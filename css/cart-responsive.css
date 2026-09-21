@@ -1,0 +1,197 @@
+/* =========================================================
+   SUNSHINE'S LUXURY HAIR
+   CART PAGE RESPONSIVE
+   ========================================================= */
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+    .cart-page-header {
+        padding: 80px 0 60px;
+    }
+
+    .cart-layout {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .cart-summary {
+        position: relative;
+        top: auto;
+
+        max-width: 650px;
+        width: 100%;
+
+        margin: 0 auto;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .cart-page-header {
+        padding: 65px 0 50px;
+    }
+
+    .cart-page-header h1 {
+        font-size: 52px;
+        letter-spacing: -1.5px;
+    }
+
+    .cart-page-header p:last-child {
+        max-width: 400px;
+        font-size: 13px;
+    }
+
+    .cart-section {
+        padding: 55px 0 80px;
+    }
+
+    .cart-top-bar {
+        align-items: flex-start;
+    }
+
+    .cart-item {
+        grid-template-columns: 95px minmax(0, 1fr);
+        gap: 18px;
+
+        padding: 22px 0;
+    }
+
+    .cart-item-image {
+        width: 95px;
+        height: 125px;
+    }
+
+    .cart-item-info h3 {
+        font-size: 20px;
+    }
+
+    .cart-item-price {
+        font-size: 13px;
+    }
+
+    .cart-item-actions {
+        grid-column: 2;
+
+        align-items: flex-start;
+
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+    .cart-item-total {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .cart-quantity {
+        width: 110px;
+    }
+
+    .cart-summary {
+        padding: 28px 22px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .cart-page-header {
+        padding: 55px 0 45px;
+    }
+
+    .cart-page-header h1 {
+        font-size: 43px;
+    }
+
+    .cart-section {
+        padding-top: 45px;
+    }
+
+    .cart-top-bar p {
+        font-size: 10px;
+    }
+
+    .clear-cart-button {
+        font-size: 9px;
+    }
+
+    .cart-item {
+        grid-template-columns: 78px minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .cart-item-image {
+        width: 78px;
+        height: 105px;
+    }
+
+    .cart-item-info h3 {
+        font-size: 17px;
+    }
+
+    .cart-item-category {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+    }
+
+    .cart-item-price {
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
+
+    .cart-item-actions {
+        gap: 12px;
+    }
+
+    .cart-quantity {
+        grid-template-columns: 30px 38px 30px;
+        width: 98px;
+    }
+
+    .cart-quantity button {
+        width: 30px;
+    }
+
+    .cart-quantity input {
+        width: 38px;
+    }
+
+    .cart-summary {
+        padding: 25px 18px;
+    }
+
+    .cart-summary h2 {
+        font-size: 25px;
+    }
+
+    .summary-total strong {
+        font-size: 22px;
+    }
+
+    .empty-cart {
+        padding: 70px 15px;
+    }
+
+    .empty-cart h2 {
+        font-size: 31px;
+    }
+
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products | Sunshine's Luxury Hair</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+    <link rel="stylesheet" href="css/products.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar" id="adminSidebar">
+
+        <div class="admin-brand">
+            <img
+                src="../assets/logo/logo-dark.png"
+                alt="Sunshine's Luxury Hair"
+            >
+        </div>
+
+        <nav class="admin-navigation">
+
+            <a href="dashboard.html" class="admin-nav-link">
+                <span>⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="products.html" class="admin-nav-link active">
+                <span>▣</span>
+                <span>Products</span>
+            </a>
+
+            <a href="add-product.html" class="admin-nav-link">
+                <span>＋</span>
+                <span>Add Product</span>
+            </a>
+
+            <a href="#" class="admin-nav-link">
+                <span>▤</span>
+                <span>Orders</span>
+            </a>
+
+            <a href="#" class="admin-nav-link">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <button class="admin-logout" id="logoutBtn">
+            <span>↪</span>
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- TOP BAR -->
+        <header class="admin-topbar">
+
+            <button
+                class="admin-menu-toggle"
+                id="adminMenuToggle"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+            <div class="admin-page-title">
+                <p>STORE MANAGEMENT</p>
+                <h1>Products</h1>
+            </div>
+
+            <div class="admin-profile">
+
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>Store Manager</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <section class="admin-content">
+
+            <!-- PAGE HEADER -->
+            <div class="products-page-header">
+
+                <div>
+                    <p class="section-label">INVENTORY</p>
+
+                    <h2>Product Management</h2>
+
+                    <p>
+                        Add, edit and manage all products in your store.
+                    </p>
+                </div>
+
+                <a
+                    href="add-product.html"
+                    class="add-product-btn"
+                >
+                    + Add Product
+                </a>
+
+            </div>
+
+
+            <!-- FILTER BAR -->
+            <div class="products-toolbar">
+
+                <div class="product-search">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="search"
+                        id="productSearch"
+                        placeholder="Search products..."
+                    >
+
+                </div>
+
+
+                <div class="product-filter">
+
+                    <label for="stockFilter">
+                        Status
+                    </label>
+
+                    <select id="stockFilter">
+
+                        <option value="all">
+                            All Products
+                        </option>
+
+                        <option value="in-stock">
+                            In Stock
+                        </option>
+
+                        <option value="out-of-stock">
+                            Out of Stock
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="product-filter">
+
+                    <label for="featuredFilter">
+                        Featured
+                    </label>
+
+                    <select id="featuredFilter">
+
+                        <option value="all">
+                            All
+                        </option>
+
+                        <option value="yes">
+                            Featured
+                        </option>
+
+                        <option value="no">
+                            Not Featured
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCTS TABLE -->
+            <div class="products-table-container">
+
+                <table class="products-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Product</th>
+
+                            <th>Price</th>
+
+                            <th>Colors</th>
+
+                            <th>Status</th>
+
+                            <th>Stock</th>
+
+                            <th>Featured</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="productsTableBody">
+
+                        <!-- Products will be inserted by JavaScript -->
+
+                    </tbody>
+
+                </table>
+
+
+                <!-- EMPTY STATE -->
+                <div
+                    class="products-empty"
+                    id="productsEmpty"
+                >
+
+                    <div class="empty-icon">
+                        ▣
+                    </div>
+
+                    <h3>No Products Found</h3>
+
+                    <p>
+                        You haven't added any products yet,
+                        or no product matches your search.
+                    </p>
+
+                    <a href="add-product.html">
+                        + Add Product
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MOBILE OVERLAY -->
+    <div
+        class="admin-overlay"
+        id="adminOverlay"
+    ></div>
+
+
+    <script type="module" src="../js/admin-auth.js"></script>
+<script type="module" src="../js/admin-products.js"></script>
+
+</body>
+</html>

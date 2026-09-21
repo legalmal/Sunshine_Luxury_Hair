@@ -1,0 +1,874 @@
+/* =========================================================
+   SUNSHINE'S LUXURY HAIR
+   HOME PAGE - FEATURED PRODUCTS
+   ========================================================= */
+
+import {
+    db,
+    collection,
+    getDocs
+} from "./firebase.js";
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+const WHATSAPP_NUMBER = "237XXXXXXXXX";
+
+const MAX_FEATURED_PRODUCTS = 4;
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const featuredGrid = document.getElementById("featuredGrid");
+
+
+/* =========================================================
+   LOAD PRODUCTS
+   ========================================================= */
+
+async function loadFeaturedProducts() {
+
+    if (!featuredGrid) {
+        console.error("featuredGrid was not found.");
+        return;
+    }
+
+    try {
+
+        featuredGrid.innerHTML = `
+            <div class="home-products-loading">
+                Loading our collection...
+            </div>
+        `;
+
+
+        const snapshot = await getDocs(
+            collection(db, "products")
+        );
+
+
+        let products = [];
+
+
+        snapshot.forEach((documentSnapshot) => {
+
+            const product = documentSnapshot.data();
+
+            products.push({
+                id: documentSnapshot.id,
+                ...product
+            });
+
+        });
+
+
+        /* ---------------------------------------------
+           FEATURED PRODUCTS FIRST
+        --------------------------------------------- */
+
+        products.sort((a, b) => {
+
+            if (a.featured === b.featured) {
+                return 0;
+            }
+
+            return a.featured ? -1 : 1;
+
+        });
+
+
+        /* ---------------------------------------------
+           ONLY SHOW FIRST 4 PRODUCTS
+        --------------------------------------------- */
+
+        products = products.slice(
+            0,
+            MAX_FEATURED_PRODUCTS
+        );
+
+
+        if (products.length === 0) {
+
+            featuredGrid.innerHTML = `
+                <div class="home-products-empty">
+                    <p>No products available yet.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        renderFeaturedProducts(products);
+
+    } catch (error) {
+
+        console.error(
+            "Error loading homepage products:",
+            error
+        );
+
+
+        featuredGrid.innerHTML = `
+            <div class="home-products-error">
+                <p>
+                    Unable to load products right now.
+                </p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER PRODUCTS
+   ========================================================= */
+
+function renderFeaturedProducts(products) {
+
+    featuredGrid.innerHTML = "";
+
+
+    products.forEach((product) => {
+
+        const card = createProductCard(product);
+
+        featuredGrid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATE PRODUCT CARD
+   ========================================================= */
+
+function createProductCard(product) {
+
+    const card = document.createElement("article");
+
+    card.className = "home-product-card";
+
+
+    /* ---------------------------------------------
+       PRODUCT DATA
+    --------------------------------------------- */
+
+    const name =
+        product.name ||
+        "Luxury Hair";
+
+
+    const category =
+        product.category ||
+        "Luxury Collection";
+
+
+    const description =
+        product.description ||
+        "Premium luxury hair";
+
+
+    const price =
+        Number(product.price) || 0;
+
+
+    const image =
+        product.mainImage ||
+        (Array.isArray(product.images)
+            ? product.images[0]
+            : "") ||
+        "assets/images/product-placeholder.jpg";
+
+
+    const productId =
+        product.id || "";
+
+
+    /* ---------------------------------------------
+       GET LENGTH
+    --------------------------------------------- */
+
+    let length = "";
+
+
+    if (
+        Array.isArray(product.options) &&
+        product.options.length > 0
+    ) {
+
+        const lengthOption =
+            product.options.find((option) => {
+
+                const optionName =
+                    String(option.name || "")
+                        .toLowerCase();
+
+                return (
+                    optionName.includes("length") ||
+                    optionName.includes("inch")
+                );
+
+            });
+
+
+        if (
+            lengthOption &&
+            Array.isArray(lengthOption.values) &&
+            lengthOption.values.length > 0
+        ) {
+
+            length =
+                lengthOption.values[0];
+
+        }
+
+    }
+
+
+    /* ---------------------------------------------
+       FALLBACK LENGTH
+    --------------------------------------------- */
+
+    if (!length && product.length) {
+        length = product.length;
+    }
+
+
+    if (!length && product.size) {
+        length = product.size;
+    }
+
+
+    /* ---------------------------------------------
+       CLEAN LENGTH
+    --------------------------------------------- */
+
+    if (length) {
+
+        length = String(length);
+
+        if (
+            !length.toLowerCase().includes("inch")
+        ) {
+
+            length += "inch";
+
+        }
+
+    } else {
+
+        length = "Available lengths";
+
+    }
+
+
+    /* ---------------------------------------------
+       CATEGORY NAME
+    --------------------------------------------- */
+
+    const categoryName =
+        formatCategory(category);
+
+
+    /* ---------------------------------------------
+       DESCRIPTION
+    --------------------------------------------- */
+
+    const shortDescription =
+        getShortDescription(description);
+
+
+    /* ---------------------------------------------
+       PRICE
+    --------------------------------------------- */
+
+    const formattedPrice =
+        formatPrice(price);
+
+
+    /* ---------------------------------------------
+       WHATSAPP
+    --------------------------------------------- */
+
+    const whatsappMessage =
+        encodeURIComponent(
+            `Hello, I would like to order the ${name}.`
+        );
+
+
+    const whatsappURL =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
+
+    /* ---------------------------------------------
+       CARD HTML
+    --------------------------------------------- */
+
+    card.innerHTML = `
+
+        <!-- PRODUCT IMAGE -->
+
+        <div class="home-product-image">
+
+            <div
+    class="home-product-image-link"
+    data-image="${escapeHTML(image)}"
+    data-name="${escapeHTML(name)}"
+    role="button"
+    tabindex="0"
+    aria-label="View ${escapeHTML(name)} image"
+>
+    <img
+        src="${escapeHTML(image)}"
+        alt="${escapeHTML(name)}"
+        loading="lazy"
+        onerror="this.src='assets/images/product-placeholder.jpg'"
+    >
+</div>
+
+        </div>
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <div class="home-product-info">
+
+
+            <!-- CATEGORY -->
+
+            <div class="home-product-category">
+
+                ${escapeHTML(categoryName)}
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <h3 class="home-product-name">
+
+                ${escapeHTML(name)}
+
+            </h3>
+
+
+            <!-- LENGTH -->
+
+            <p class="home-product-length">
+
+                ${escapeHTML(length)}
+
+            </p>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="home-product-description">
+
+                ${escapeHTML(shortDescription)}
+
+            </p>
+
+
+            <!-- PRICE -->
+
+            <div class="home-product-price">
+
+                ${formattedPrice} FCFA
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="home-product-actions">
+
+
+                <a
+                    href="shop.html?id=${encodeURIComponent(productId)}"
+                    class="home-view-details"
+                >
+
+                    Visit Our Gallary
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    return card;
+
+}
+
+
+/* =========================================================
+   FORMAT CATEGORY
+   ========================================================= */
+
+function formatCategory(category) {
+
+    if (!category) {
+        return "Luxury Collection";
+    }
+
+
+    return String(category)
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, (letter) =>
+            letter.toUpperCase()
+        );
+
+}
+
+
+/* =========================================================
+   FORMAT PRICE
+   ========================================================= */
+
+function formatPrice(price) {
+
+    if (!price || Number.isNaN(Number(price))) {
+        return "Price on request";
+    }
+
+
+    return Number(price).toLocaleString(
+        "en-US"
+    );
+
+}
+
+
+/* =========================================================
+   SHORT DESCRIPTION
+   ========================================================= */
+
+function getShortDescription(description) {
+
+    if (!description) {
+        return "Premium luxury hair";
+    }
+
+
+    const text =
+        String(description)
+            .replace(/\s+/g, " ")
+            .trim();
+
+
+    if (text.length <= 55) {
+        return text;
+    }
+
+
+    return text.substring(0, 55) + "...";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+loadFeaturedProducts();
+
+/* =========================================================
+   PRODUCT IMAGE LIGHTBOX
+   ========================================================= */
+
+function createImageLightbox() {
+
+    if (document.getElementById("homeImageLightbox")) {
+        return;
+    }
+
+    const lightbox = document.createElement("div");
+
+    lightbox.id = "homeImageLightbox";
+    lightbox.className = "home-image-lightbox";
+
+    lightbox.innerHTML = `
+
+        <button
+            type="button"
+            class="home-lightbox-close"
+            aria-label="Close image"
+        >
+            &times;
+        </button>
+
+        <div class="home-lightbox-content">
+
+            <img
+                class="home-lightbox-image"
+                src=""
+                alt=""
+            >
+
+        </div>
+
+    `;
+
+    document.body.appendChild(lightbox);
+
+
+    const closeButton =
+        lightbox.querySelector(
+            ".home-lightbox-close"
+        );
+
+
+    const image =
+        lightbox.querySelector(
+            ".home-lightbox-image"
+        );
+
+
+    /* ---------------------------------------------
+       CLOSE BUTTON
+    --------------------------------------------- */
+
+    closeButton.addEventListener(
+        "click",
+        closeImageLightbox
+    );
+
+
+    /* ---------------------------------------------
+       CLICK OUTSIDE IMAGE
+    --------------------------------------------- */
+
+    lightbox.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target === lightbox ||
+                event.target.classList.contains(
+                    "home-lightbox-content"
+                )
+            ) {
+
+                closeImageLightbox();
+
+            }
+
+        }
+    );
+
+
+    /* ---------------------------------------------
+       ESCAPE KEY
+    --------------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                lightbox.classList.contains("active")
+            ) {
+
+                closeImageLightbox();
+
+            }
+
+        }
+    );
+}
+
+
+/* =========================================================
+   OPEN IMAGE
+   ========================================================= */
+
+function openImageLightbox(imageURL, imageName) {
+
+    createImageLightbox();
+
+
+    const lightbox =
+        document.getElementById(
+            "homeImageLightbox"
+        );
+
+
+    const image =
+        lightbox.querySelector(
+            ".home-lightbox-image"
+        );
+
+
+    image.src = imageURL;
+
+    image.alt = imageName;
+
+
+    lightbox.classList.add("active");
+
+
+    document.body.classList.add(
+        "image-lightbox-open"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE IMAGE
+   ========================================================= */
+
+function closeImageLightbox() {
+
+    const lightbox =
+        document.getElementById(
+            "homeImageLightbox"
+        );
+
+
+    if (!lightbox) {
+        return;
+    }
+
+
+    lightbox.classList.remove(
+        "active"
+    );
+
+
+    document.body.classList.remove(
+        "image-lightbox-open"
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE CLICK EVENTS
+   ========================================================= */
+
+function setupHomeImageLightbox() {
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            const imageContainer =
+                event.target.closest(
+                    ".home-product-image-link"
+                );
+
+
+            if (!imageContainer) {
+                return;
+            }
+
+
+            const imageURL =
+                imageContainer.dataset.image;
+
+
+            const imageName =
+                imageContainer.dataset.name ||
+                "Product image";
+
+
+            if (!imageURL) {
+                return;
+            }
+
+
+            openImageLightbox(
+                imageURL,
+                imageName
+            );
+
+        }
+    );
+
+
+    /* Keyboard accessibility */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key !== "Enter" &&
+                event.key !== " "
+            ) {
+                return;
+            }
+
+
+            const imageContainer =
+                event.target.closest(
+                    ".home-product-image-link"
+                );
+
+
+            if (!imageContainer) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            openImageLightbox(
+                imageContainer.dataset.image,
+                imageContainer.dataset.name ||
+                "Product image"
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LATEST VIDEOS
+===================================================== */
+
+function renderLatestVideos(products) {
+
+    if (!latestVideosGrid) {
+        return;
+    }
+
+
+    const videoProducts =
+        products
+            .filter(
+                product =>
+                    product.videoUrl ||
+                    product.video
+            )
+            .slice(0, 3);
+
+
+    if (!videoProducts.length) {
+
+        latestVideosGrid.innerHTML = `
+            <p class="home-empty-message">
+                New videos coming soon.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    latestVideosGrid.innerHTML =
+        videoProducts
+            .map(product => {
+
+                const video =
+                    product.videoUrl ||
+                    product.video;
+
+                const name =
+                    product.name ||
+                    "Luxury Hair";
+
+                const category =
+                    product.category ||
+                    "New Collection";
+
+                const description =
+                    product.description ||
+                    "Discover our latest luxury hair collection.";
+
+
+                return `
+
+                    <article class="latest-video-card">
+
+                        <div class="latest-video-media">
+
+                            <video
+                                controls
+                                playsinline
+                                preload="metadata"
+                            >
+
+                                <source
+                                    src="${escapeHTML(video)}"
+                                    type="video/mp4"
+                                >
+
+                                Your browser does not support
+                                video playback.
+
+                            </video>
+
+                        </div>
+
+
+                        <div class="latest-video-info">
+
+                            <p class="latest-video-category">
+                                ${escapeHTML(category)}
+                            </p>
+
+                            <h3>
+                                ${escapeHTML(name)}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    description.substring(0, 90)
+                                )}${description.length > 90 ? "..." : ""}
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+
+/* =========================================================
+   START LIGHTBOX
+   ========================================================= */
+
+setupHomeImageLightbox();

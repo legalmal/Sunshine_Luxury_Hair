@@ -1,0 +1,163 @@
+/* =========================================================
+   SHOP PAGE RESPONSIVE
+   ========================================================= */
+
+
+/* ---------- TABLET ---------- */
+
+@media (max-width: 992px) {
+
+    .shop-toolbar {
+        grid-template-columns: 1fr 220px;
+
+        gap: 20px;
+    }
+
+
+    .shop-sort {
+        grid-column: 1 / -1;
+
+        justify-content: flex-end;
+    }
+
+
+    .product-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 45px 20px;
+    }
+
+
+    .product-image-container {
+        height: 430px;
+    }
+
+}
+
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 768px) {
+
+    .shop-hero {
+        padding: 70px 0 60px;
+
+        text-align: center;
+    }
+
+
+    .shop-hero h1 {
+        font-size: 43px;
+    }
+
+
+    .shop-hero p:last-child {
+        margin-inline: auto;
+
+        font-size: 14px;
+    }
+
+
+    .shop-toolbar {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+    }
+
+
+    .category-filters {
+        overflow-x: auto;
+
+        flex-wrap: nowrap;
+
+        padding-bottom: 5px;
+
+        scrollbar-width: none;
+    }
+
+
+    .category-filters::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    .filter-button {
+        flex: 0 0 auto;
+    }
+
+
+    .shop-sort {
+        justify-content: space-between;
+    }
+
+
+    .shop-sort select {
+        flex: 1;
+
+        max-width: 220px;
+    }
+
+
+    .product-grid {
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+    }
+
+
+    .product-image-container {
+        height: 480px;
+    }
+
+
+    .quick-view-button {
+        opacity: 1;
+
+        transform: none;
+
+        background-color: rgba(0, 0, 0, 0.65);
+    }
+
+
+    .quick-view-content {
+        width: 92vw;
+
+        height: 75vh;
+    }
+
+}
+
+
+
+/* ---------- SMALL MOBILE ---------- */
+
+@media (max-width: 480px) {
+
+    .shop-section {
+        padding-top: 50px;
+    }
+
+
+    .shop-hero h1 {
+        font-size: 38px;
+    }
+
+
+    .product-image-container {
+        height: 430px;
+    }
+
+
+    .quick-view-content {
+        width: 94vw;
+
+        height: 70vh;
+    }
+
+}

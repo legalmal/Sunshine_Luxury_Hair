@@ -1,0 +1,511 @@
+/* =========================================================
+   SUNSHINE'S LUXURY HAIR
+   GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
+
+/* ---------- ROOT VARIABLES ---------- */
+
+:root {
+    --gold: #D4AF37;
+    --gold-light: #E2C35B;
+    --gold-dark: #B8941F;
+
+    --black: #080808;
+    --black-soft: #111111;
+
+    --white: #FFFFFF;
+    --white-soft: #F8F8F6;
+
+    --text-primary: #111111;
+    --text-secondary: #666666;
+
+    --border-color: #e5e5e5;
+
+    --header-height: 80px;
+
+    --transition-fast: 0.2s ease;
+    --transition: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    --container-width: 1400px;
+
+    --radius-small: 4px;
+    --radius-medium: 8px;
+    --radius-large: 14px;
+}
+
+
+/* ---------- DARK THEME ---------- */
+
+body.dark-theme {
+    --black: #ffffff;
+    --black-soft: #eeeeee;
+
+    --white: #080808;
+    --white-soft: #111111;
+
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+
+    --border-color: #292929;
+}
+
+
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background-color: var(--white);
+    color: var(--text-primary);
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    line-height: 1.6;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
+}
+
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ---------- GLOBAL CONTAINER ---------- */
+
+.container {
+    width: min(
+        calc(100% - 40px),
+        var(--container-width)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.site-header {
+    width: 100%;
+    height: var(--header-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 40px;
+
+    background-color: var(--white);
+
+    border-bottom: 1px solid var(--border-color);
+
+    position: relative;
+    z-index: 1000;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition);
+}
+
+
+/* ---------- LOGO ---------- */
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+
+.brand-logo {
+    width: 150px;
+    height: auto;
+
+    object-fit: contain;
+
+    transition: opacity var(--transition);
+}
+
+
+/* ---------- NAVIGATION ---------- */
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+
+.main-navigation a {
+    position: relative;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    color: var(--text-primary);
+
+    transition: color var(--transition);
+}
+
+
+.main-navigation a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -7px;
+
+    width: 0;
+    height: 2px;
+
+    background-color: var(--gold);
+
+    transition: width var(--transition);
+}
+
+
+.main-navigation a:hover {
+    color: var(--gold);
+}
+
+
+.main-navigation a:hover::after {
+    width: 100%;
+}
+
+
+/* ---------- HEADER ACTIONS ---------- */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+
+.header-actions button {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--border-color);
+
+    background: transparent;
+    color: var(--text-primary);
+
+    border-radius: 50%;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        border-color var(--transition);
+}
+
+
+.header-actions button:hover {
+    background-color: var(--gold);
+    border-color: var(--gold);
+
+    color: #000000;
+}
+
+
+.cart-link {
+    font-size: 14px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    transition: color var(--transition);
+}
+
+
+.cart-link:hover {
+    color: var(--gold);
+}
+
+
+/* ---------- BUTTONS ---------- */
+
+.primary-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 50px;
+
+    padding: 0 28px;
+
+    background-color: var(--gold);
+    color: #000000;
+
+    border: 1px solid var(--gold);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
+}
+
+
+.primary-button:hover {
+    background-color: transparent;
+    color: var(--gold);
+
+    transform: translateY(-2px);
+}
+
+
+/* ---------- SECONDARY BUTTON ---------- */
+
+.secondary-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 50px;
+
+    padding: 0 28px;
+
+    background-color: transparent;
+    color: var(--text-primary);
+
+    border: 1px solid var(--text-primary);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    transition: all var(--transition);
+}
+
+
+.secondary-button:hover {
+    background-color: var(--gold);
+    border-color: var(--gold);
+
+    color: #000000;
+}
+
+
+/* ---------- SECTION ---------- */
+
+section {
+    width: 100%;
+}
+
+
+.section-padding {
+    padding: 100px 0;
+}
+
+
+.section-heading {
+    margin-bottom: 50px;
+}
+
+
+.section-label {
+    margin-bottom: 12px;
+
+    color: var(--gold);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+.section-title {
+    font-size: clamp(32px, 4vw, 56px);
+
+    line-height: 1.1;
+
+    font-weight: 500;
+}
+
+
+.section-description {
+    max-width: 650px;
+
+    margin-top: 18px;
+
+    color: var(--text-secondary);
+
+    font-size: 16px;
+}
+
+
+/* ---------- FORM ELEMENTS ---------- */
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    background-color: var(--white);
+
+    color: var(--text-primary);
+
+    border: 1px solid var(--border-color);
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--gold);
+
+    box-shadow: 0 0 0 2px rgba(201, 164, 92, 0.12);
+}
+
+
+/* ---------- FOOTER ---------- */
+
+.site-footer {
+    padding: 40px;
+
+    background-color: var(--black-soft);
+    color: var(--white);
+
+    text-align: center;
+
+    font-size: 13px;
+
+    border-top: 1px solid var(--border-color);
+}
+
+
+/* ---------- ACCESSIBILITY ---------- */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+
+
+/* ---------- SELECTION ---------- */
+
+::selection {
+    background-color: var(--gold);
+    color: #000000;
+}
+
+
+/* ---------- SCROLLBAR ---------- */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: var(--white-soft);
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-dark);
+}
+/* ---------- MOBILE MENU BUTTON ---------- */
+
+.menu-toggle {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 8px;
+
+    background: transparent;
+    border: 1px solid var(--border-color);
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    border-radius: 50%;
+}
+
+.menu-toggle span {
+    display: block;
+
+    width: 18px;
+    height: 1.5px;
+
+    background-color: var(--text-primary);
+
+    transition: all var(--transition);
+}

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Shop premium luxury hair from Sunshine's Luxury Hair."
+    >
+
+    <title>Shop | Sunshine's Luxury Hair</title>
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- Shop CSS -->
+    <link rel="stylesheet" href="css/shop.css">
+    <link rel="stylesheet" href="css/shop-responsive.css">
+
+</head>
+
+
+<!-- =====================================================
+     WHATSAPP FLOATING BUTTON
+====================================================== -->
+
+<a
+    href="https://wa.me/237XXXXXXXXX?text=Hello%20Sunshine's%20Luxury%20Hair,%20I%20would%20like%20to%20make%20an%20order."
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with us on WhatsApp"
+>
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="site-header">
+
+        <a
+            href="index.html"
+            class="logo-link"
+        >
+
+            <img
+                src="assets/logos/logo-light.png"
+                alt="Sunshine's Luxury Hair"
+                class="brand-logo"
+                id="brandLogo"
+            >
+
+        </a>
+
+
+        <!-- Mobile menu -->
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+
+        <!-- Navigation -->
+
+        <nav
+            class="main-navigation"
+            id="mainNavigation"
+        >
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a
+                href="shop.html"
+                class="active"
+            >
+                Shop
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <!-- Header actions -->
+
+        <div class="header-actions">
+
+            <button
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle theme"
+            >
+                ☾
+            </button>
+
+            <a
+                href="cart.html"
+                class="cart-link"
+            >
+                Cart
+                <span
+                    class="cart-count"
+                    id="cartCount"
+                >
+                    0
+                </span>
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+
+        <!-- ================= SHOP HERO ================= -->
+
+        <section class="shop-hero">
+
+            <div class="container">
+
+                <p class="section-label">
+                    SUNSHINE'S COLLECTION
+                </p>
+
+                <h1>
+                    Find Your Perfect Look
+                </h1>
+
+                <p>
+                    Explore our collection of premium
+                    luxury hair designed to make you
+                    feel confident, beautiful and bold.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SHOP CONTROLS ================= -->
+
+        <section class="shop-section">
+
+            <div class="container">
+
+
+                <div class="shop-toolbar">
+
+
+                    <!-- Categories -->
+
+                    <div class="category-filters">
+
+                        <button
+                            class="filter-button active"
+                            data-category="all"
+                        >
+                            All
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-category="wigs"
+                        >
+                            Wigs
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-category="bundles"
+                        >
+                            Bundles
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-category="closures"
+                        >
+                            Closures
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-category="frontals"
+                        >
+                            Frontals
+                        </button>
+
+                    </div>
+
+
+                    <!-- Search -->
+
+                    <div class="shop-search">
+
+                        <label
+                            for="productSearch"
+                            class="visually-hidden"
+                        >
+                            Search products
+                        </label>
+
+                        <input
+                            type="search"
+                            id="productSearch"
+                            placeholder="Search products..."
+                        >
+
+                    </div>
+
+
+                    <!-- Sort -->
+
+                    <div class="shop-sort">
+
+                        <label for="productSort">
+                            Sort:
+                        </label>
+
+                        <select id="productSort">
+
+                            <option value="featured">
+                                Featured
+                            </option>
+
+                            <option value="price-low">
+                                Price: Low to High
+                            </option>
+
+                            <option value="price-high">
+                                Price: High to Low
+                            </option>
+
+                            <option value="name">
+                                Name
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Product count -->
+
+                <div class="shop-result-info">
+
+                    <p id="productResultCount">
+                        Showing products
+                    </p>
+
+                </div>
+
+
+
+                <!-- ================= PRODUCT GRID ================= -->
+
+                <div
+                    class="product-grid"
+                    id="productGrid"
+                >
+
+                    <!-- Products will be inserted by JavaScript -->
+
+                </div>
+
+
+                <!-- Empty state -->
+
+                <div
+                    class="empty-products"
+                    id="emptyProducts"
+                    hidden
+                >
+
+                    <div>
+
+                        <span>
+                            ✦
+                        </span>
+
+                        <h2>
+                            No products found
+                        </h2>
+
+                        <p>
+                            Try changing your search
+                            or category filter.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= QUICK VIEW MODAL ================= -->
+
+    <div
+        class="quick-view-modal"
+        id="quickViewModal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="quick-view-backdrop"
+            id="quickViewBackdrop"
+        ></div>
+
+
+        <div
+            class="quick-view-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Product quick view"
+        >
+
+            <button
+                class="quick-view-close"
+                id="quickViewClose"
+                type="button"
+                aria-label="Close product preview"
+            >
+                ×
+            </button>
+
+
+            <div
+                class="quick-view-image"
+                id="quickViewImage"
+            >
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="site-footer">
+
+        <p>
+            © 2026 Sunshine's Luxury Hair.
+            All rights reserved.
+        </p>
+
+    </footer>
+
+
+
+    <script src="js/app.js"></script>
+
+    <script type="module" src="js/shop.js"></script>
+
+</body>
+
+</html>

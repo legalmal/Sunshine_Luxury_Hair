@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Sunshine's Luxury Hair Admin - Add Product"
+    >
+
+    <title>Add Product | Sunshine's Luxury Hair</title>
+
+    <!-- FAVICON -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="../assets/logos/logo-dark.png"
+    >
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <!-- ADMIN CSS -->
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-responsive.css"
+    >
+
+    <!-- ADD PRODUCT CSS -->
+    <link
+        rel="stylesheet"
+        href="css/add-product.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/add-product-responsive.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================================
+         ADMIN LAYOUT
+    ========================================== -->
+
+    <div class="admin-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="admin-sidebar">
+
+            <!-- SIDEBAR HEADER -->
+            <div class="admin-sidebar-header">
+
+                <a
+                    href="dashboard.html"
+                    class="admin-logo-link"
+                >
+
+                    <img
+                        src="../assets/logos/logo-dark.png"
+                        alt="Sunshine's Luxury Hair"
+                        class="admin-logo"
+                    >
+
+                </a>
+
+            </div>
+
+
+            <!-- SIDEBAR NAVIGATION -->
+            <nav class="admin-nav">
+
+                <!-- DASHBOARD -->
+                <a
+                    href="dashboard.html"
+                    class="admin-nav-link"
+                >
+
+                    <span class="admin-nav-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- PRODUCTS -->
+                <a
+                    href="products.html"
+                    class="admin-nav-link"
+                >
+
+                    <span class="admin-nav-icon">
+                        <i class="fa-solid fa-box"></i>
+                    </span>
+
+                    <span>
+                        Products
+                    </span>
+
+                </a>
+
+
+                <!-- ADD PRODUCT -->
+                <a
+                    href="add-product.html"
+                    class="admin-nav-link active"
+                >
+
+                    <span class="admin-nav-icon">
+                        <i class="fa-solid fa-plus"></i>
+                    </span>
+
+                    <span>
+                        Add Product
+                    </span>
+
+                </a>
+
+
+                <!-- ORDERS -->
+                <a
+                    href="orders.html"
+                    class="admin-nav-link"
+                >
+
+                    <span class="admin-nav-icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </span>
+
+                    <span>
+                        Orders
+                    </span>
+
+                </a>
+
+
+                <!-- SETTINGS -->
+                <a
+                    href="#"
+                    class="admin-nav-link"
+                    id="settingsLink"
+                >
+
+                    <span class="admin-nav-icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+
+                    <span>
+                        Settings
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <!-- SIDEBAR FOOTER -->
+            <div class="admin-sidebar-footer">
+
+                <button
+                    type="button"
+                    class="admin-logout-btn"
+                    id="logoutBtn"
+                >
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>
+                        Logout
+                    </span>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <main class="admin-main">
+
+
+            <!-- =================================
+                 TOP BAR
+            ================================== -->
+
+            <header class="admin-topbar">
+
+                <div class="admin-topbar-left">
+
+                    <!-- MOBILE MENU -->
+                    <button
+                        type="button"
+                        class="admin-menu-toggle"
+                        id="adminMenuToggle"
+                        aria-label="Open menu"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+
+                    <div>
+
+                        <p class="admin-page-label">
+                            PRODUCT MANAGEMENT
+                        </p>
+
+                        <h1 class="admin-page-title">
+                            Add Product
+                        </h1>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOPBAR ACTION -->
+                <div class="admin-topbar-actions">
+
+                    <a
+                        href="products.html"
+                        class="admin-topbar-link"
+                    >
+
+                        <i class="fa-solid fa-box"></i>
+
+                        <span>
+                            View Products
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================
+                 PAGE CONTENT
+            ================================== -->
+
+            <section class="add-product-page">
+
+                <div class="add-product-container">
+
+
+                    <!-- =================================
+                         PAGE INTRO
+                    ================================== -->
+
+                    <div class="add-product-intro">
+
+                        <div>
+
+                            <p class="section-eyebrow">
+                                SUNSHINE'S LUXURY HAIR
+                            </p>
+
+                            <h2>
+                                Create a New Product
+                            </h2>
+
+                            <p>
+                                Add your product information, main image,
+                                gallery images, video and available options.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         PRODUCT FORM
+                    ================================== -->
+
+                    <form
+                        id="productForm"
+                        class="product-form"
+                        novalidate
+                    >
+
+
+                        <!-- =================================
+                             BASIC INFORMATION
+                        ================================== -->
+
+                        <section class="form-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    01
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Basic Information
+                                    </h3>
+
+                                    <p>
+                                        Enter the main information about
+                                        your product.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-grid">
+
+
+                                <!-- PRODUCT NAME -->
+                                <div class="form-group form-group-full">
+
+                                    <label for="productName">
+                                        Product Name
+                                        <span>*</span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="productName"
+                                        name="productName"
+                                        placeholder="e.g. Bone Straight Wig"
+                                        autocomplete="off"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- PRICE -->
+                                <div class="form-group">
+
+                                    <label for="productPrice">
+                                        Price (₦)
+                                        <span>*</span>
+                                    </label>
+
+                                    <div class="input-with-icon">
+
+                                        <span>
+                                            ₦
+                                        </span>
+
+                                        <input
+                                            type="number"
+                                            id="productPrice"
+                                            name="productPrice"
+                                            placeholder="120000"
+                                            min="0"
+                                            step="100"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- CATEGORY -->
+                                <div class="form-group">
+
+                                    <label for="productCategory">
+                                        Category
+                                        <span>*</span>
+                                    </label>
+
+                                    <select
+                                        id="productCategory"
+                                        name="productCategory"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Select Category
+                                        </option>
+
+                                        <option value="wigs">
+                                            Wigs
+                                        </option>
+
+                                        <option value="bundles">
+                                            Bundles
+                                        </option>
+
+                                        <option value="closures">
+                                            Closures
+                                        </option>
+
+                                        <option value="frontals">
+                                            Frontals
+                                        </option>
+
+                                        <option value="ponytails">
+                                            Ponytails
+                                        </option>
+
+                                        <option value="extensions">
+                                            Hair Extensions
+                                        </option>
+
+                                        <option value="accessories">
+                                            Hair Accessories
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+                                <div class="form-group form-group-full">
+
+                                    <label for="productDescription">
+                                        Product Description
+                                        <span>*</span>
+                                    </label>
+
+                                    <textarea
+                                        id="productDescription"
+                                        name="productDescription"
+                                        rows="6"
+                                        placeholder="Describe the product, texture, quality, styling possibilities and other important details..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             MAIN IMAGE
+                        ================================== -->
+
+                        <section class="form-section media-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    02
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Main Product Image
+                                    </h3>
+
+                                    <p>
+                                        This image will appear on the
+                                        homepage and as the main image
+                                        on the product page.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="media-upload-card main-media-card">
+
+                                <div class="upload-icon">
+                                    <i class="fa-regular fa-image"></i>
+                                </div>
+
+                                <h4>
+                                    Upload Main Image
+                                </h4>
+
+                                <p>
+                                    Choose the primary image customers
+                                    should see first.
+                                </p>
+
+
+                                <label
+                                    for="mainProductImage"
+                                    class="upload-button"
+                                >
+
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                                    Choose Main Image
+
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="mainProductImage"
+                                    name="mainProductImage"
+                                    accept="image/jpeg,image/png,image/webp,image/jpg"
+                                    required
+                                    hidden
+                                >
+
+
+                                <!-- MAIN IMAGE PREVIEW -->
+                                <div
+                                    id="mainImagePreview"
+                                    class="main-image-preview"
+                                ></div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             GALLERY IMAGES
+                        ================================== -->
+
+                        <section class="form-section media-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    03
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Product Gallery
+                                    </h3>
+
+                                    <p>
+                                        Add up to 3 additional images
+                                        customers can view on the
+                                        product page.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="media-upload-card">
+
+                                <div class="upload-icon">
+                                    <i class="fa-regular fa-images"></i>
+                                </div>
+
+                                <h4>
+                                    Upload Gallery Images
+                                </h4>
+
+                                <p>
+                                    Select up to 3 additional product images.
+                                </p>
+
+
+                                <label
+                                    for="productImages"
+                                    class="upload-button"
+                                >
+
+                                    <i class="fa-solid fa-images"></i>
+
+                                    Choose Gallery Images
+
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="productImages"
+                                    name="productImages"
+                                    accept="image/jpeg,image/png,image/webp,image/jpg"
+                                    multiple
+                                    hidden
+                                >
+
+
+                                <!-- GALLERY PREVIEW -->
+                                <div
+                                    id="imagePreview"
+                                    class="image-preview"
+                                ></div>
+
+
+                                <div class="upload-limit">
+
+                                    <i class="fa-solid fa-circle-info"></i>
+
+                                    <span>
+                                        Maximum 3 gallery images.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             PRODUCT VIDEO
+                        ================================== -->
+
+                        <section class="form-section media-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    04
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Product Video
+                                    </h3>
+
+                                    <p>
+                                        Add a short video showing the
+                                        product in detail.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="media-upload-card video-upload-card">
+
+                                <div class="upload-icon">
+                                    <i class="fa-solid fa-video"></i>
+                                </div>
+
+                                <h4>
+                                    Upload Product Video
+                                </h4>
+
+                                <p>
+                                    Optional. Customers will be able to
+                                    watch this video on the product page.
+                                </p>
+
+
+                                <label
+                                    for="productVideo"
+                                    class="upload-button"
+                                >
+
+                                    <i class="fa-solid fa-video"></i>
+
+                                    Choose Video
+
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="productVideo"
+                                    name="productVideo"
+                                    accept="video/mp4,video/webm,video/quicktime"
+                                    hidden
+                                >
+
+
+                                <!-- VIDEO PREVIEW -->
+                                <div
+                                    id="videoPreview"
+                                    class="video-preview"
+                                ></div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             PRODUCT DETAILS
+                        ================================== -->
+
+                        <section class="form-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    05
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Product Details
+                                    </h3>
+
+                                    <p>
+                                        Configure stock, colors and
+                                        product availability.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-grid">
+
+
+                                <!-- COLORS -->
+                                <div class="form-group form-group-full">
+
+                                    <label for="productColors">
+                                        Colors
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="productColors"
+                                        name="productColors"
+                                        placeholder="e.g. Natural Black, Brown, Burgundy"
+                                    >
+
+                                    <small>
+                                        Separate multiple colors with commas.
+                                    </small>
+
+                                </div>
+
+
+                                <!-- STATUS -->
+                                <div class="form-group">
+
+                                    <label for="productStatus">
+                                        Product Status
+                                        <span>*</span>
+                                    </label>
+
+                                    <select
+                                        id="productStatus"
+                                        name="productStatus"
+                                        required
+                                    >
+
+                                        <option value="in-stock">
+                                            In Stock
+                                        </option>
+
+                                        <option value="out-of-stock">
+                                            Out of Stock
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- STOCK -->
+                                <div class="form-group">
+
+                                    <label for="productStock">
+                                        Stock Quantity
+                                        <span>*</span>
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="productStock"
+                                        name="productStock"
+                                        min="0"
+                                        value="1"
+                                        placeholder="10"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             PRODUCT OPTIONS
+                        ================================== -->
+
+                        <section class="form-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    06
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Product Options
+                                    </h3>
+
+                                    <p>
+                                        Add options such as length,
+                                        texture or size.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="optionsContainer"
+                                class="options-container"
+                            >
+
+
+                                <!-- DEFAULT OPTION -->
+                                <div class="product-option">
+
+                                    <div class="option-fields">
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Option Name
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="option-name"
+                                                placeholder="e.g. Length"
+                                            >
+
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            <label>
+                                                Option Values
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                class="option-values"
+                                                placeholder="e.g. 16, 18, 20, 22"
+                                            >
+
+                                            <small>
+                                                Separate values with commas.
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <button
+                                        type="button"
+                                        class="remove-option"
+                                    >
+
+                                        <i class="fa-solid fa-trash"></i>
+
+                                        Remove
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ADD OPTION -->
+                            <button
+                                type="button"
+                                id="addOptionBtn"
+                                class="add-option-btn"
+                            >
+
+                                <i class="fa-solid fa-plus"></i>
+
+                                Add Another Option
+
+                            </button>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             FEATURED PRODUCT
+                        ================================== -->
+
+                        <section class="form-section">
+
+                            <div class="form-section-header">
+
+                                <div class="form-section-number">
+                                    07
+                                </div>
+
+                                <div>
+
+                                    <h3>
+                                        Homepage Visibility
+                                    </h3>
+
+                                    <p>
+                                        Choose whether this product
+                                        should be featured.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <label
+                                class="featured-toggle"
+                                for="productFeatured"
+                            >
+
+                                <div class="featured-toggle-text">
+
+                                    <strong>
+                                        Feature this product
+                                    </strong>
+
+                                    <span>
+                                        Featured products can appear
+                                        in the homepage collection.
+                                    </span>
+
+                                </div>
+
+
+                                <input
+                                    type="checkbox"
+                                    id="productFeatured"
+                                    name="productFeatured"
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                            </label>
+
+                        </section>
+
+
+
+                        <!-- =================================
+                             SAVE AREA
+                        ================================== -->
+
+                        <section class="product-save-section">
+
+                            <div class="save-info">
+
+                                <i class="fa-solid fa-shield-halved"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Ready to publish?
+                                    </strong>
+
+                                    <p>
+                                        Your images and video will be
+                                        uploaded before the product
+                                        is saved.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="save-actions">
+
+                                <a
+                                    href="products.html"
+                                    class="cancel-product-btn"
+                                >
+                                    Cancel
+                                </a>
+
+
+                                <button
+                                    type="submit"
+                                    class="save-product-btn"
+                                    id="saveProductBtn"
+                                >
+
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                                    Save Product
+
+                                </button>
+
+                            </div>
+
+                        </section>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =========================================
+         MOBILE SIDEBAR OVERLAY
+    ========================================== -->
+
+    <div
+        class="admin-sidebar-overlay"
+        id="adminSidebarOverlay"
+    ></div>
+
+
+
+    <!-- =========================================
+         SCRIPTS
+    ========================================== -->
+
+    <!-- ADMIN AUTH -->
+    <script
+        type="module"
+        src="../js/admin-auth.js"
+    ></script>
+
+
+    <!-- ADD PRODUCT -->
+    <script
+        type="module"
+        src="../js/add-product.js"
+    ></script>
+
+
+    <!-- =========================================
+         MOBILE MENU
+    ========================================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const menuToggle =
+                document.getElementById("adminMenuToggle");
+
+            const sidebar =
+                document.querySelector(".admin-sidebar");
+
+            const overlay =
+                document.getElementById("adminSidebarOverlay");
+
+
+            function openSidebar() {
+
+                if (!sidebar) return;
+
+                sidebar.classList.add("active");
+
+                if (overlay) {
+                    overlay.classList.add("active");
+                }
+
+                if (menuToggle) {
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+                }
+
+            }
+
+
+            function closeSidebar() {
+
+                if (!sidebar) return;
+
+                sidebar.classList.remove("active");
+
+                if (overlay) {
+                    overlay.classList.remove("active");
+                }
+
+                if (menuToggle) {
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                }
+
+            }
+
+
+            if (menuToggle) {
+
+                menuToggle.addEventListener(
+                    "click",
+                    () => {
+
+                        if (
+                            sidebar &&
+                            sidebar.classList.contains("active")
+                        ) {
+
+                            closeSidebar();
+
+                        } else {
+
+                            openSidebar();
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            if (overlay) {
+
+                overlay.addEventListener(
+                    "click",
+                    closeSidebar
+                );
+
+            }
+
+
+            if (sidebar) {
+
+                sidebar
+                    .querySelectorAll("a")
+                    .forEach(link => {
+
+                        link.addEventListener(
+                            "click",
+                            closeSidebar
+                        );
+
+                    });
+
+            }
+
+
+            /*
+             * Settings is not active yet.
+             * Prevent the placeholder link from jumping.
+             */
+
+            const settingsLink =
+                document.getElementById("settingsLink");
+
+            if (settingsLink) {
+
+                settingsLink.addEventListener(
+                    "click",
+                    event => {
+
+                        event.preventDefault();
+
+                    }
+                );
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Sunshine's Luxury Hair</title>
+
+    <!-- Main Admin CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="css/admin-responsive.css">
+</head>
+
+<body class="admin-login-page">
+
+    <main class="login-container">
+
+        <section class="login-card">
+
+            <!-- Logo -->
+            <div class="login-logo">
+                <img 
+                    src="/assets/logos/logo-dark.png" 
+                    alt="Sunshine's Luxury Hair"
+                >
+            </div>
+
+            <div class="login-heading">
+                <p class="section-label">ADMINISTRATION</p>
+                <h1>Welcome Back</h1>
+                <p>Sign in to manage your store.</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="adminLoginForm">
+
+                <div class="form-group">
+                    <label for="adminEmail">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        name="email"
+                        placeholder="Enter admin email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="login-options">
+
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberAdmin">
+                        <span>Remember me</span>
+                    </label>
+
+                    <a href="#" id="forgotPassword">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+                <button type="submit" class="admin-login-btn">
+                    Sign In
+                </button>
+
+                <p id="loginMessage" class="login-message"></p>
+
+            </form>
+
+            <div class="login-footer">
+                <a href="../index.html">
+                    ← Back to Store
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Admin Authentication JS -->
+     <script type="module" src="../js/admin-auth.js"></script>
+<script type="module" src="../js/add-product.js"></script>
+    
+
+</body>
+</html>

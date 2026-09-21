@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Sunshine's Luxury Hair — Premium luxury hair designed for confidence, beauty and style."
+    >
+
+    <title>Sunshine's Luxury Hair | Home</title>
+
+
+    <!-- =====================================================
+         FONTS
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+
+    <!-- =====================================================
+         GLOBAL CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css"
+    >
+
+
+    <!-- =====================================================
+         HOMEPAGE CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/home.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/home-responsive.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="site-header">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="logo-link"
+        >
+
+            <img
+                src="assets/logos/logo-light.png"
+                alt="Sunshine's Luxury Hair"
+                class="brand-logo"
+                id="brandLogo"
+            >
+
+        </a>
+
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav
+            class="main-navigation"
+            id="mainNavigation"
+        >
+
+            <a
+                href="index.html"
+                class="active"
+            >
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+
+        <!-- HEADER ACTIONS -->
+
+        <div class="header-actions">
+
+
+            <!-- THEME TOGGLE -->
+
+            <button
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle dark mode"
+            >
+                ☾
+            </button>
+
+
+
+            <!-- CART -->
+
+            <a
+                href="cart.html"
+                class="cart-link"
+            >
+
+                Cart
+
+                <span
+                    class="cart-count"
+                    id="cartCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             HERO SECTION
+        ================================================== -->
+
+        <section class="hero-section">
+
+
+            <div class="hero-container">
+
+
+                <!-- HERO CONTENT -->
+
+                <div class="hero-content">
+
+
+                    <p class="hero-label">
+                        SUNSHINE'S LUXURY HAIR
+                    </p>
+
+
+
+                    <h1 class="hero-title">
+
+                        BE BOLD.<br>
+
+                        BE BEAUTIFUL.<br>
+
+                        <span>BE YOU.</span>
+
+                    </h1>
+
+
+
+                    <p class="hero-description">
+
+                        Discover premium luxury hair designed
+                        to elevate your beauty, confidence
+                        and personal style.
+
+                    </p>
+
+
+
+                    <!-- HERO BUTTONS -->
+
+                    <div class="hero-buttons">
+
+
+                        <a
+                            href="shop.html"
+                            class="primary-button"
+                        >
+                            Shop Collection
+                        </a>
+
+
+
+                        <a
+                            href="https://wa.me/237XXXXXXXXX"
+                            class="secondary-button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Order on WhatsApp
+                        </a>
+
+
+                    </div>
+
+
+
+                    <!-- DECORATIVE BORDER -->
+
+                    <div class="hero-decoration"></div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+        <!-- =================================================
+             FEATURED COLLECTION
+        ================================================== -->
+
+        <section class="featured-section section-padding">
+
+
+            <div class="container">
+
+
+                <!-- SECTION HEADING -->
+
+                <div class="section-heading centered">
+
+
+                    <p class="section-label">
+                        SHOP THE LOOK
+                    </p>
+
+
+
+                    <h2 class="section-title">
+                        Featured Collection
+                    </h2>
+
+
+
+                    <p class="section-subtitle">
+
+                        Discover our latest luxury hair collection.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- PRODUCTS FROM FIRESTORE -->
+
+                <div
+                    class="featured-grid"
+                    id="featuredGrid"
+                >
+
+                    <!--
+                        Products are loaded automatically
+                        from Firestore by home.js.
+                    -->
+
+                </div>
+
+
+
+                <!-- VIEW ALL PRODUCTS -->
+
+                <div class="featured-action">
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =====================================================
+     LATEST VIDEOS
+===================================================== -->
+
+<section class="latest-videos-section section-padding">
+
+    <div class="container">
+
+        <div class="section-heading centered">
+
+            <p class="section-label">
+                WATCH & DISCOVER
+            </p>
+
+            <h2 class="section-title">
+                Our Latest Videos
+            </h2>
+
+            <span class="section-divider"></span>
+
+            <p class="section-subtitle">
+                Get styling tips, hair care advice, and see our
+                luxury hair in action.
+            </p>
+
+        </div>
+
+
+        <!-- Videos loaded from Firestore -->
+
+        <div
+            class="latest-videos-grid"
+            id="latestVideosGrid"
+        >
+
+            <!-- home.js will load videos here -->
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     SHOP BY CATEGORY
+===================================================== -->
+
+<section class="categories-section section-padding">
+
+    <div class="container">
+
+        <div class="section-heading centered">
+
+            <p class="section-label">
+                SHOP BY CATEGORY
+            </p>
+
+            <h2 class="section-title">
+                Find Your Perfect Style
+            </h2>
+
+            <span class="section-divider"></span>
+
+            <p class="section-subtitle">
+                Explore our premium hair collections and find
+                the perfect match for your look.
+            </p>
+
+        </div>
+
+
+        <div class="categories-grid">
+
+            <!-- WIGS -->
+
+            <a
+                href="shop.html?category=wigs"
+                class="category-card category-wigs"
+            >
+
+                <div class="category-overlay"></div>
+
+                <div class="category-content">
+
+                    <span class="category-number">
+                        01
+                    </span>
+
+                    <h3>
+                        Wigs
+                    </h3>
+
+                    <p>
+                        Browse all wigs
+                    </p>
+
+                    <span class="category-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- BUNDLES -->
+
+            <a
+                href="shop.html?category=bundles"
+                class="category-card category-bundles"
+            >
+
+                <div class="category-overlay"></div>
+
+                <div class="category-content">
+
+                    <span class="category-number">
+                        02
+                    </span>
+
+                    <h3>
+                        Bundles
+                    </h3>
+
+                    <p>
+                        Premium hair bundles
+                    </p>
+
+                    <span class="category-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- CLOSURES -->
+
+            <a
+                href="shop.html?category=closures"
+                class="category-card category-closures"
+            >
+
+                <div class="category-overlay"></div>
+
+                <div class="category-content">
+
+                    <span class="category-number">
+                        03
+                    </span>
+
+                    <h3>
+                        Closures
+                    </h3>
+
+                    <p>
+                        Flawless finishing
+                    </p>
+
+                    <span class="category-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- FRONTALS -->
+
+            <a
+                href="shop.html?category=frontals"
+                class="category-card category-frontals"
+            >
+
+                <div class="category-overlay"></div>
+
+                <div class="category-content">
+
+                    <span class="category-number">
+                        04
+                    </span>
+
+                    <h3>
+                        Frontals
+                    </h3>
+
+                    <p>
+                        Natural-looking finish
+                    </p>
+
+                    <span class="category-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <div class="categories-action">
+
+            <a
+                href="shop.html"
+                class="primary-button"
+            >
+                Explore All Hair
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+    <!-- =====================================================
+     WHY CHOOSE US
+===================================================== -->
+<section class="why-choose-section" id="why-choose">
+    <div class="why-choose-container">
+
+        <div class="section-heading why-heading">
+            <span class="section-label">WHY CHOOSE US?</span>
+
+            <h2>Your Beauty, Our Priority</h2>
+
+            <span class="section-divider"></span>
+
+            <p>
+                We are committed to providing you with the highest quality hair,
+                exceptional service and a seamless shopping experience.
+            </p>
+        </div>
+
+
+        <div class="why-choose-grid">
+
+            <!-- Premium Quality -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="fa-regular fa-gem"></i>
+                </div>
+
+                <h3>Premium Quality</h3>
+
+                <p>
+                    Carefully selected luxury wigs made with quality materials.
+                </p>
+
+            </div>
+
+
+            <!-- Fast Delivery -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="fa-solid fa-truck"></i>
+                </div>
+
+                <h3>Fast Delivery</h3>
+
+                <p>
+                    Nationwide delivery with safe packaging.
+                </p>
+
+            </div>
+
+
+            <!-- Customer Support -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+
+                <h3>24/7 Support</h3>
+
+                <p>
+                    Friendly customer support before and after every purchase.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+        <!-- =================================================
+             WHY SUNSHINE'S
+        ================================================== -->
+
+        <section class="why-section section-padding">
+
+
+            <div class="container">
+
+
+                <div class="why-layout">
+
+                   <!-- FEATURES -->
+
+                    <div class="why-features">
+
+
+                        <!-- FEATURE 01 -->
+
+                        <div class="feature-item">
+
+
+                            <span class="feature-number">
+                                01
+                            </span>
+
+
+
+                            <div>
+
+
+                                <h3>
+                                    Premium Quality
+                                </h3>
+
+
+
+                                <p>
+
+                                    Carefully selected luxury
+                                    hair for a beautiful finish.
+
+                                </p>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- FEATURE 02 -->
+
+                        <div class="feature-item">
+
+
+                            <span class="feature-number">
+                                02
+                            </span>
+
+
+
+                            <div>
+
+
+                                <h3>
+                                    Elegant Style
+                                </h3>
+
+
+
+                                <p>
+
+                                    Timeless styles designed
+                                    for confidence and beauty.
+
+                                </p>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- FEATURE 03 -->
+
+                        <div class="feature-item">
+
+
+                            <span class="feature-number">
+                                03
+                            </span>
+
+
+
+                            <div>
+
+
+                                <h3>
+                                    Personal Service
+                                </h3>
+
+
+
+                                <p>
+
+                                    We're here to help you
+                                    choose the perfect look.
+
+                                </p>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                
+                </div>
+
+
+
+
+            </div>
+
+
+                        <a
+                            href="about.html"
+                            class="primary-button"
+                        >
+                            Discover More
+                        </a>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             BRAND CTA
+        ================================================== -->
+
+        <section class="brand-cta">
+
+
+            <div class="brand-cta-inner">
+
+
+                <p class="section-label">
+
+                    YOUR BEAUTY. YOUR CONFIDENCE.
+
+                </p>
+
+
+
+                <h2>
+
+                    BE BOLD.<br>
+
+                    BE BEAUTIFUL.<br>
+
+                    <span>BE YOU.</span>
+
+                </h2>
+
+
+
+                <a
+                    href="shop.html"
+                    class="primary-button"
+                >
+                    Shop Now
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+
+        <div class="footer-inner">
+
+
+            <!-- FOOTER BRAND -->
+
+            <div class="footer-brand">
+
+
+                <img
+                    src="assets/logos/logo-light.png"
+                    alt="Sunshine's Luxury Hair"
+                >
+
+
+
+                <p>
+
+                    Premium luxury hair for
+                    every beautiful version of you.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-links">
+
+
+                <h3>
+                    Quick Links
+                </h3>
+
+
+
+                <a href="index.html">
+                    Home
+                </a>
+
+
+
+                <a href="shop.html">
+                    Shop
+                </a>
+
+
+
+                <a href="about.html">
+                    About
+                </a>
+
+
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+
+            </div>
+
+
+
+            <!-- SHOP -->
+
+            <div class="footer-links">
+
+
+                <h3>
+                    Shop
+                </h3>
+
+
+
+                <a href="shop.html?category=wigs">
+                    Wigs
+                </a>
+
+
+
+                <a href="shop.html?category=bundles">
+                    Bundles
+                </a>
+
+
+
+                <a href="shop.html?category=closures">
+                    Closures
+                </a>
+
+
+
+                <a href="shop.html?category=frontals">
+                    Frontals
+                </a>
+
+
+            </div>
+
+
+
+            <!-- CONTACT -->
+
+            <div class="footer-contact">
+
+
+                <h3>
+                    Contact
+                </h3>
+
+
+
+                <p>
+                    WhatsApp
+                </p>
+
+
+
+                <p>
+                    Available for orders
+                </p>
+
+
+
+                <a
+                    href="https://wa.me/237XXXXXXXXX"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Chat With Us →
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+
+            <p>
+
+                © 2026 Sunshine's Luxury Hair.
+                All rights reserved.
+
+            </p>
+
+
+        </div>
+
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         BACK TO TOP
+    ====================================================== -->
+
+    <button
+        class="back-to-top"
+        id="backToTop"
+        type="button"
+        aria-label="Back to top"
+    >
+        ↑
+    </button>
+
+
+
+    <!-- =====================================================
+         WHATSAPP FLOATING BUTTON
+    ====================================================== -->
+
+    <a
+        href="https://wa.me/237XXXXXXXXX?text=Hello%20Sunshine's%20Luxury%20Hair,%20I%20would%20like%20to%20make%20an%20order."
+        class="whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with us on WhatsApp"
+    >
+
+        <i class="fa-brands fa-whatsapp"></i>
+
+    </a>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="js/app.js"></script>
+
+
+
+    <script
+        type="module"
+        src="js/home.js"
+    ></script>
+
+
+
+    <!-- =====================================================
+         BACK TO TOP SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        const backToTop =
+            document.getElementById("backToTop");
+
+
+        if (backToTop) {
+
+
+            window.addEventListener("scroll", () => {
+
+
+                if (window.scrollY > 400) {
+
+                    backToTop.classList.add("show");
+
+                } else {
+
+                    backToTop.classList.remove("show");
+
+                }
+
+
+            });
+
+
+
+            backToTop.addEventListener("click", () => {
+
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+
+            });
+
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

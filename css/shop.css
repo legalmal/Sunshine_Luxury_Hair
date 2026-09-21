@@ -1,0 +1,634 @@
+/* =========================================================
+   SUNSHINE'S LUXURY HAIR
+   SHOP PAGE — PREMIUM UI
+   ========================================================= */
+
+/* ---------- HERO ---------- */
+
+.shop-hero {
+    padding: 120px 0 95px;
+    background: var(--white-soft);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.shop-hero .container {
+    max-width: 1400px;
+}
+
+.shop-hero h1 {
+    max-width: 850px;
+    margin: 18px 0 22px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(48px, 7vw, 86px);
+    font-weight: 400;
+    line-height: .98;
+    letter-spacing: -3px;
+}
+
+.shop-hero p:last-child {
+    max-width: 620px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+
+/* ---------- SHOP SECTION ---------- */
+
+.shop-section {
+    padding: 75px 0 120px;
+}
+
+
+/* ---------- TOOLBAR ---------- */
+
+.shop-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 280px auto;
+    align-items: center;
+    gap: 25px;
+
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+
+/* ---------- FILTERS ---------- */
+
+.category-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-button {
+    min-height: 42px;
+    padding: 0 17px;
+
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+
+    cursor: pointer;
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+}
+
+.filter-button:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.filter-button.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #000;
+}
+
+
+/* ---------- SEARCH ---------- */
+
+.shop-search {
+    position: relative;
+}
+
+.shop-search input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 17px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+
+    background: transparent;
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+    transition: border-color .25s ease;
+}
+
+.shop-search input::placeholder {
+    color: var(--text-secondary);
+}
+
+.shop-search input:focus {
+    border-color: var(--gold);
+}
+
+
+/* ---------- SORT ---------- */
+
+.shop-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.shop-sort label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.shop-sort select {
+    min-width: 165px;
+    height: 46px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+
+    background: transparent;
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 12px;
+
+    outline: none;
+    cursor: pointer;
+}
+
+.shop-sort select:focus {
+    border-color: var(--gold);
+}
+
+
+/* ---------- RESULT INFO ---------- */
+
+.shop-result-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 28px 0;
+}
+
+.shop-result-info p {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+
+/* ---------- PRODUCT GRID ---------- */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 65px 25px;
+}
+
+
+/* ---------- PRODUCT CARD ---------- */
+
+.product-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.product-image-container {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 4 / 5;
+
+    overflow: hidden;
+
+    background: var(--white-soft);
+}
+
+.product-card-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.product-card:hover .product-card-image {
+    transform: scale(1.055);
+}
+
+
+/* ---------- CARD OVERLAY ---------- */
+
+.product-image-container::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.32),
+        transparent 40%
+    );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity .35s ease;
+}
+
+.product-card:hover .product-image-container::after {
+    opacity: 1;
+}
+
+
+/* ---------- BADGE ---------- */
+
+.product-card-badge {
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    z-index: 5;
+
+    padding: 8px 12px;
+
+    background: var(--gold);
+    color: #000;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+
+/* ---------- QUICK VIEW ---------- */
+
+.quick-view-button {
+    position: absolute;
+
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+
+    z-index: 6;
+
+    min-height: 48px;
+
+    border: 1px solid rgba(255,255,255,.8);
+
+    background: rgba(0,0,0,.78);
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    transform: translateY(12px);
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease,
+        background-color .3s ease;
+}
+
+.product-card:hover .quick-view-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quick-view-button:hover {
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
+}
+
+
+/* ---------- PRODUCT INFORMATION ---------- */
+
+.product-card-info {
+    padding-top: 18px;
+}
+
+.product-card-category {
+    margin-bottom: 7px;
+
+    color: var(--gold);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 1.7px;
+}
+
+.product-card-name {
+    margin: 0 0 8px;
+
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+
+    color: var(--text-primary);
+}
+
+.product-card-price {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    color: var(--text-primary);
+}
+
+
+/* ---------- IMAGE MISSING ---------- */
+
+.image-missing {
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #333,
+            #090909
+        );
+}
+
+.image-missing .product-card-image {
+    display: none;
+}
+
+.missing-image {
+    position: absolute;
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+    gap: 8px;
+
+    color: #fff;
+}
+
+.image-missing .missing-image {
+    display: flex;
+}
+
+.missing-image span {
+    color: var(--gold);
+
+    font-size: 9px;
+    letter-spacing: 4px;
+}
+
+.missing-image strong {
+    font-family: "Playfair Display", serif;
+
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+
+/* ---------- EMPTY STATE ---------- */
+
+.empty-products {
+    padding: 120px 20px;
+
+    text-align: center;
+}
+
+.empty-products span {
+    display: block;
+
+    margin-bottom: 20px;
+
+    color: var(--gold);
+    font-size: 25px;
+}
+
+.empty-products h2 {
+    margin-bottom: 12px;
+
+    font-family: "Playfair Display", serif;
+    font-size: 42px;
+    font-weight: 400;
+}
+
+.empty-products p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+
+/* ---------- LOADING ---------- */
+
+.products-loading {
+    grid-column: 1 / -1;
+
+    padding: 100px 20px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+    font-size: 12px;
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   QUICK VIEW MODAL
+   ========================================================= */
+
+.quick-view-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 2000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-view-modal.active {
+    display: flex;
+}
+
+.quick-view-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0,0,0,.82);
+    backdrop-filter: blur(6px);
+}
+
+.quick-view-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(650px, 90vw);
+    height: min(760px, 88vh);
+
+    overflow: hidden;
+
+    background: var(--background);
+
+    box-shadow: 0 30px 100px rgba(0,0,0,.4);
+}
+
+.quick-view-image {
+    width: 100%;
+    height: 100%;
+}
+
+.quick-view-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+.quick-view-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    z-index: 5;
+
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 50%;
+
+    background: rgba(0,0,0,.65);
+    color: #fff;
+
+    font-size: 26px;
+    font-weight: 300;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
+
+.quick-view-close:hover {
+    background: var(--gold);
+    color: #000;
+}
+
+
+/* ---------- DARK THEME ---------- */
+
+.dark-theme .shop-hero {
+    background: #111;
+}
+
+.dark-theme .product-image-container {
+    background: #151515;
+}
+
+.dark-theme .shop-search input,
+.dark-theme .shop-sort select {
+    background: #111;
+}
+
+
+/* =====================================================
+   FLOATING WHATSAPP
+===================================================== */
+
+.whatsapp-float {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #25D366;
+    color: #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 28px;
+
+    text-decoration: none;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .whatsapp-float {
+        right: 18px;
+        bottom: 18px;
+
+        width: 54px;
+        height: 54px;
+
+        font-size: 25px;
+    }
+
+}

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Sunshine's Luxury Hair</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/dashboard-responsive.css">
+</head>
+
+<body class="admin-dashboard-page">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar" id="adminSidebar">
+
+        <div class="admin-brand">
+            <img
+                src="../assets/logos/logo-dark.png"
+                alt="Sunshine's Luxury Hair"
+            >
+        </div>
+
+        <nav class="admin-navigation">
+
+            <a href="dashboard.html" class="admin-nav-link active">
+                <span>⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="products.html" class="admin-nav-link">
+                <span>▣</span>
+                <span>Products</span>
+            </a>
+
+            <a href="add-product.html" class="admin-nav-link">
+                <span>＋</span>
+                <span>Add Product</span>
+            </a>
+
+            <a href="orders.html" class="admin-nav-link">
+                <span>▤</span>
+                <span>Orders</span>
+            </a>
+
+            <a href="#" class="admin-nav-link">
+                <span>⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <button class="admin-logout" id="logoutBtn">
+            <span>↪</span>
+            Logout
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+        <!-- TOP BAR -->
+        <header class="admin-topbar">
+
+            <button
+                class="admin-menu-toggle"
+                id="adminMenuToggle"
+                aria-label="Open menu"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
+
+            <div class="admin-page-title">
+                <p>ADMINISTRATION</p>
+                <h1>Dashboard</h1>
+            </div>
+
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    A
+                </div>
+
+                <div>
+                    <strong>Administrator</strong>
+                    <small>Store Manager</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD CONTENT -->
+        <section class="admin-content">
+
+            <!-- WELCOME -->
+            <div class="dashboard-welcome">
+
+                <div>
+                    <p class="section-label">
+                        SUNSHINE'S LUXURY HAIR
+                    </p>
+
+                    <h2>Welcome back, Admin</h2>
+
+                    <p>
+                        Manage your products, orders, inventory
+                        and store from your dashboard.
+                    </p>
+                </div>
+
+                <div class="dashboard-actions">
+
+                    <a
+                        href="orders.html"
+                        class="dashboard-action-secondary"
+                    >
+                        View Orders
+                    </a>
+
+                    <a
+                        href="add-product.html"
+                        class="add-product-btn"
+                    >
+                        + Add Product
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT STATISTICS -->
+            <div class="dashboard-section-heading">
+
+                <div>
+                    <p class="section-label">INVENTORY</p>
+                    <h2>Product Overview</h2>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-stats">
+
+                <!-- TOTAL PRODUCTS -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ▣
+                    </div>
+
+                    <div>
+                        <span>Total Products</span>
+                        <strong id="totalProducts">0</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- IN STOCK -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <span>In Stock</span>
+                        <strong id="inStockProducts">0</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- OUT OF STOCK -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ×
+                    </div>
+
+                    <div>
+                        <span>Out of Stock</span>
+                        <strong id="outOfStockProducts">0</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURED -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ★
+                    </div>
+
+                    <div>
+                        <span>Featured</span>
+                        <strong id="featuredProducts">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER STATISTICS -->
+            <div class="dashboard-section-heading dashboard-orders-heading">
+
+                <div>
+                    <p class="section-label">ORDERS</p>
+                    <h2>Order Overview</h2>
+                </div>
+
+                <a
+                    href="orders.html"
+                    class="view-all-btn"
+                >
+                    View All Orders
+                </a>
+
+            </div>
+
+
+            <div class="dashboard-stats order-stats">
+
+                <!-- TOTAL ORDERS -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ▤
+                    </div>
+
+                    <div>
+                        <span>Total Orders</span>
+                        <strong id="totalOrders">0</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- PENDING -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ◷
+                    </div>
+
+                    <div>
+                        <span>Pending Orders</span>
+                        <strong id="pendingOrders">0</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- COMPLETED -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <span>Completed Orders</span>
+                        <strong id="completedOrders">0</strong>
+                    </div>
+
+                </div>
+
+
+                <!-- TOTAL VALUE -->
+                <div class="stat-card stat-card-wide">
+
+                    <div class="stat-icon">
+                        ₦
+                    </div>
+
+                    <div>
+                        <span>Total Order Value</span>
+                        <strong id="totalOrderValue">
+                            ₦0
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT ORDERS -->
+            <section class="dashboard-section">
+
+                <div class="dashboard-section-header">
+
+                    <div>
+                        <p class="section-label">
+                            CUSTOMER ACTIVITY
+                        </p>
+
+                        <h2>Recent Orders</h2>
+                    </div>
+
+                    <a
+                        href="orders.html"
+                        class="view-all-btn"
+                    >
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div
+                    class="recent-orders"
+                    id="recentOrders"
+                >
+
+                    <div class="dashboard-loading">
+                        Loading orders...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RECENT PRODUCTS -->
+            <section class="dashboard-section">
+
+                <div class="dashboard-section-header">
+
+                    <div>
+                        <p class="section-label">
+                            STORE INVENTORY
+                        </p>
+
+                        <h2>Recent Products</h2>
+                    </div>
+
+                    <a
+                        href="products.html"
+                        class="view-all-btn"
+                    >
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div
+                    class="recent-products"
+                    id="recentProducts"
+                >
+
+                    <div class="dashboard-loading">
+                        Loading products...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+    <!-- MOBILE OVERLAY -->
+    <div
+        class="admin-overlay"
+        id="adminOverlay"
+    ></div>
+
+
+    <!-- JAVASCRIPT -->
+    <script
+        type="module"
+        src="../js/admin-auth.js"
+    ></script>
+
+    <script
+        type="module"
+        src="../js/admin-dashboard.js"
+    ></script>
+
+</body>
+</html>

@@ -1,0 +1,687 @@
+/* =========================================================
+   CHECKOUT PAGE
+========================================================= */
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.checkout-page-header {
+
+    padding: 80px 0 60px;
+
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.checkout-page-header .container {
+
+    text-align: center;
+
+}
+
+
+.checkout-page-header h1 {
+
+    margin: 15px 0;
+
+    font-size: clamp(45px, 6vw, 75px);
+
+    font-weight: 400;
+
+    letter-spacing: -2px;
+
+}
+
+
+.checkout-page-header p:last-child {
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+}
+
+
+
+/* =========================================================
+   CHECKOUT SECTION
+========================================================= */
+
+.checkout-section {
+
+    padding: 70px 0 110px;
+
+}
+
+
+.checkout-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        390px;
+
+    gap: 70px;
+
+    align-items: start;
+
+}
+
+
+
+/* =========================================================
+   HEADINGS
+========================================================= */
+
+.checkout-heading,
+.summary-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 30px;
+
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.checkout-heading span,
+.summary-heading span {
+
+    color: var(--gold);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.checkout-heading h2,
+.summary-heading h2 {
+
+    margin: 0;
+
+    font-size: 20px;
+
+    font-weight: 500;
+
+}
+
+
+.delivery-heading {
+
+    margin-top: 50px;
+
+}
+
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.checkout-form-area {
+
+    max-width: 700px;
+
+}
+
+
+.form-group {
+
+    margin-bottom: 25px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.2px;
+
+}
+
+
+.form-group label > span {
+
+    color: var(--gold);
+
+}
+
+
+.form-group label small {
+
+    margin-left: 6px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+
+    font-weight: 400;
+
+    text-transform: none;
+
+    letter-spacing: 0;
+
+}
+
+
+.form-group input,
+.form-group textarea {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: 1px solid var(--border-color);
+
+    outline: none;
+
+    background: transparent;
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition: border-color var(--transition);
+
+}
+
+
+.form-group input {
+
+    height: 52px;
+
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 110px;
+
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: var(--gold);
+
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+    color: var(--text-secondary);
+
+}
+
+
+.form-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+}
+
+
+
+/* =========================================================
+   FORM ERROR
+========================================================= */
+
+.form-error {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #b00020;
+
+    font-size: 10px;
+
+}
+
+
+.input-error {
+
+    border-color: #b00020 !important;
+
+}
+
+
+
+/* =========================================================
+   WHATSAPP INFO
+========================================================= */
+
+.whatsapp-info {
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    margin-top: 35px;
+
+    border: 1px solid var(--border-color);
+
+}
+
+
+.whatsapp-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid var(--gold);
+
+    border-radius: 50%;
+
+    color: var(--gold);
+
+}
+
+
+.whatsapp-info h3 {
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.whatsapp-info p {
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+}
+
+
+
+/* =========================================================
+   PLACE ORDER
+========================================================= */
+
+.place-order-button {
+
+    width: 100%;
+
+    min-height: 58px;
+
+    margin-top: 20px;
+
+    background: var(--gold);
+
+    color: #000;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    transition: all var(--transition);
+
+}
+
+
+.place-order-button:hover {
+
+    background: transparent;
+
+    color: var(--gold);
+
+    border: 1px solid var(--gold);
+
+}
+
+
+
+/* =========================================================
+   ORDER SUMMARY
+========================================================= */
+
+.checkout-summary {
+
+    position: sticky;
+
+    top: 110px;
+
+    padding: 30px;
+
+    border: 1px solid var(--border-color);
+
+}
+
+
+.summary-heading {
+
+    margin-bottom: 20px;
+
+}
+
+
+
+/* =========================================================
+   CHECKOUT ITEM
+========================================================= */
+
+.checkout-item {
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.checkout-item-image {
+
+    position: relative;
+
+    width: 75px;
+
+    height: 90px;
+
+    flex-shrink: 0;
+
+    background: var(--white-soft);
+
+}
+
+
+.checkout-item-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.checkout-item-quantity {
+
+    position: absolute;
+
+    top: -7px;
+
+    right: -7px;
+
+    width: 22px;
+
+    height: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--gold);
+
+    color: #000;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+}
+
+
+.checkout-item-info {
+
+    min-width: 0;
+
+}
+
+
+.checkout-item-info h3 {
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+}
+
+
+.checkout-item-options {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    margin-bottom: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+
+}
+
+
+.checkout-item-info p {
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+}
+
+
+
+/* =========================================================
+   SUMMARY DETAILS
+========================================================= */
+
+.checkout-summary-details {
+
+    padding-top: 20px;
+
+}
+
+
+.checkout-summary-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+}
+
+
+.checkout-summary-row strong {
+
+    color: var(--text-primary);
+
+    font-weight: 500;
+
+}
+
+
+.checkout-summary-divider {
+
+    height: 1px;
+
+    margin: 22px 0;
+
+    background: var(--border-color);
+
+}
+
+
+.checkout-total {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.checkout-total span {
+
+    font-size: 14px;
+
+}
+
+
+.checkout-total strong {
+
+    font-size: 18px;
+
+}
+
+
+.edit-cart {
+
+    display: inline-block;
+
+    margin-top: 25px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+
+.edit-cart:hover {
+
+    color: var(--gold);
+
+}
+
+
+
+/* =========================================================
+   EMPTY CHECKOUT
+========================================================= */
+
+.checkout-empty {
+
+    padding: 120px 0;
+
+    text-align: center;
+
+}
+
+
+.checkout-empty h2 {
+
+    margin: 15px 0;
+
+    font-size: 35px;
+
+    font-weight: 400;
+
+}
+
+
+.checkout-empty p:not(.section-label) {
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+}
+
+
+.back-to-shop {
+
+    display: inline-flex;
+
+    margin-top: 25px;
+
+    padding: 15px 25px;
+
+    background: var(--gold);
+
+    color: #000;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}

@@ -1,0 +1,106 @@
+/* =========================================
+   EDIT PRODUCT RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .edit-product-page {
+        padding: 20px 15px;
+    }
+
+
+    .form-section {
+        padding: 20px;
+    }
+
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .form-group-full {
+        grid-column: auto;
+    }
+
+
+    .option-fields {
+        grid-template-columns: 1fr;
+    }
+
+
+    .image-preview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
+    .preview-image {
+        height: 140px;
+    }
+
+
+    .featured-setting {
+        align-items: flex-start;
+    }
+
+
+    .form-actions {
+        justify-content: stretch;
+    }
+
+
+    .cancel-btn,
+    .save-product-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .edit-product-page {
+        padding: 15px 10px;
+    }
+
+
+    .form-section {
+        padding: 16px;
+    }
+
+
+    .form-section-header h2 {
+        font-size: 17px;
+    }
+
+
+    .image-preview {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+
+    .preview-image {
+        height: 120px;
+    }
+
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+
+    .cancel-btn,
+    .save-product-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    .product-not-found {
+        margin: 40px 10px;
+        padding: 30px 20px;
+    }
+
+}

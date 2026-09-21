@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Product | Sunshine's Luxury Hair</title>
+
+    <!-- Shared Admin CSS -->
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-responsive.css"
+    >
+
+    <!-- Page-specific CSS -->
+    <link
+        rel="stylesheet"
+        href="css/edit-product.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/edit-product-responsive.css"
+    >
+</head>
+
+
+<body class="admin-body">
+
+    <div class="admin-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-sidebar-header">
+
+                <img
+                    src="../assets/logo/logo-dark.png"
+                    alt="Sunshine's Luxury Hair"
+                    class="admin-logo"
+                >
+
+            </div>
+
+
+            <nav class="admin-navigation">
+
+                <a href="dashboard.html">
+                    <span>⌂</span>
+                    Dashboard
+                </a>
+
+
+                <a
+                    href="products.html"
+                    class="active"
+                >
+                    <span>▣</span>
+                    Products
+                </a>
+
+
+                <a href="add-product.html">
+                    <span>＋</span>
+                    Add Product
+                </a>
+
+
+                <a href="#">
+                    <span>▤</span>
+                    Orders
+                    <small>Coming soon</small>
+                </a>
+
+
+                <a href="#">
+                    <span>⚙</span>
+                    Settings
+                    <small>Coming soon</small>
+                </a>
+
+            </nav>
+
+
+            <div class="admin-sidebar-bottom">
+
+                <button
+                    type="button"
+                    id="logoutBtn"
+                    class="admin-logout"
+                >
+                    <span>↪</span>
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =====================================
+             MAIN
+        ====================================== -->
+
+        <main class="admin-main">
+
+
+            <!-- TOP BAR -->
+
+            <header class="admin-topbar">
+
+                <button
+                    type="button"
+                    class="admin-menu-toggle"
+                    id="adminMenuToggle"
+                >
+                    ☰
+                </button>
+
+
+                <div>
+
+                    <h1>Edit Product</h1>
+
+                    <p>
+                        Update your product information.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =====================================
+                 PAGE
+            ====================================== -->
+
+            <section class="edit-product-page">
+
+
+                <!-- PRODUCT NOT FOUND -->
+
+                <div
+                    id="productNotFound"
+                    class="product-not-found"
+                    hidden
+                >
+
+                    <div class="not-found-icon">
+                        !
+                    </div>
+
+                    <h2>
+                        Product Not Found
+                    </h2>
+
+                    <p>
+                        The product you are trying to edit
+                        could not be found.
+                    </p>
+
+                    <a
+                        href="products.html"
+                        class="back-products-btn"
+                    >
+                        Back to Products
+                    </a>
+
+                </div>
+
+
+
+                <!-- FORM -->
+
+                <form
+                    id="editProductForm"
+                    hidden
+                >
+
+
+                    <!-- =================================
+                         BASIC INFORMATION
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Basic Information
+                            </h2>
+
+                            <p>
+                                Update the main information
+                                about this product.
+                            </p>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <!-- PRODUCT NAME -->
+
+                            <div class="form-group form-group-full">
+
+                                <label for="productName">
+                                    Product Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="productName"
+                                    required
+                                    placeholder="e.g. Body Wave Wig"
+                                >
+
+                            </div>
+
+
+
+                            <!-- PRICE -->
+
+                            <div class="form-group">
+
+                                <label for="productPrice">
+                                    Price (₦)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="productPrice"
+                                    min="0"
+                                    step="100"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="form-group">
+
+                                <label for="productCategory">
+                                    Category
+                                </label>
+
+                                <select
+                                    id="productCategory"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                    <option value="wigs">
+                                        Wigs
+                                    </option>
+
+                                    <option value="bundles">
+                                        Bundles
+                                    </option>
+
+                                    <option value="closures">
+                                        Closures
+                                    </option>
+
+                                    <option value="frontals">
+                                        Frontals
+                                    </option>
+
+                                    <option value="extensions">
+                                        Hair Extensions
+                                    </option>
+
+                                    <option value="accessories">
+                                        Accessories
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- DESCRIPTION -->
+
+                            <div class="form-group form-group-full">
+
+                                <label for="productDescription">
+                                    Description
+                                </label>
+
+                                <textarea
+                                    id="productDescription"
+                                    rows="6"
+                                    required
+                                    placeholder="Describe the product..."
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         COLORS
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Colors Available
+                            </h2>
+
+                            <p>
+                                Edit the available product colors.
+                            </p>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="productColors">
+                                Colors
+                            </label>
+
+                            <input
+                                type="text"
+                                id="productColors"
+                                placeholder="Black, Brown, Burgundy"
+                            >
+
+                            <small class="form-help">
+                                Separate colors with commas.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         INVENTORY
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Inventory
+                            </h2>
+
+                            <p>
+                                Update availability and stock.
+                            </p>
+
+                        </div>
+
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="productStatus">
+                                    Status
+                                </label>
+
+                                <select
+                                    id="productStatus"
+                                    required
+                                >
+
+                                    <option value="in-stock">
+                                        In Stock
+                                    </option>
+
+                                    <option value="out-of-stock">
+                                        Out of Stock
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="productStock">
+                                    Stock Quantity
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="productStock"
+                                    min="0"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         PRODUCT OPTIONS
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Product Options
+                            </h2>
+
+                            <p>
+                                Edit options such as length,
+                                size or texture.
+                            </p>
+
+                        </div>
+
+
+                        <div id="optionsContainer"></div>
+
+
+                        <button
+                            type="button"
+                            id="addOptionBtn"
+                            class="secondary-btn"
+                        >
+                            + Add Another Option
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         EXISTING IMAGES
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Current Product Images
+                            </h2>
+
+                            <p>
+                                The first image is the main
+                                product image.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            id="existingImages"
+                            class="image-preview"
+                        ></div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         ADD NEW IMAGES
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Add New Images
+                            </h2>
+
+                            <p>
+                                Add additional product images.
+                            </p>
+
+                        </div>
+
+
+                        <div class="upload-box">
+
+                            <input
+                                type="file"
+                                id="productImages"
+                                accept="image/*"
+                                multiple
+                                hidden
+                            >
+
+
+                            <label
+                                for="productImages"
+                                class="upload-label"
+                            >
+
+                                <span class="upload-icon">
+                                    +
+                                </span>
+
+                                <strong>
+                                    Choose New Images
+                                </strong>
+
+                                <small>
+                                    PNG, JPG, WEBP
+                                </small>
+
+                            </label>
+
+                        </div>
+
+
+                        <div
+                            id="newImagePreview"
+                            class="image-preview"
+                        ></div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         PRODUCT VIDEO
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <h2>
+                                Product Video
+                            </h2>
+
+                            <p>
+                                Replace the existing product video
+                                if needed.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            id="existingVideo"
+                            class="existing-video"
+                        ></div>
+
+
+                        <div class="upload-box">
+
+                            <input
+                                type="file"
+                                id="productVideo"
+                                accept="video/*"
+                                hidden
+                            >
+
+
+                            <label
+                                for="productVideo"
+                                class="upload-label"
+                            >
+
+                                <span class="upload-icon">
+                                    +
+                                </span>
+
+                                <strong>
+                                    Choose New Video
+                                </strong>
+
+                                <small>
+                                    MP4, MOV, WEBM
+                                </small>
+
+                            </label>
+
+                        </div>
+
+
+                        <div
+                            id="videoPreview"
+                            class="video-preview"
+                        ></div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         FEATURED
+                    ================================== -->
+
+                    <div class="form-section">
+
+                        <div class="featured-setting">
+
+                            <div>
+
+                                <h2>
+                                    Featured Product
+                                </h2>
+
+                                <p>
+                                    Show this product in featured
+                                    sections of the website.
+                                </p>
+
+                            </div>
+
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    id="productFeatured"
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         ACTIONS
+                    ================================== -->
+
+                    <div class="form-actions">
+
+                        <a
+                            href="products.html"
+                            class="cancel-btn"
+                        >
+                            Cancel
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="save-product-btn"
+                        >
+                            Save Changes
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+    <script type="module" src="../js/admin-auth.js"></script>
+<script type="module" src="../js/edit-product.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Orders | Sunshine's Luxury Hair</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+
+    <link rel="stylesheet" href="css/orders.css">
+    <link rel="stylesheet" href="css/orders-responsive.css">
+</head>
+
+<body class="admin-body">
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+
+        <div class="admin-sidebar-header">
+            <img
+                src="../assets/logo/logo-dark.png"
+                alt="Sunshine's Luxury Hair"
+                class="admin-logo"
+            >
+        </div>
+
+        <nav class="admin-navigation">
+
+            <a href="dashboard.html">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="products.html">
+                <span>▣</span>
+                Products
+            </a>
+
+            <a href="add-product.html">
+                <span>＋</span>
+                Add Product
+            </a>
+
+            <a
+                href="orders.html"
+                class="active"
+            >
+                <span>▤</span>
+                Orders
+            </a>
+
+            <a href="#">
+                <span>⚙</span>
+                Settings
+                <small>Coming soon</small>
+            </a>
+
+        </nav>
+
+        <div class="admin-sidebar-bottom">
+
+            <button
+                type="button"
+                id="logoutBtn"
+                class="admin-logout"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- TOP BAR -->
+        <header class="admin-topbar">
+
+            <button
+                type="button"
+                class="admin-menu-toggle"
+                id="adminMenuToggle"
+                aria-label="Open menu"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
+
+            <div>
+                <h1>Orders</h1>
+
+                <p>
+                    Manage customer orders and delivery information.
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- ORDERS PAGE -->
+        <section class="orders-page">
+
+            <!-- SUMMARY -->
+            <div class="orders-stats">
+
+                <div class="order-stat-card">
+                    <span>Total Orders</span>
+                    <strong id="totalOrders">0</strong>
+                </div>
+
+                <div class="order-stat-card">
+                    <span>Pending</span>
+                    <strong id="pendingOrders">0</strong>
+                </div>
+
+                <div class="order-stat-card">
+                    <span>Confirmed</span>
+                    <strong id="confirmedOrders">0</strong>
+                </div>
+
+                <div class="order-stat-card">
+                    <span>Completed</span>
+                    <strong id="completedOrders">0</strong>
+                </div>
+
+            </div>
+
+
+            <!-- TOOLBAR -->
+            <div class="orders-toolbar">
+
+                <div class="orders-search">
+
+                    <input
+                        type="search"
+                        id="orderSearch"
+                        placeholder="Search customer, phone or order ID..."
+                    >
+
+                </div>
+
+
+                <div class="orders-filter">
+
+                    <select id="orderStatusFilter">
+
+                        <option value="all">
+                            All Orders
+                        </option>
+
+                        <option value="pending">
+                            Pending
+                        </option>
+
+                        <option value="confirmed">
+                            Confirmed
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                        <option value="cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOADING -->
+            <div
+                id="ordersLoading"
+                class="orders-loading"
+            >
+                Loading orders...
+            </div>
+
+
+            <!-- EMPTY -->
+            <div
+                id="ordersEmpty"
+                class="orders-empty"
+                hidden
+            >
+
+                <div class="orders-empty-icon">
+                    ▤
+                </div>
+
+                <h2>
+                    No orders found
+                </h2>
+
+                <p>
+                    Customer orders will appear here after checkout.
+                </p>
+
+            </div>
+
+
+            <!-- ORDERS -->
+            <div
+                id="ordersContainer"
+                class="orders-container"
+            ></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script type="module" src="../js/admin-auth.js"></script>
+
+<script type="module" src="../js/admin-orders.js"></script>
+
+</body>
+</html>
