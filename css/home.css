@@ -53,13 +53,10 @@
 
     margin: 0 auto;
 
-    display: grid;
-
-    grid-template-columns: 0.9fr 1.1fr;
+    display: flex;
 
     align-items: center;
 
-    gap: 70px;
 }
 
 
@@ -71,6 +68,8 @@
     position: relative;
 
     z-index: 2;
+
+    width: min(100%, 650px);
 
     padding: 70px 0;
 }
@@ -163,7 +162,7 @@
 
     font-family: "Poppins", sans-serif;
 
-    font-size: 11px;
+    font-size: 14px;
 
     font-weight: 600;
 
@@ -172,6 +171,8 @@
     text-transform: uppercase;
 
     text-decoration: none;
+
+    border-radius: 10px;
 
     cursor: pointer;
 
@@ -200,22 +201,29 @@
 
 
 .secondary-button {
-    background: #111111;
+    background: #25D366;
 
-    border: 1px solid #111111;
+    border: 1px solid #25D366;
 
-    color: #ffffff;
+    color: #111111;
 }
 
 
 .secondary-button:hover {
-    background: var(--gold);
+    background: var(--black-soft);
 
-    border-color: var(--gold);
+    border-color: var(--black-soft);
 
-    color: #111111;
+    color: #ffffff;
 
     transform: translateY(-2px);
+}
+
+
+.why-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 
@@ -693,25 +701,29 @@
 
 .category-wigs {
     background-image:
-        url("../assets/images/categories/wigs.jpg");
+        url("../assets/images/home/IMG-20260715-WA0007.jpg");
+    background-position: 58% center;
 }
 
 
 .category-bundles {
     background-image:
-        url("../assets/images/categories/bundles.jpg");
+        url("../assets/images/home/IMG-20260715-WA0007.jpg");
+    background-position: 70% center;
 }
 
 
 .category-closures {
     background-image:
-        url("../assets/images/categories/closures.jpg");
+        url("../assets/images/home/IMG-20260715-WA0007.jpg");
+    background-position: 42% center;
 }
 
 
 .category-frontals {
     background-image:
-        url("../assets/images/categories/frontals.jpg");
+        url("../assets/images/home/IMG-20260715-WA0007.jpg");
+    background-position: 82% center;
 }
 
 
@@ -1410,6 +1422,19 @@ body.dark-mode .secondary-button {
 
     font-weight: 700;
 }
+
+/* Keep the featured collection balanced at every screen width. */
+.featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(16px, 2.5vw, 34px);
+}
+
+.home-product-card { min-width: 0; }
+.home-product-image { height: auto; aspect-ratio: 1 / 1; }
+.home-product-info { display: flex; flex-direction: column; align-items: flex-start; }
+.home-product-category { min-width: 0; max-width: 100%; margin-bottom: 14px; }
+.home-product-name { overflow-wrap: anywhere; }
+.home-product-actions { width: 100%; }
 
 
 /* BUTTON CONTAINER */

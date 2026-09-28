@@ -252,18 +252,84 @@ a {
 
 
 .cart-link {
-    font-size: 14px;
-    font-weight: 600;
+    position: relative;
 
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    width: 40px;
+    height: 40px;
 
-    transition: color var(--transition);
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border-color);
+
+    border-radius: 50%;
+
+    font-size: 17px;
+
+    color: var(--text-primary);
+
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        border-color var(--transition);
 }
 
 
 .cart-link:hover {
-    color: var(--gold);
+    background-color: var(--gold);
+
+    border-color: var(--gold);
+
+    color: #000000;
+}
+
+
+.cart-label {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+.cart-count {
+    position: absolute;
+
+    top: -7px;
+    right: -8px;
+
+    min-width: 18px;
+    height: 18px;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 0 4px;
+
+    border-radius: 50px;
+
+    background: var(--gold);
+
+    color: #000000;
+
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 
@@ -494,7 +560,7 @@ select:focus-visible {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
 
     border-radius: 50%;
 }
@@ -508,4 +574,125 @@ select:focus-visible {
     background-color: var(--text-primary);
 
     transition: all var(--transition);
+}
+
+/* =========================================
+   THEME TOGGLE — GOLD IN BOTH THEMES
+========================================= */
+
+#themeToggle {
+    background-color: #d4af37 !important;
+    color: #111111 !important;
+    border: none !important;
+
+    width: px;
+    height: px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                transform 0.2s ease;
+}
+
+/* Keep it GOLD when dark theme is active */
+body.dark-theme #themeToggle {
+    background-color: #d4af37 !important;
+    color: #111111 !important;
+}
+
+/* Hover */
+#themeToggle:hover,
+body.dark-theme #themeToggle:hover {
+    background-color: #e3c45c !important;
+    color: #111111 !important;
+}
+
+/* Click effect */
+#themeToggle:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================
+   MOBILE TOGGLE ANIMATIONS
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* -------------------------
+       MENU TOGGLE
+    ------------------------- */
+
+    #menuToggle {
+        background-color: #d4af37 !important;
+        color: #111 !important;
+        border: none !important;
+
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    #menuToggle:hover {
+        transform: scale(1.08);
+        background-color: #e3c45c !important;
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+    }
+
+    #menuToggle:active {
+        transform: scale(0.92);
+    }
+
+    /* Animate hamburger icon */
+    #menuToggle i {
+        transition: transform 0.35s ease;
+    }
+
+    #menuToggle:hover i {
+        transform: rotate(8deg);
+    }
+
+
+    /* -------------------------
+       THEME TOGGLE
+    ------------------------- */
+
+    #themeToggle {
+        background-color: #d4af37 !important;
+        color: #111 !important;
+        border: none !important;
+
+        transition:
+            transform 0.35s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    #themeToggle:hover {
+        transform: scale(1.08) rotate(8deg);
+        background-color: #e3c45c !important;
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+    }
+
+    #themeToggle:active {
+        transform: scale(0.92);
+    }
+
+    /* Animate moon/sun icon */
+    #themeToggle i {
+        transition:
+            transform 0.45s ease,
+            opacity 0.25s ease;
+    }
+
+    #themeToggle:hover i {
+        transform: rotate(25deg) scale(1.1);
+    }
+
 }

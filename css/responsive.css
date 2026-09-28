@@ -59,7 +59,10 @@
     }
 
     .cart-link {
-        font-size: 12px;
+        width: 36px;
+        height: 36px;
+
+        font-size: 15px;
     }
 
     .container {
@@ -152,6 +155,46 @@
 
     .main-navigation a {
         font-size: 13px;
+    }
+
+}
+/* =========================================
+   MOBILE HEADER LOGO
+========================================= */
+
+@media (max-width: 768px) {
+
+    #brandLogo {
+        width: 58px;
+        height: 58px;
+        object-fit: contain;
+        display: block;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE MENU + THEME TOGGLE
+   GOLD IN BOTH LIGHT & DARK THEMES
+========================================= */
+
+@media (max-width: 768px) {
+
+    .menu-toggle,
+    #themeToggle {
+        background-color: #d4af37 !important;
+        color: #111111 !important;
+    }
+
+    .menu-toggle i,
+    .theme-toggle i {
+        color: #111111 !important;
+    }
+
+    .menu-toggle:hover,
+    .theme-toggle:hover {
+        background-color:#111111 !important;
     }
 
 }

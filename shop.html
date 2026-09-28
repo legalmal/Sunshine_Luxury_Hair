@@ -17,9 +17,21 @@
 
     <title>Shop | Sunshine's Luxury Hair</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
     <!-- Global CSS -->
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/responsive.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
 
     <!-- Shop CSS -->
     <link rel="stylesheet" href="css/shop.css">
@@ -125,8 +137,15 @@
             <a
                 href="cart.html"
                 class="cart-link"
+                title="Shopping cart"
             >
-                Cart
+                <i
+                    class="fa-solid fa-cart-shopping"
+                    aria-hidden="true"
+                ></i>
+                <span class="cart-label">
+                    Shopping cart
+                </span>
                 <span
                     class="cart-count"
                     id="cartCount"
@@ -146,25 +165,100 @@
     <main>
 
 
-        <!-- ================= SHOP HERO ================= -->
+        <!-- ================= SHOP BANNER ================= -->
 
-        <section class="shop-hero">
+        <section
+            class="shop-hero"
+            aria-label="Sunshine's luxury hair collection"
+        ></section>
+
+
+        <!-- ================= SEARCH ================= -->
+
+        <section class="shop-search-section">
 
             <div class="container">
 
-                <p class="section-label">
-                    SUNSHINE'S COLLECTION
-                </p>
+                <div
+                    class="shop-search"
+                    role="search"
+                >
 
-                <h1>
-                    Find Your Perfect Look
-                </h1>
+                    <label
+                        for="productSearch"
+                        class="visually-hidden"
+                    >
+                        Search products
+                    </label>
 
-                <p>
-                    Explore our collection of premium
-                    luxury hair designed to make you
-                    feel confident, beautiful and bold.
-                </p>
+                    <input
+                        type="search"
+                        id="productSearch"
+                        placeholder="Search for wigs..."
+                    >
+
+                    <button
+                        type="button"
+                        id="productSearchButton"
+                        aria-label="Search products"
+                    >
+                        <i
+                            class="fa-solid fa-magnifying-glass"
+                            aria-hidden="true"
+                        ></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIES ================= -->
+
+        <section class="shop-category-section">
+
+            <div class="container">
+
+                <div class="category-filters">
+
+                    <button
+                        class="filter-button active"
+                        data-category="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="wigs"
+                    >
+                        Wigs
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="bundles"
+                    >
+                        Bundles
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="closures"
+                    >
+                        Closures
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        data-category="frontals"
+                    >
+                        Frontals
+                    </button>
+
+                </div>
 
             </div>
 
@@ -172,115 +266,31 @@
 
 
 
-        <!-- ================= SHOP CONTROLS ================= -->
+        <!-- ================= PRODUCTS ================= -->
 
         <section class="shop-section">
 
             <div class="container">
 
+                <header class="shop-heading">
 
-                <div class="shop-toolbar">
+                    <h1>
+                        Available Products
+                    </h1>
 
+                    <span aria-hidden="true"></span>
 
-                    <!-- Categories -->
+                    <p>
+                        Browse our latest premium collection.
+                    </p>
 
-                    <div class="category-filters">
-
-                        <button
-                            class="filter-button active"
-                            data-category="all"
-                        >
-                            All
-                        </button>
-
-                        <button
-                            class="filter-button"
-                            data-category="wigs"
-                        >
-                            Wigs
-                        </button>
-
-                        <button
-                            class="filter-button"
-                            data-category="bundles"
-                        >
-                            Bundles
-                        </button>
-
-                        <button
-                            class="filter-button"
-                            data-category="closures"
-                        >
-                            Closures
-                        </button>
-
-                        <button
-                            class="filter-button"
-                            data-category="frontals"
-                        >
-                            Frontals
-                        </button>
-
-                    </div>
+                </header>
 
 
-                    <!-- Search -->
-
-                    <div class="shop-search">
-
-                        <label
-                            for="productSearch"
-                            class="visually-hidden"
-                        >
-                            Search products
-                        </label>
-
-                        <input
-                            type="search"
-                            id="productSearch"
-                            placeholder="Search products..."
-                        >
-
-                    </div>
-
-
-                    <!-- Sort -->
-
-                    <div class="shop-sort">
-
-                        <label for="productSort">
-                            Sort:
-                        </label>
-
-                        <select id="productSort">
-
-                            <option value="featured">
-                                Featured
-                            </option>
-
-                            <option value="price-low">
-                                Price: Low to High
-                            </option>
-
-                            <option value="price-high">
-                                Price: High to Low
-                            </option>
-
-                            <option value="name">
-                                Name
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Product count -->
-
-                <div class="shop-result-info">
+                <div
+                    class="shop-result-info visually-hidden"
+                    aria-live="polite"
+                >
 
                     <p id="productResultCount">
                         Showing products
@@ -328,6 +338,42 @@
                     </div>
 
                 </div>
+
+
+                <!-- ================= VIDEOS ================= -->
+
+                <section
+                    class="shop-videos"
+                    id="shopVideos"
+                    hidden
+                >
+
+                    <header class="shop-video-heading">
+
+                        <p>
+                            Explore our videos
+                        </p>
+
+                        <h2>
+                            Hair Inspiration
+                        </h2>
+
+                    </header>
+
+                    <div
+                        class="shop-video-grid"
+                        id="shopVideoGrid"
+                    ></div>
+
+                </section>
+
+
+                <nav
+                    class="shop-pagination"
+                    id="shopPagination"
+                    aria-label="Product pages"
+                    hidden
+                ></nav>
 
             </div>
 
@@ -385,10 +431,41 @@
 
     <footer class="site-footer">
 
-        <p>
-            © 2026 Sunshine's Luxury Hair.
-            All rights reserved.
-        </p>
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+                <img src="assets/logos/logo-light.png" alt="Sunshine's Luxury Hair">
+                <p>Premium luxury hair for every beautiful version of you.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="shop.html">Shop</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <div class="footer-links">
+                <h3>Shop</h3>
+                <a href="shop.html?category=wigs">Wigs</a>
+                <a href="shop.html?category=bundles">Bundles</a>
+                <a href="shop.html?category=closures">Closures</a>
+                <a href="shop.html?category=frontals">Frontals</a>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p>WhatsApp</p>
+                <p>Available for orders</p>
+                <a href="https://wa.me/237XXXXXXXXX" target="_blank" rel="noopener noreferrer">Chat With Us →</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Sunshine's Luxury Hair. All rights reserved.</p>
+        </div>
 
     </footer>
 

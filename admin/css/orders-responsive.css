@@ -1,0 +1,33 @@
+/* Orders page additions: orders.css contains the main breakpoint layouts. */
+@media (max-width: 900px) {
+    .admin-body .admin-main,
+    .admin-body .orders-page,
+    .admin-body .orders-toolbar,
+    .admin-body .admin-order-card {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .admin-body .admin-topbar {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .admin-body .admin-profile > div:last-child {
+        display: none;
+    }
+
+    .admin-body .admin-order-item,
+    .admin-body .admin-order-header,
+    .admin-body .admin-order-footer {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-body .orders-toolbar button,
+    .admin-body .orders-toolbar select,
+    .admin-body .orders-toolbar input {
+        max-width: 100%;
+    }
+}

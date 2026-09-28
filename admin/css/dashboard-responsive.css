@@ -1,0 +1,36 @@
+/* Dashboard pages load this file after dashboard.css. Keep the top bar and
+   content usable on compact tablets and phones. */
+@media (max-width: 768px) {
+    .admin-dashboard-page .admin-main,
+    .admin-dashboard-page .admin-content,
+    .dashboard-sections,
+    .dashboard-section {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .admin-dashboard-page .admin-topbar {
+        gap: 10px;
+    }
+
+    .admin-dashboard-page .admin-profile > div:last-child {
+        display: none;
+    }
+
+    .dashboard-section-header,
+    .dashboard-welcome,
+    .dashboard-actions {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 380px) {
+    .admin-dashboard-page .admin-topbar {
+        padding-inline: 8px;
+    }
+
+    .admin-dashboard-page .admin-page-title {
+        font-size: 15px;
+    }
+}

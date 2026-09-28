@@ -113,6 +113,27 @@ let product = null;
 
 let mediaItems = [];
 
+
+function setAddToCartButtonIcon(iconClass, label) {
+
+    if (!addToCartButton) {
+        return;
+    }
+
+
+    addToCartButton.setAttribute(
+        "aria-label",
+        label
+    );
+
+    addToCartButton.title = label;
+
+    addToCartButton.innerHTML = `
+        <i class="${iconClass}" aria-hidden="true"></i>
+        <span class="add-cart-label">${label}</span>
+    `;
+}
+
 let currentMediaIndex = 0;
 
 
@@ -1022,8 +1043,10 @@ function updateStockState() {
         addToCartButton.disabled =
             true;
 
-        addToCartButton.textContent =
-            "Out of Stock";
+        setAddToCartButtonIcon(
+            "fa-solid fa-ban",
+            "Out of stock"
+        );
 
     }
 
@@ -1251,8 +1274,10 @@ if (addToCartButton) {
             );
 
 
-            addToCartButton.textContent =
-                "Added to Cart ✓";
+            setAddToCartButtonIcon(
+                "fa-solid fa-check",
+                "Added to cart"
+            );
 
 
             setTimeout(
@@ -1274,8 +1299,10 @@ if (addToCartButton) {
                         "out-of-stock"
                     ) {
 
-                        addToCartButton.textContent =
-                            "Add to Cart";
+                        setAddToCartButtonIcon(
+                            "fa-solid fa-cart-shopping",
+                            "Add to cart"
+                        );
 
                     }
 

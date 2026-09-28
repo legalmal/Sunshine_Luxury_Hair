@@ -21,6 +21,11 @@ const productGrid =
 const productSearch =
     document.getElementById("productSearch");
 
+const productSearchButton =
+    document.getElementById(
+        "productSearchButton"
+    );
+
 const productSort =
     document.getElementById("productSort");
 
@@ -32,6 +37,15 @@ const productResultCount =
 
 const emptyProducts =
     document.getElementById("emptyProducts");
+
+const shopVideos =
+    document.getElementById("shopVideos");
+
+const shopVideoGrid =
+    document.getElementById("shopVideoGrid");
+
+const shopPagination =
+    document.getElementById("shopPagination");
 
 
 /* =========================================================
@@ -62,6 +76,12 @@ let currentCategory = "all";
 let currentSearch = "";
 
 let currentSort = "featured";
+
+let currentPage = 1;
+
+const PRODUCTS_PER_PAGE = 8;
+
+const VIDEOS_PER_PAGE = 4;
 
 
 /* =========================================================
@@ -121,12 +141,78 @@ function escapeHTML(value) {
    CREATE PRODUCT CARD
    ========================================================= */
 
+function getProductDetails(product) {
+
+    const colors =
+        Array.isArray(product.colors)
+            ? product.colors
+            : [];
+
+    const color =
+        colors[0] ||
+        product.color ||
+        product.colour ||
+        "Premium quality";
+
+
+    const lengthOption =
+        Array.isArray(product.options)
+            ? product.options.find(option => {
+
+                const optionName =
+                    String(option.name || "")
+                        .toLowerCase();
+
+                return (
+                    optionName.includes("length") ||
+                    optionName.includes("inch")
+                );
+
+            })
+            : null;
+
+    let length =
+        product.length ||
+        product.size ||
+        lengthOption?.values?.[0] ||
+        "Available lengths";
+
+
+    if (
+        length !== "Available lengths" &&
+        !String(length).toLowerCase().includes("inch")
+    ) {
+        length = `${length} inch`;
+    }
+
+
+    return {
+        color,
+        length
+    };
+
+}
+
+
 function createProductCard(product) {
 
     const image =
         product.mainImage ||
         product.image ||
         "assets/logo/logo-light.png";
+
+    const details =
+        getProductDetails(product);
+
+    const productId =
+        encodeURIComponent(product.id || "");
+
+    const orderMessage =
+        encodeURIComponent(
+            `Hello, I would like to order the ${
+                product.name || "luxury hair"
+            }.`
+        );
 
 
     return `
@@ -149,16 +235,6 @@ function createProductCard(product) {
                     :
                     ""
                 }
-
-
-                <button
-                    class="quick-view-button"
-                    type="button"
-                    data-quick-view="${escapeHTML(product.id)}"
-                >
-                    Quick View
-                </button>
-
 
                 <img
                     src="${escapeHTML(image)}"
@@ -196,9 +272,41 @@ function createProductCard(product) {
                 </h2>
 
 
+                <p class="product-card-details">
+                    <span>
+                        ${escapeHTML(details.color)}
+                    </span>
+
+                    <span>
+                        ${escapeHTML(details.length)}
+                    </span>
+                </p>
+
+
                 <p class="product-card-price">
                     ${formatPrice(product.price)}
                 </p>
+
+
+                <div class="product-card-actions">
+
+                    <a
+                        href="product.html?id=${productId}"
+                        class="product-view-details"
+                    >
+                        View Details
+                    </a>
+
+                    <a
+                        href="https://wa.me/237XXXXXXXXX?text=${orderMessage}"
+                        class="product-order-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Place Order Now
+                    </a>
+
+                </div>
 
             </div>
 
@@ -332,6 +440,148 @@ function getFilteredProducts() {
    RENDER PRODUCTS
    ========================================================= */
 
+function renderVideos(pageProducts) {
+
+    if (!shopVideos || !shopVideoGrid) {
+        return;
+    }
+
+
+    const videoProducts =
+        pageProducts
+            .filter(product => {
+
+                return Boolean(
+                    product.videoUrl ||
+                    product.video
+                );
+
+            })
+            .slice(0, VIDEOS_PER_PAGE);
+
+
+    if (!videoProducts.length) {
+        shopVideoGrid.innerHTML = "";
+
+        shopVideos.hidden = true;
+
+        return;
+    }
+
+
+    shopVideoGrid.innerHTML =
+        videoProducts
+            .map(product => {
+
+                const video =
+                    product.videoUrl ||
+                    product.video ||
+                    "";
+
+                const name =
+                    product.name ||
+                    "Luxury hair video";
+
+
+                return `
+                    <article class="shop-video-card">
+                        <video
+                            controls
+                            playsinline
+                            preload="metadata"
+                            aria-label="${escapeHTML(name)} video"
+                        >
+                            <source src="${escapeHTML(video)}">
+                            Your browser does not support video playback.
+                        </video>
+                    </article>
+                `;
+
+            })
+            .join("");
+
+    shopVideos.hidden = false;
+
+}
+
+
+function renderPagination(totalPages) {
+
+    if (!shopPagination) {
+        return;
+    }
+
+
+    if (totalPages < 1) {
+        shopPagination.innerHTML = "";
+
+        shopPagination.hidden = true;
+
+        return;
+    }
+
+
+    const pageButtons =
+        Array.from(
+            { length: totalPages },
+            (_, index) => {
+
+                const page = index + 1;
+
+                const isCurrentPage =
+                    page === currentPage;
+
+
+                return `
+                    <button
+                        type="button"
+                        data-page="${page}"
+                        ${
+                            isCurrentPage
+                                ? 'aria-current="page"'
+                                : ""
+                        }
+                        aria-label="Page ${page}"
+                    >
+                        ${page}
+                    </button>
+                `;
+
+            }
+        ).join("");
+
+
+    shopPagination.innerHTML = `
+        <button
+            type="button"
+            data-page="${currentPage - 1}"
+            aria-label="Previous page"
+            ${currentPage === 1 ? "disabled" : ""}
+        >
+            ‹
+        </button>
+
+        ${pageButtons}
+
+        <button
+            type="button"
+            data-page="${currentPage + 1}"
+            aria-label="Next page"
+            ${
+                currentPage === totalPages
+                    ? "disabled"
+                    : ""
+            }
+        >
+            ›
+        </button>
+    `;
+
+    shopPagination.hidden = false;
+
+}
+
+
 function renderProducts() {
 
     if (!productGrid) {
@@ -343,14 +593,13 @@ function renderProducts() {
         getFilteredProducts();
 
 
-    productGrid.innerHTML = "";
-
-
     /* -----------------------------------------------------
        EMPTY STATE
     ----------------------------------------------------- */
 
     if (filteredProducts.length === 0) {
+
+        productGrid.innerHTML = "";
 
         if (emptyProducts) {
             emptyProducts.hidden = false;
@@ -363,6 +612,10 @@ function renderProducts() {
                     : "No products found";
         }
 
+        renderVideos([]);
+
+        renderPagination(0);
+
         return;
 
     }
@@ -373,17 +626,45 @@ function renderProducts() {
     }
 
 
+    const totalPages =
+        Math.ceil(
+            filteredProducts.length /
+            PRODUCTS_PER_PAGE
+        );
+
+
+    if (currentPage > totalPages) {
+        currentPage = totalPages;
+    }
+
+
+    const startIndex =
+        (currentPage - 1) * PRODUCTS_PER_PAGE;
+
+    const pageProducts =
+        filteredProducts.slice(
+            startIndex,
+            startIndex + PRODUCTS_PER_PAGE
+        );
+
+
     if (productResultCount) {
 
+        const finalProduct =
+            startIndex + pageProducts.length;
+
         productResultCount.textContent =
-            `Showing ${filteredProducts.length} product${
-                filteredProducts.length === 1 ? "" : "s"
-            }`;
+            `Showing ${startIndex + 1}–${finalProduct} of ${
+                filteredProducts.length
+            } products`;
 
     }
 
 
-    filteredProducts.forEach(product => {
+    productGrid.innerHTML = "";
+
+
+    pageProducts.forEach(product => {
 
         productGrid.insertAdjacentHTML(
             "beforeend",
@@ -394,6 +675,10 @@ function renderProducts() {
 
 
     attachProductEvents();
+
+    renderVideos(pageProducts);
+
+    renderPagination(totalPages);
 
 }
 
@@ -412,14 +697,9 @@ function attachProductEvents() {
 
         card.addEventListener("click", event => {
 
-            /*
-                Do not open product details
-                when Quick View is clicked.
-            */
-
             if (
                 event.target.closest(
-                    ".quick-view-button"
+                    "a, button"
                 )
             ) {
 
@@ -575,6 +855,8 @@ filterButtons.forEach(button => {
                 button.dataset.category || "all";
 
 
+            currentPage = 1;
+
             renderProducts();
 
         }
@@ -597,6 +879,27 @@ if (productSearch) {
                 event.target.value;
 
 
+            currentPage = 1;
+
+            renderProducts();
+
+        }
+    );
+
+}
+
+
+if (productSearchButton) {
+
+    productSearchButton.addEventListener(
+        "click",
+        () => {
+
+            currentSearch =
+                productSearch?.value || "";
+
+            currentPage = 1;
+
             renderProducts();
 
         }
@@ -617,7 +920,51 @@ if (productSort) {
             currentSort =
                 event.target.value;
 
+            currentPage = 1;
+
             renderProducts();
+
+        }
+    );
+
+}
+
+
+if (shopPagination) {
+
+    shopPagination.addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest("[data-page]");
+
+
+            if (button?.disabled) {
+                return;
+            }
+
+
+            const page =
+                Number(button?.dataset.page);
+
+
+            if (!Number.isInteger(page) || page < 1) {
+                return;
+            }
+
+
+            currentPage = page;
+
+            renderProducts();
+
+
+            document.querySelector(
+                ".shop-heading"
+            )?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
         }
     );
