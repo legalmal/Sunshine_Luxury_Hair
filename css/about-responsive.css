@@ -1,0 +1,20 @@
+@media (max-width: 800px) {
+    .about-hero { min-height: auto; padding: 55px 6%; grid-template-columns: 1fr 1fr; gap: 5%; }
+    .about-hero-image, .about-hero-image img { min-height: 360px; }
+    .about-hero h1 { font-size: clamp(42px, 7vw, 60px); }
+    .about-values { padding-inline: 6%; gap: 28px; }
+}
+
+@media (max-width: 600px) {
+    .about-hero { padding: 46px 22px 34px; grid-template-columns: 1fr; gap: 34px; }
+    .about-hero h1 { font-size: 52px; }
+    .about-lead { font-size: 14px; }
+    .about-hero-image, .about-hero-image img { min-height: 340px; }
+    .about-belief { padding: 65px 24px; }
+    .about-belief h2 { font-size: 39px; }
+    .about-belief > p:last-child { font-size: 13px; }
+    .about-values { padding: 52px 24px 62px; grid-template-columns: 1fr; gap: 30px; }
+    .value-card h3 { margin-top: 12px; }
+    .about-invite { padding: 48px 24px; align-items: flex-start; flex-direction: column; gap: 8px; }
+    .about-footer { padding: 24px; align-items: flex-start; flex-direction: column; gap: 10px; }
+}

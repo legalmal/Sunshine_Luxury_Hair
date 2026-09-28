@@ -127,36 +127,46 @@
     }
 
     .main-navigation {
-        position: absolute;
-
+        position: fixed;
         top: 70px;
-        left: 0;
+        right: 0;
+        z-index: 1001;
 
-        width: 100%;
+        width: min(86vw, 360px);
+        height: calc(100vh - 70px);
+        height: calc(100dvh - 70px);
+        padding: 32px 28px;
 
-        padding: 25px 20px;
-
-        display: none;
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
 
-        gap: 22px;
+        gap: 26px;
+        overflow-y: auto;
 
         background-color: var(--white);
-
-        border-bottom: 1px solid var(--border-color);
-
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border-left: 1px solid var(--border-color);
+        box-shadow: -14px 0 35px rgba(0, 0, 0, 0.16);
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform .32s cubic-bezier(.2,.7,.2,1), visibility .32s ease;
     }
 
     .main-navigation.active {
-        display: flex;
+        transform: translateX(0);
+        visibility: visible;
     }
 
     .main-navigation a {
-        font-size: 13px;
+        font-size: 14px;
     }
 
+    .main-navigation a::after { bottom: -8px; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .main-navigation { transition: none; }
 }
 /* =========================================
    MOBILE HEADER LOGO

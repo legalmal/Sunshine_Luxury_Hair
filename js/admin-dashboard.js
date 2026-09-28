@@ -41,6 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const recentOrders =
         document.getElementById("recentOrders");
 
+    const recentMessages =
+        document.getElementById("recentMessages");
+
 
     /* =========================================
        HELPERS
@@ -340,6 +343,39 @@ document.addEventListener("DOMContentLoaded", () => {
             renderRecentOrders(orders);
 
 
+            /* =====================================
+               LOAD CUSTOMER MESSAGES
+            ===================================== */
+
+            try {
+                const messagesSnapshot =
+                    await getDocs(collection(db, "messages"));
+
+                const messages = messagesSnapshot.docs.map(document => ({
+                    id: document.id,
+                    ...document.data()
+                }));
+
+                messages.sort((a, b) => {
+                    const dateA = a.createdAt?.toDate?.()?.getTime() || 0;
+                    const dateB = b.createdAt?.toDate?.()?.getTime() || 0;
+                    return dateB - dateA;
+                });
+
+                renderRecentMessages(messages);
+            } catch (messageError) {
+                console.error("Unable to load customer messages:", messageError);
+                if (recentMessages) {
+                    recentMessages.innerHTML = `
+                        <div class="dashboard-error">
+                            <h3>Unable to load messages</h3>
+                            <p>Check the Firestore messages read permissions.</p>
+                        </div>
+                    `;
+                }
+            }
+
+
             console.log(
                 "Dashboard loaded successfully."
             );
@@ -382,6 +418,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+    }
+
+
+    /* =========================================
+       RECENT CUSTOMER MESSAGES
+    ========================================= */
+
+    function renderRecentMessages(messages) {
+        if (!recentMessages) return;
+
+        if (!messages.length) {
+            recentMessages.innerHTML = `
+                <div class="empty-messages">
+                    <div class="empty-icon">✉</div>
+                    <h3>No messages yet</h3>
+                    <p>Customer enquiries submitted through the contact form will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        recentMessages.innerHTML = messages.slice(0, 8).map(message => {
+            const date = message.createdAt?.toDate?.();
+            const formattedDate = date
+                ? date.toLocaleString("en-NG", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })
+                : "Just received";
+
+            return `
+                <article class="recent-message-card">
+                    <div class="recent-message-heading">
+                        <div>
+                            <span class="message-received-badge">Message received</span>
+                            <h3>${escapeHTML(message.name || "Customer")}</h3>
+                            <a href="mailto:${escapeHTML(message.email || "")}">${escapeHTML(message.email || "No email provided")}</a>
+                        </div>
+                        <time>${escapeHTML(formattedDate)}</time>
+                    </div>
+                    ${message.subject ? `<strong class="recent-message-subject">${escapeHTML(message.subject)}</strong>` : ""}
+                    <p class="recent-message-body">${escapeHTML(message.message || "")}</p>
+                </article>
+            `;
+        }).join("");
     }
 
 

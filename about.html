@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get to know Sunshine's Luxury Hair and our passion for helping you feel confident in every style.">
+    <title>About Us | Sunshine's Luxury Hair</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/about-responsive.css">
+    <link rel="stylesheet" href="css/brand.css">
+    <link rel="stylesheet" href="css/brand-responsive.css">
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo-link" aria-label="Sunshine's Luxury Hair home">
+            <img src="assets/logos/logo-light.png" alt="Sunshine's Luxury Hair" class="brand-logo" id="brandLogo">
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="main-navigation" id="mainNavigation" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html" class="active" aria-current="page">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggle" type="button" aria-label="Toggle dark mode">☾</button>
+            <a href="cart.html" class="cart-link" title="Shopping cart" aria-label="Shopping cart">
+                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                <span class="cart-label">Shopping cart</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="about-page">
+        <section class="about-hero">
+            <div class="about-hero-copy">
+                <p class="eyebrow">OUR STORY</p>
+                <h1>Beauty that feels<br><em>like you.</em></h1>
+                <p class="about-lead">At Sunshine's Luxury Hair, we believe the right hair can do more than complete a look. It can help you show up with confidence, express your style, and feel beautifully yourself.</p>
+                <a class="about-button" href="shop.html">Explore the collection <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="about-hero-image">
+                <img src="assets/images/hero.jpg" alt="A look from the Sunshine's Luxury Hair collection">
+                <span class="image-caption">Made for your kind of beautiful</span>
+            </div>
+        </section>
+
+        <section class="about-belief">
+            <p class="eyebrow">WHAT WE BELIEVE</p>
+            <h2>Your hair. Your story.<br><em>Your confidence.</em></h2>
+            <p>Every woman deserves to feel radiant in her own way. Our goal is to make finding a style you love feel simple and special, with a considered collection of luxury hair for the moments that matter and the everyday in between.</p>
+        </section>
+
+        <section class="about-values" aria-label="Our values">
+            <article class="value-card">
+                <span class="value-number">01</span>
+                <h3>Confidence</h3>
+                <p>We celebrate the feeling you get when your look reflects exactly who you are.</p>
+            </article>
+            <article class="value-card">
+                <span class="value-number">02</span>
+                <h3>Personal style</h3>
+                <p>From everyday elegance to a statement moment, your style should always feel like yours.</p>
+            </article>
+            <article class="value-card">
+                <span class="value-number">03</span>
+                <h3>Care in every detail</h3>
+                <p>We want every step, from discovering your look to wearing it, to feel thoughtfully considered.</p>
+            </article>
+        </section>
+
+        <section class="brand-cta">
+            <div class="brand-cta-inner">
+                <p class="section-label">YOUR BEAUTY. YOUR CONFIDENCE.</p>
+                <h2>BE BOLD.<br>BE BEAUTIFUL.<br><span>BE YOU.</span></h2>
+                <a href="shop.html" class="primary-button">Shop Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand"><img src="assets/logos/logo-light.png" alt="Sunshine's Luxury Hair"><p>Premium luxury hair for every beautiful version of you.</p></div>
+            <div class="footer-links"><h3>Quick Links</h3><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+            <div class="footer-links"><h3>Shop</h3><a href="shop.html?category=wigs">Wigs</a><a href="shop.html?category=bundles">Bundles</a><a href="shop.html?category=closures">Closures</a><a href="shop.html?category=frontals">Frontals</a></div>
+            <div class="footer-contact"><h3>Contact</h3><p>WhatsApp</p><p>Available for orders</p><a href="https://wa.me/237XXXXXXXXX" target="_blank" rel="noopener noreferrer">Chat With Us →</a></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Sunshine's Luxury Hair. All rights reserved.</p></div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+    <script src="js/app.js"></script>
+    <script>
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 400));
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
+</body>
+</html>

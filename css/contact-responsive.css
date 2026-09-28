@@ -1,0 +1,11 @@
+@media (max-width: 700px) {
+    .contact-page { padding: 48px 18px 60px; }
+    .contact-intro { margin-bottom: 32px; }
+    .contact-intro h1 { font-size: 47px; }
+    .contact-panel { grid-template-columns: 1fr; }
+    .contact-details { padding: 34px 26px; }
+    .contact-details h2 { font-size: 35px; }
+    .contact-note { margin-top: 25px; }
+    .contact-form { padding: 30px 24px; }
+    .contact-footer { padding: 22px 24px; flex-direction: column; }
+}

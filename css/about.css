@@ -1,0 +1,73 @@
+.about-page {
+    overflow: hidden;
+}
+
+.about-hero {
+    max-width: 1400px;
+    min-height: 620px;
+    margin: 0 auto;
+    padding: 72px 7%;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: center;
+    gap: 7%;
+}
+
+.about-hero-copy { max-width: 510px; }
+.eyebrow {
+    color: var(--gold-dark);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+.about-hero h1, .about-belief h2, .about-invite h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -.035em;
+    line-height: 1.12;
+}
+.about-hero h1 { margin: 22px 0; font-size: clamp(48px, 6vw, 78px); }
+.about-hero h1 em, .about-belief h2 em { color: var(--gold-dark); font-weight: 400; }
+.about-lead { max-width: 460px; color: var(--text-secondary); font-size: 15px; line-height: 1.9; }
+.about-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 30px;
+    padding: 15px 20px;
+    border: 1px solid var(--gold-dark);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    transition: background .2s ease, color .2s ease;
+}
+.about-button:hover { color: #fff; background: var(--gold-dark); }
+.about-button span { color: var(--gold-dark); font-size: 18px; }
+.about-button:hover span { color: #fff; }
+.about-hero-image { position: relative; min-height: 440px; height: 100%; background: #eee9e0; }
+.about-hero-image img { width: 100%; height: 100%; min-height: 440px; object-fit: cover; object-position: center; }
+.image-caption { position: absolute; right: 0; bottom: 0; padding: 12px 17px; background: var(--white); color: var(--text-primary); font-family: 'Playfair Display', Georgia, serif; font-size: 13px; font-style: italic; }
+
+.about-belief { padding: 88px 24px 92px; background: var(--white-soft); text-align: center; }
+.about-belief h2 { margin: 18px auto; font-size: clamp(36px, 4.5vw, 56px); }
+.about-belief > p:last-child { max-width: 650px; margin: 0 auto; color: var(--text-secondary); font-size: 14px; line-height: 1.9; }
+.about-values { max-width: 1200px; margin: 0 auto; padding: 76px 40px 88px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; }
+.value-card { border-top: 1px solid var(--border-color); padding-top: 20px; }
+.value-number { color: var(--gold-dark); font-size: 11px; letter-spacing: .14em; }
+.value-card h3 { margin: 16px 0 10px; font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 500; }
+.value-card p { color: var(--text-secondary); font-size: 13px; line-height: 1.8; }
+.about-invite { padding: 65px max(7%, calc((100% - 1200px) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 30px; background: #17130e; color: #fff; }
+.about-invite .eyebrow { color: var(--gold-light); }
+.about-invite h2 { margin-top: 15px; font-size: clamp(36px, 4vw, 52px); }
+.about-button-light { border-color: var(--gold-light); color: #fff; white-space: nowrap; }
+.about-button-light span { color: var(--gold-light); }
+.about-footer { min-height: 78px; padding: 20px 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--border-color); font-size: 12px; }
+.about-footer > a:first-child { font-family: 'Playfair Display', Georgia, serif; font-size: 16px; }
+.about-footer > span { color: var(--text-secondary); }
+.about-footer > a:last-child { color: var(--gold-dark); }
+
+@media (prefers-reduced-motion: reduce) {
+    .about-button { transition: none; }
+}

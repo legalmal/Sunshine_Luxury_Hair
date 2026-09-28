@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Sunshine's Luxury Hair. Send us a message and we'll be happy to help.">
+    <title>Contact Us | Sunshine's Luxury Hair</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/contact-responsive.css">
+    <link rel="stylesheet" href="css/brand.css">
+    <link rel="stylesheet" href="css/brand-responsive.css">
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo-link" aria-label="Sunshine's Luxury Hair home">
+            <img src="assets/logos/logo-light.png" alt="Sunshine's Luxury Hair" class="brand-logo" id="brandLogo">
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <nav class="main-navigation" id="mainNavigation" aria-label="Main navigation">
+            <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html" class="active" aria-current="page">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button id="themeToggle" type="button" aria-label="Toggle dark mode">☾</button>
+            <a href="cart.html" class="cart-link" title="Shopping cart" aria-label="Shopping cart"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i><span class="cart-label">Shopping cart</span><span class="cart-count" id="cartCount">0</span></a>
+        </div>
+    </header>
+
+    <main class="contact-page">
+        <section class="contact-intro">
+            <p class="contact-eyebrow">WE'RE HERE FOR YOU</p>
+            <h1>Let's talk about<br><em>your next look.</em></h1>
+            <p>Have a question about a style, an order, or finding the right look? Send us a message and our team will get back to you.</p>
+        </section>
+
+        <section class="contact-panel" aria-label="Send us a message">
+            <div class="contact-details">
+                <p class="contact-eyebrow">GET IN TOUCH</p>
+                <h2>We'd love to<br>hear from you.</h2>
+                <p>Fill out the form with a few details and your message will be sent directly to our team.</p>
+                <div class="contact-note"><span aria-hidden="true">✦</span><span>Your details are used only to respond to your enquiry.</span></div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <div class="contact-field">
+                    <label for="contactName">Your name</label>
+                    <input id="contactName" name="name" type="text" autocomplete="name" maxlength="100" required>
+                </div>
+                <div class="contact-field">
+                    <label for="contactEmail">Email address</label>
+                    <input id="contactEmail" name="email" type="email" autocomplete="email" maxlength="254" required>
+                </div>
+                <div class="contact-field">
+                    <label for="contactSubject">Subject <span>(optional)</span></label>
+                    <input id="contactSubject" name="subject" type="text" maxlength="150">
+                </div>
+                <div class="contact-field">
+                    <label for="contactMessage">Your message</label>
+                    <textarea id="contactMessage" name="message" rows="6" maxlength="3000" required></textarea>
+                </div>
+                <button class="contact-submit" id="contactSubmit" type="submit">Send message <span aria-hidden="true">→</span></button>
+                <p class="contact-form-status" id="contactFormStatus" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <section class="brand-cta">
+            <div class="brand-cta-inner">
+                <p class="section-label">YOUR BEAUTY. YOUR CONFIDENCE.</p>
+                <h2>BE BOLD.<br>BE BEAUTIFUL.<br><span>BE YOU.</span></h2>
+                <a href="shop.html" class="primary-button">Shop Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand"><img src="assets/logos/logo-light.png" alt="Sunshine's Luxury Hair"><p>Premium luxury hair for every beautiful version of you.</p></div>
+            <div class="footer-links"><h3>Quick Links</h3><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+            <div class="footer-links"><h3>Shop</h3><a href="shop.html?category=wigs">Wigs</a><a href="shop.html?category=bundles">Bundles</a><a href="shop.html?category=closures">Closures</a><a href="shop.html?category=frontals">Frontals</a></div>
+            <div class="footer-contact"><h3>Contact</h3><p>WhatsApp</p><p>Available for orders</p><a href="https://wa.me/237XXXXXXXXX" target="_blank" rel="noopener noreferrer">Chat With Us →</a></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 Sunshine's Luxury Hair. All rights reserved.</p></div>
+    </footer>
+    <script src="js/app.js"></script>
+    <script type="module" src="js/contact.js"></script>
+</body>
+</html>

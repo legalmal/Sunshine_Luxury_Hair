@@ -61,6 +61,21 @@
     margin-bottom: 30px;
 }
 
+/* CUSTOMER MESSAGES */
+.recent-messages { display: grid; gap: 12px; }
+.recent-message-card { padding: 18px 20px; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); background: var(--dash-surface); }
+.recent-message-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.recent-message-heading h3 { margin: 8px 0 3px; color: var(--dash-white); font-size: 15px; font-weight: 500; }
+.recent-message-heading a { color: var(--dash-gold-light); font-size: 12px; overflow-wrap: anywhere; }
+.recent-message-heading time { color: var(--dash-muted); font-size: 11px; text-align: right; }
+.message-received-badge { display: inline-block; padding: 4px 8px; border-radius: 20px; background: rgba(212, 175, 55, .12); color: var(--dash-gold-light); font-size: 10px; font-weight: 600; letter-spacing: .04em; }
+.recent-message-subject { display: block; margin-top: 13px; color: var(--dash-soft); font-size: 12px; }
+.recent-message-body { margin-top: 8px; color: var(--dash-muted); font-size: 12px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.empty-messages { padding: 28px 18px; border: 1px dashed var(--dash-border-light); border-radius: var(--dash-radius); text-align: center; }
+.empty-messages .empty-icon { color: var(--dash-gold); font-size: 25px; }
+.empty-messages h3 { margin: 10px 0 5px; color: var(--dash-white); font-size: 15px; }
+.empty-messages p { color: var(--dash-muted); font-size: 12px; }
+
 .dashboard-welcome .section-label {
     margin: 0 0 8px;
 
