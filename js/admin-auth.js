@@ -143,6 +143,8 @@ const showLoginMessage = (message, type = "error") => {
 
 
     loginMessage.textContent = message;
+    loginMessage.classList.remove("is-success", "is-error", "is-loading");
+    loginMessage.classList.add(`is-${type}`);
 
 
     if (type === "success") {
@@ -438,9 +440,7 @@ const setupLogout = () => {
                 logoutButton.textContent =
                     "Logout";
 
-                alert(
-                    "Logout failed. Please try again."
-                );
+                window.showToast?.("Logout failed. Please try again.", "error");
 
             }
 

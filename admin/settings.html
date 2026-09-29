@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="../css/back-to-top.css">
     <link rel="stylesheet" href="../css/scroll-reveal.css">
-    <link rel="stylesheet" href="../css/product-image-viewer.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 <body class="admin-body">
     <div class="admin-layout">
@@ -45,7 +45,7 @@
                 <div class="settings-intro">
                     <span class="section-label">YOUR STORE</span>
                     <h2>Store settings</h2>
-                    <p>Manage your public contact details, currency, delivery message, and stock alert level.</p>
+                    <p>Manage your public contact details, store location, currency, delivery message, and stock alert level.</p>
                 </div>
 
                 <div id="settingsStatus" class="settings-status" role="status" aria-live="polite"></div>
@@ -58,7 +58,9 @@
                         </div>
                         <div class="settings-fields">
                             <label class="settings-field settings-field-wide">Store name<input id="settingStoreName" name="storeName" maxlength="80" required></label>
+                            <label class="settings-field settings-field-wide">Store location <small>Enter the full address shown to customers on the Contact page map.</small><input id="settingStoreLocationAddress" name="storeLocationAddress" maxlength="240" autocomplete="street-address" placeholder="Street, town or city, region, country"></label>
                             <label class="settings-field">Support email<input id="settingSupportEmail" name="supportEmail" type="email" autocomplete="email"></label>
+                            <label class="settings-field">New order notification email<input id="settingOrderNotificationEmail" name="orderNotificationEmail" type="email" autocomplete="email"><small>Receives an email whenever a customer places an order.</small></label>
                             <label class="settings-field">Support phone<input id="settingSupportPhone" name="supportPhone" type="tel" autocomplete="tel"></label>
                             <label class="settings-field settings-field-wide">WhatsApp number <small>Include the country code; enter digits only.</small><input id="settingWhatsapp" name="whatsappNumber" inputmode="numeric" placeholder="237690000000"></label>
                         </div>
@@ -90,6 +92,6 @@
     <script src="../js/admin-menu.js"></script>
     <script src="../js/back-to-top.js"></script>
     <script src="../js/scroll-reveal.js"></script>
-    <script src="../js/product-image-viewer.js"></script>
+    <script src="../js/notifications.js"></script>
 </body>
 </html>

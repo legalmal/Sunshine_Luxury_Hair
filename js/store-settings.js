@@ -4,7 +4,8 @@ export const DEFAULT_STORE_SETTINGS = Object.freeze({
     storeName: "Sunshine's Luxury Hair",
     supportEmail: "",
     supportPhone: "",
-    whatsappNumber: "",
+    whatsappNumber: "237681880898",
+    storeLocationAddress: "",
     currency: "NGN",
     lowStockThreshold: 5,
     deliveryNote: "Nationwide delivery available."

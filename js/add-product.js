@@ -125,18 +125,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         status.className =
             `product-upload-status ${type}`;
+        status.setAttribute("role", type === "error" ? "alert" : "status");
+        status.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
 
-        status.innerHTML = `
-            <i class="${
-                type === "success"
-                    ? "fa-solid fa-circle-check"
-                    : type === "error"
-                        ? "fa-solid fa-circle-exclamation"
-                        : "fa-solid fa-spinner fa-spin"
-            }"></i>
+        const icon = document.createElement("i");
+        icon.className = type === "success"
+            ? "fa-solid fa-circle-check"
+            : type === "error"
+                ? "fa-solid fa-circle-exclamation"
+                : "fa-solid fa-spinner fa-spin";
+        icon.setAttribute("aria-hidden", "true");
 
-            <span>${message}</span>
-        `;
+        const messageText = document.createElement("span");
+        messageText.textContent = message;
+        status.replaceChildren(icon, messageText);
 
         status.scrollIntoView({
             behavior: "smooth",

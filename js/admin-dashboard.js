@@ -1,11 +1,17 @@
 import {
     db,
+    auth,
     collection,
-    getDocs
+    getDocsFromServer,
+    onAuthStateChanged
 } from "./firebase.js";
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { DEFAULT_STORE_SETTINGS, loadStoreSettings, formatStorePrice } from "./store-settings.js";
 
-const STORE_SETTINGS = await loadStoreSettings();
+// Dashboard initialization must not wait for the optional currency settings read.
+let STORE_SETTINGS = DEFAULT_STORE_SETTINGS;
+loadStoreSettings().then(settings => {
+    STORE_SETTINGS = settings;
+});
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,6 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const featuredProducts =
         document.getElementById("featuredProducts");
+
+    const totalFavorites =
+        document.getElementById("totalFavorites");
 
     const totalOrders =
         document.getElementById("totalOrders");
@@ -46,6 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const recentMessages =
         document.getElementById("recentMessages");
+
+    const dashboardLoadError =
+        document.getElementById("dashboardLoadError");
 
 
     /* =========================================
@@ -185,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ===================================== */
 
             const productsSnapshot =
-                await getDocs(
+                await getDocsFromServer(
                     collection(db, "products")
                 );
 
@@ -209,16 +221,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ===================================== */
 
             const inStock =
-                products.filter(
-                    product =>
-                        product.status === "in-stock"
+                products.filter(product =>
+                    String(product.status || "in-stock").toLowerCase() === "in-stock"
                 ).length;
 
 
             const outOfStock =
-                products.filter(
-                    product =>
-                        product.status === "out-of-stock"
+                products.filter(product =>
+                    String(product.status || "").toLowerCase() === "out-of-stock"
                 ).length;
 
 
@@ -243,10 +253,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             /* =====================================
+               PRODUCT FAVORITES
+            ===================================== */
+
+            const favoriteCounts = new Map();
+            try {
+                const favoritesSnapshot = await getDocsFromServer(collection(db, "favorites"));
+                favoritesSnapshot.docs.forEach(favoriteDocument => {
+                    const favorite = favoriteDocument.data();
+                    if (favorite.liked !== true || !favorite.productId) return;
+                    favoriteCounts.set(
+                        favorite.productId,
+                        (favoriteCounts.get(favorite.productId) || 0) + 1
+                    );
+                });
+                totalFavorites.textContent = [...favoriteCounts.values()]
+                    .reduce((total, count) => total + count, 0);
+            } catch (favoriteError) {
+                console.error("Unable to load product favorites:", favoriteError);
+                totalFavorites.textContent = "—";
+                if (dashboardLoadError) {
+                    dashboardLoadError.hidden = false;
+                    dashboardLoadError.textContent =
+                        "Favorites could not be loaded. Deploy the latest Firestore rules to enable dashboard favorite tracking.";
+                }
+            }
+
+            /* =====================================
                RECENT PRODUCTS
             ===================================== */
 
-            renderRecentProducts(products);
+            renderRecentProducts(products, favoriteCounts);
 
 
             /* =====================================
@@ -254,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ===================================== */
 
             const ordersSnapshot =
-                await getDocs(
+                await getDocsFromServer(
                     collection(db, "orders")
                 );
 
@@ -297,17 +334,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const pending =
                 orders.filter(
-                    order =>
-                        getOrderStatus(order) ===
-                        "pending"
+                        order =>
+                        getOrderStatus(order) === "pending"
                 ).length;
 
 
             const completed =
                 orders.filter(
-                    order =>
-                        getOrderStatus(order) ===
-                        "completed"
+                        order =>
+                        getOrderStatus(order) === "completed"
                 ).length;
 
 
@@ -345,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const messagesSnapshot =
-                    await getDocs(collection(db, "messages"));
+                    await getDocsFromServer(collection(db, "messages"));
 
                 const messages = messagesSnapshot.docs.map(document => ({
                     id: document.id,
@@ -382,6 +417,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Error loading dashboard:",
                 error
             );
+
+            [totalProducts, inStockProducts, outOfStockProducts, featuredProducts, totalFavorites,
+                totalOrders, pendingOrders, completedOrders, totalOrderValue]
+                .filter(Boolean)
+                .forEach(element => { element.textContent = "—"; });
+
+            if (dashboardLoadError) {
+                dashboardLoadError.hidden = false;
+                dashboardLoadError.textContent =
+                    `Dashboard data could not be loaded (${error.code || "connection or permissions error"}). Check the connection and Firestore access, then reload this page.`;
+            }
 
 
             if (recentProducts) {
@@ -463,7 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
        RECENT PRODUCTS
     ========================================= */
 
-    function renderRecentProducts(products) {
+    function renderRecentProducts(products, favoriteCounts = new Map()) {
 
         if (!recentProducts) return;
 
@@ -571,6 +617,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                     : "Out of Stock"
                             }
                         </div>
+
+                        <span class="recent-product-favorites" aria-label="${favoriteCounts.get(product.id) || 0} favorites">
+                            ♥ ${favoriteCounts.get(product.id) || 0}
+                        </span>
 
                     </article>
                 `;
@@ -715,6 +765,12 @@ document.addEventListener("DOMContentLoaded", () => {
        START
     ========================================= */
 
-    loadDashboard();
+    // Wait until Firebase restores the admin session before querying protected data.
+    let dashboardLoadStarted = false;
+    onAuthStateChanged(auth, user => {
+        if (!user || dashboardLoadStarted) return;
+        dashboardLoadStarted = true;
+        loadDashboard();
+    });
 
 });

@@ -7,5 +7,9 @@
     .contact-details h2 { font-size: 35px; }
     .contact-note { margin-top: 25px; }
     .contact-form { padding: 30px 24px; }
+    .contact-map-section { margin-top: 52px; }
+    .contact-map-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
+    .contact-map-frame, .contact-map-placeholder { min-height: 300px; }
+    .contact-map-frame iframe { height: 320px; }
     .contact-footer { padding: 22px 24px; flex-direction: column; }
 }

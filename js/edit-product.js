@@ -128,9 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
 
 
-        alert(
-            "Unable to load product."
-        );
+        window.showToast?.("We couldn't load this product. Check your connection and try again.", "error");
 
         return;
     }
@@ -475,9 +473,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             product.images.length <= 1
         ) {
 
-            alert(
-                "A product must have at least one image."
-            );
+            window.showToast?.("Add at least one product image before saving.", "error");
 
             return;
         }
@@ -743,9 +739,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (!name) {
 
-                alert(
-                    "Please enter a product name."
-                );
+                window.showToast?.("Enter a product name before saving.", "error");
 
                 return;
             }
@@ -756,9 +750,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 price < 0
             ) {
 
-                alert(
-                    "Please enter a valid product price."
-                );
+                window.showToast?.("Enter a valid price greater than or equal to zero.", "error");
 
                 return;
             }
@@ -769,9 +761,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 stock < 0
             ) {
 
-                alert(
-                    "Please enter a valid stock quantity."
-                );
+                window.showToast?.("Enter a valid stock quantity greater than or equal to zero.", "error");
 
                 return;
             }
@@ -854,9 +844,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 !hasExistingVideo
             ) {
 
-                alert(
-                    "Please add at least one product image or video."
-                );
+                window.showToast?.("Add at least one product image or video before saving.", "error");
 
                 return;
             }
@@ -1031,9 +1019,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-            alert(
-                "Product updated successfully!"
-            );
+            window.showToast?.("Product updated successfully.", "success");
 
 
             window.location.href =
@@ -1048,10 +1034,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-            alert(
-                "Failed to update product.\n\n" +
-                error.message
-            );
+            window.showToast?.("We couldn't update this product. Please try again.", "error");
 
 
             saveButton.disabled =

@@ -138,10 +138,7 @@ async function getProducts() {
         );
 
 
-        alert(
-            "Unable to load products.\n\n" +
-            error.message
-        );
+        window.showToast?.("We couldn't load products. Check your connection and try again.", "error");
 
 
         return [];
@@ -704,9 +701,7 @@ async function deleteProduct(
 
     if (!product) {
 
-        alert(
-            "Product not found."
-        );
+        window.showToast?.("This product could not be found.", "error");
 
         return;
 
@@ -750,9 +745,7 @@ async function deleteProduct(
         filterProducts();
 
 
-        alert(
-            "Product deleted successfully."
-        );
+        window.showToast?.("Product deleted successfully.", "success");
 
 
     } catch (error) {
@@ -763,10 +756,7 @@ async function deleteProduct(
         );
 
 
-        alert(
-            "Failed to delete product.\n\n" +
-            error.message
-        );
+        window.showToast?.("We couldn't delete this product. Please try again.", "error");
 
     }
 
@@ -839,9 +829,7 @@ if (logoutBtn) {
                     error
                 );
 
-                alert(
-                    "Unable to log out."
-                );
+                window.showToast?.("We couldn't log you out. Please try again.", "error");
 
             }
 

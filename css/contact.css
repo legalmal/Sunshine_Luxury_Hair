@@ -22,8 +22,23 @@
 .contact-submit span { margin-left: 18px; font-size: 17px; }
 .contact-submit:hover { background: var(--gold); }
 .contact-submit:disabled { opacity: .65; cursor: wait; }
-.contact-form-status { min-height: 22px; margin-top: 15px; color: #287a45; font-size: 12px; line-height: 1.6; }
-.contact-form-status.is-error { color: #b3261e; }
+.contact-form-status { min-height: 0; margin-top: 15px; padding: 0; border-left: 0 solid transparent; border-radius: 8px; color: #236a40; font-size: 12px; line-height: 1.6; transition: padding .2s ease, background .2s ease; }
+.contact-form-status:not(:empty) { padding: 12px 14px; border-left-width: 3px; background: rgba(46, 125, 50, .08); }
+.contact-form-status.is-success:not(:empty) { border-left-color: #3c9d62; color: #236a40; }
+.contact-form-status.is-error:not(:empty) { border-left-color: #c64b4b; background: rgba(179, 38, 30, .08); color: #9b2822; }
+.contact-map-section { width: min(100%, 1080px); margin: 76px auto 0; }
+.contact-map-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.contact-map-heading h2 { margin: 8px 0 6px; color: var(--text-primary); font-family: 'Playfair Display', Georgia, serif; font-size: clamp(32px, 4vw, 46px); font-weight: 500; }
+.contact-map-address { color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
+.contact-map-directions { display: inline-flex; align-items: center; gap: 12px; flex: 0 0 auto; padding: 13px 17px; color: #17130e; background: var(--gold); font-size: 12px; font-weight: 600; text-decoration: none; }
+.contact-map-directions:hover { background: var(--gold-light); }
+.contact-map-frame { min-height: 360px; overflow: hidden; border: 1px solid var(--border-color); background: var(--white-soft); }
+.contact-map-frame iframe { display: block; width: 100%; height: 390px; border: 0; }
+.contact-map-frame iframe[hidden] { display: none; }
+.contact-map-placeholder { display: grid; min-height: 360px; place-content: center; justify-items: center; gap: 14px; padding: 30px; color: var(--text-secondary); text-align: center; }
+.contact-map-placeholder[hidden] { display: none; }
+.contact-map-placeholder span { display: grid; width: 52px; height: 52px; place-items: center; border: 1px solid var(--gold-dark); border-radius: 50%; color: var(--gold-dark); font-size: 28px; }
+.contact-map-placeholder p { max-width: 390px; font-size: 13px; line-height: 1.7; }
 .contact-footer { display: flex; justify-content: space-between; gap: 20px; padding: 22px 5%; border-top: 1px solid var(--border-color); font-size: 12px; }
 .contact-footer a { font-family: 'Playfair Display', Georgia, serif; font-size: 16px; }
 .contact-footer span { color: var(--text-secondary); }

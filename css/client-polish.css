@@ -102,7 +102,8 @@ body.dark-theme .site-header {
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.92) 35%, rgba(255,255,255,.55) 58%, rgba(255,255,255,.08) 100%);
+    /* Keep the hero photo equally crisp across its full width on every device. */
+    background: none;
 }
 
 .hero-section.hero-image-fading::before,
@@ -224,7 +225,7 @@ body.dark-theme .site-header {
 
 body.dark-theme .hero-section::after,
 body.dark-theme .shop-hero::after {
-    background: linear-gradient(90deg, rgba(17,17,17,.96) 0%, rgba(17,17,17,.88) 35%, rgba(17,17,17,.52) 60%, rgba(17,17,17,.1) 100%);
+    background: none;
 }
 
 body.dark-theme .shop-hero { background-color: #111; }
@@ -555,4 +556,15 @@ a:focus-visible {
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
     }
+}
+
+/* Keep the home hero copy in the requested black and gold palette in every theme. */
+.hero-content .hero-label,
+.hero-content .hero-title span {
+    color: var(--gold-dark);
+}
+
+.hero-content .hero-title,
+.hero-content .hero-description {
+    color: #111;
 }

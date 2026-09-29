@@ -261,7 +261,7 @@ function createProductCard(product) {
                 }
 
                 ${!image && video ? `
-                <video class="product-card-video" controls playsinline preload="metadata" poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}" aria-label="${escapeHTML(product.name || "Product")} video">
+                <video class="product-card-video" data-product-id="${escapeHTML(product.id || "")}" controls playsinline preload="metadata" poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}" aria-label="${escapeHTML(product.name || "Product")} video">
                     <source src="${escapeHTML(video)}">
                 </video>
                 ` : image ? `<img

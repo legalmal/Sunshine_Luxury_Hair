@@ -262,10 +262,11 @@ function renderCart() {
                 <article
                     class="cart-item"
                     data-cart-key="${escapeHTML(itemKey)}"
+                    data-product-id="${escapeHTML(item.id || item.productId || "")}"
                 >
 
                     <div class="cart-item-image">
-                        ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}" loading="lazy">` : item.videoUrl ? `<video src="${escapeHTML(item.videoUrl)}" poster="${escapeHTML(item.poster || "")}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video"></video>` : ""}
+                        ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}" loading="lazy">` : item.videoUrl ? `<video data-product-id="${escapeHTML(item.id || item.productId || "")}" src="${escapeHTML(item.videoUrl)}" poster="${escapeHTML(item.poster || "")}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video"></video>` : ""}
                     </div>
 
 

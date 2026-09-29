@@ -17,7 +17,7 @@ import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
 ========================================================= */
 
 const STORE_SETTINGS = await loadStoreSettings();
-const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237XXXXXXXXX";
+const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237681880898";
 
 const MAX_FEATURED_PRODUCTS = 4;
 const MAX_LATEST_VIDEOS = 3;
@@ -194,6 +194,7 @@ function createProductCard(product) {
 
     card.className =
         "home-product-card";
+    card.dataset.productId = product.id || "";
 
 
     /* =====================================================
@@ -372,7 +373,7 @@ function createProductCard(product) {
         <div class="home-product-image">
 
             ${!image && video ? `
-                <video class="home-product-video" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video">
+                <video class="home-product-video" data-product-id="${escapeHTML(productId)}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video">
                     <source src="${escapeHTML(video)}">
                 </video>
             ` : image ? `

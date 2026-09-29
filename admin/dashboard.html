@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/admin-polish.css">
     <link rel="stylesheet" href="../css/back-to-top.css">
     <link rel="stylesheet" href="../css/scroll-reveal.css">
-    <link rel="stylesheet" href="../css/product-image-viewer.css">
+    <link rel="stylesheet" href="../css/notifications.css">
 </head>
 
 <body class="admin-dashboard-page">
@@ -151,7 +151,7 @@
             </div>
 
 
-            <div class="dashboard-stats">
+            <div class="dashboard-stats dashboard-product-stats">
 
                 <!-- TOTAL PRODUCTS -->
                 <div class="stat-card">
@@ -162,7 +162,7 @@
 
                     <div>
                         <span>Total Products</span>
-                        <strong id="totalProducts">0</strong>
+                        <strong id="totalProducts">—</strong>
                     </div>
 
                 </div>
@@ -177,7 +177,7 @@
 
                     <div>
                         <span>In Stock</span>
-                        <strong id="inStockProducts">0</strong>
+                        <strong id="inStockProducts">—</strong>
                     </div>
 
                 </div>
@@ -192,7 +192,7 @@
 
                     <div>
                         <span>Out of Stock</span>
-                        <strong id="outOfStockProducts">0</strong>
+                        <strong id="outOfStockProducts">—</strong>
                     </div>
 
                 </div>
@@ -207,12 +207,26 @@
 
                     <div>
                         <span>Featured</span>
-                        <strong id="featuredProducts">0</strong>
+                        <strong id="featuredProducts">—</strong>
+                    </div>
+
+                </div>
+
+                <!-- FAVORITES -->
+                <div class="stat-card">
+
+                    <div class="stat-icon">♥</div>
+
+                    <div>
+                        <span>Active Favorites</span>
+                        <strong id="totalFavorites">—</strong>
                     </div>
 
                 </div>
 
             </div>
+
+            <p id="dashboardLoadError" class="dashboard-load-error" role="status" hidden></p>
 
 
             <!-- ORDER STATISTICS -->
@@ -244,7 +258,7 @@
 
                     <div>
                         <span>Total Orders</span>
-                        <strong id="totalOrders">0</strong>
+                        <strong id="totalOrders">—</strong>
                     </div>
 
                 </div>
@@ -259,7 +273,7 @@
 
                     <div>
                         <span>Pending Orders</span>
-                        <strong id="pendingOrders">0</strong>
+                        <strong id="pendingOrders">—</strong>
                     </div>
 
                 </div>
@@ -274,7 +288,7 @@
 
                     <div>
                         <span>Completed Orders</span>
-                        <strong id="completedOrders">0</strong>
+                        <strong id="completedOrders">—</strong>
                     </div>
 
                 </div>
@@ -290,7 +304,7 @@
                     <div>
                         <span>Total Order Value</span>
                         <strong id="totalOrderValue">
-                            ₦0
+                            —
                         </strong>
                     </div>
 
@@ -415,6 +429,6 @@
 
     <script src="../js/back-to-top.js"></script>
     <script src="../js/scroll-reveal.js"></script>
-    <script src="../js/product-image-viewer.js"></script>
+    <script src="../js/notifications.js"></script>
 </body>
 </html>

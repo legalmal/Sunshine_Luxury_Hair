@@ -18,14 +18,7 @@ const STORE_SETTINGS = await loadStoreSettings();
    SETTINGS
 ========================================================= */
 
-// IMPORTANT:
-// Replace this with Sunshine's real WhatsApp number.
-// Include country code, without + or spaces.
-//
-// Example Cameroon:
-// 237690000000
-//
-const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237XXXXXXXXX";
+const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237681880898";
 
 const CART_KEY = "sunshinesCart";
 
@@ -348,11 +341,11 @@ function renderCheckoutItems(cart) {
 
 
             return `
-                <article class="checkout-item">
+                <article class="checkout-item" data-product-id="${escapeHTML(item.id || item.productId || "")}">
 
                     <div class="checkout-item-image">
 
-                        ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}">` : item.videoUrl ? `<video src="${escapeHTML(item.videoUrl)}" poster="${escapeHTML(item.poster || "")}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video"></video>` : ""}
+                        ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}">` : item.videoUrl ? `<video data-product-id="${escapeHTML(item.id || item.productId || "")}" src="${escapeHTML(item.videoUrl)}" poster="${escapeHTML(item.poster || "")}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video"></video>` : ""}
 
                         <span class="checkout-item-quantity">
                             ${quantity}
@@ -740,9 +733,7 @@ async function placeOrder(event) {
 
     if (cart.length === 0) {
 
-        alert(
-            "Your cart is empty."
-        );
+        window.showToast?.("Your cart is empty. Add an item before placing an order.", "error");
 
         return;
     }
@@ -940,9 +931,7 @@ async function placeOrder(event) {
         );
 
 
-        alert(
-            "We could not save your order. Please check your internet connection and try again."
-        );
+        window.showToast?.("We couldn't save your order. Check your connection and try again.", "error");
 
 
         if (placeOrderButton) {

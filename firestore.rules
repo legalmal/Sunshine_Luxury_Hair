@@ -42,9 +42,32 @@ service cloud.firestore {
       allow update, delete: if isSignedIn();
     }
 
+    match /favorites/{favoriteId} {
+      // Visitors can save one favorite state per product and browser identity.
+      // Dashboard reads remain restricted to signed-in administrators.
+      allow read: if isSignedIn();
+      allow create, update: if request.resource.data.keys().hasAll([
+          'productId', 'visitorId', 'liked', 'updatedAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'productId', 'visitorId', 'liked', 'updatedAt'
+        ])
+        && request.resource.data.productId is string
+        && request.resource.data.productId.size() > 0
+        && request.resource.data.productId.size() <= 500
+        && request.resource.data.visitorId is string
+        && request.resource.data.visitorId.matches('^[a-zA-Z0-9-]{1,80}$')
+        && request.resource.data.liked is bool
+        && request.resource.data.updatedAt == request.time
+        && favoriteId == request.resource.data.productId + '_' + request.resource.data.visitorId;
+      allow delete: if false;
+    }
+
     match /settings/{settingId} {
       // Storefront contact, currency, and delivery details are public client settings.
-      allow read: if settingId == 'storefront';
+      // Admin notification settings contain the private recipient address.
+      allow read: if settingId == 'storefront'
+        || (settingId == 'adminNotifications' && isSignedIn());
       // Match the existing admin write policy used for products and order management.
       allow create, update, delete: if isSignedIn();
     }

@@ -25,11 +25,13 @@ if (form && submitButton && status) {
         submitButton.textContent = "Sending…";
         status.textContent = "";
         status.classList.remove("is-error");
+        status.classList.remove("is-success");
 
         try {
             await addDoc(collection(db, "messages"), message);
             form.reset();
             status.textContent = "Message received. Thank you for getting in touch!";
+            status.classList.add("is-success");
         } catch (error) {
             console.error("Unable to submit contact message:", error);
             status.textContent = error.code === "permission-denied"

@@ -180,6 +180,13 @@
     margin-bottom: 35px;
 }
 
+.dashboard-load-error {
+    margin: -18px 0 30px;
+    color: #ff9b9b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
 .dashboard-stat-card {
     position: relative;
 
@@ -342,7 +349,7 @@
 /* Product card */
 .recent-product-card {
     display: grid;
-    grid-template-columns: 58px minmax(0, 1fr) auto;
+    grid-template-columns: 58px minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 14px;
 
@@ -479,6 +486,12 @@
     border: 1px solid rgba(224, 109, 109, 0.22);
 }
 
+.recent-product-favorites {
+    color: #ff7b8c;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
 
 /* Other product statuses */
 .recent-product-status.pending {
@@ -488,7 +501,6 @@
 
     border: 1px solid rgba(212, 175, 55, 0.22);
 }
-
 
 /* =========================================================
    RECENT ORDERS
@@ -958,6 +970,12 @@
         justify-self: start;
 
         margin-top: -4px;
+    }
+
+    .recent-product-favorites {
+        grid-column: 2;
+        justify-self: start;
+        margin-top: -8px;
     }
 
     .recent-order-card {
@@ -1778,4 +1796,14 @@
         border-bottom: none;
     }
 
+}
+
+.dashboard-product-stats {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+@media (max-width: 1200px) {
+    .dashboard-product-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }

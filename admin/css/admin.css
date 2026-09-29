@@ -1137,6 +1137,10 @@ img {
     line-height: 1.5;
 }
 
+.login-message.is-success { color: #76d49a !important; }
+.login-message.is-error { color: #ff8585 !important; }
+.login-message.is-loading { color: #e3c45c !important; }
+
 
 /* =========================================================
    LOGIN FOOTER

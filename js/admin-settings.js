@@ -5,6 +5,7 @@ const form = document.getElementById("settingsForm");
 const status = document.getElementById("settingsStatus");
 const saveButton = document.getElementById("settingsSave");
 const settingsRef = doc(db, "settings", "storefront");
+const notificationSettingsRef = doc(db, "settings", "adminNotifications");
 
 function setStatus(message, type = "") {
     status.textContent = message;
@@ -13,7 +14,9 @@ function setStatus(message, type = "") {
 
 function populate(settings) {
     document.getElementById("settingStoreName").value = settings.storeName || "";
+    document.getElementById("settingStoreLocationAddress").value = settings.storeLocationAddress || "";
     document.getElementById("settingSupportEmail").value = settings.supportEmail || "";
+    document.getElementById("settingOrderNotificationEmail").value = settings.orderNotificationEmail || "";
     document.getElementById("settingSupportPhone").value = settings.supportPhone || "";
     document.getElementById("settingWhatsapp").value = settings.whatsappNumber || "";
     document.getElementById("settingCurrency").value = settings.currency === "XAF" ? "XAF" : "NGN";
@@ -23,8 +26,15 @@ function populate(settings) {
 
 async function loadSettings() {
     try {
-        const snapshot = await getDoc(settingsRef);
-        populate(snapshot.exists() ? { ...DEFAULT_STORE_SETTINGS, ...snapshot.data() } : DEFAULT_STORE_SETTINGS);
+        const [snapshot, notificationSnapshot] = await Promise.all([
+            getDoc(settingsRef),
+            getDoc(notificationSettingsRef)
+        ]);
+        populate({
+            ...DEFAULT_STORE_SETTINGS,
+            ...(snapshot.exists() ? snapshot.data() : {}),
+            ...(notificationSnapshot.exists() ? notificationSnapshot.data() : {})
+        });
     } catch (error) {
         console.error("Unable to load store settings:", error);
         populate(DEFAULT_STORE_SETTINGS);
@@ -42,6 +52,7 @@ form.addEventListener("submit", async (event) => {
 
     const data = {
         storeName: document.getElementById("settingStoreName").value.trim(),
+        storeLocationAddress: document.getElementById("settingStoreLocationAddress").value.trim(),
         supportEmail: document.getElementById("settingSupportEmail").value.trim(),
         supportPhone: document.getElementById("settingSupportPhone").value.trim(),
         whatsappNumber: phone,
@@ -50,13 +61,20 @@ form.addEventListener("submit", async (event) => {
         deliveryNote: document.getElementById("settingDeliveryNote").value.trim(),
         updatedAt: serverTimestamp()
     };
+    const notificationData = {
+        orderNotificationEmail: document.getElementById("settingOrderNotificationEmail").value.trim(),
+        updatedAt: serverTimestamp()
+    };
 
     saveButton.disabled = true;
     saveButton.textContent = "Saving…";
     setStatus("Saving your store settings…");
 
     try {
-        await setDoc(settingsRef, data, { merge: true });
+        await Promise.all([
+            setDoc(settingsRef, data, { merge: true }),
+            setDoc(notificationSettingsRef, notificationData, { merge: true })
+        ]);
         setStatus("Settings saved successfully.", "success");
     } catch (error) {
         console.error("Unable to save store settings:", error);

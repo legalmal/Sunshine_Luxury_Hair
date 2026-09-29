@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/client-polish.css">
     <link rel="stylesheet" href="css/back-to-top.css">
     <link rel="stylesheet" href="css/scroll-reveal.css">
-    <link rel="stylesheet" href="css/product-image-viewer.css">
+    <link rel="stylesheet" href="css/notifications.css">
 </head>
 <body>
     <header class="site-header">
@@ -46,15 +46,43 @@
 
     <main class="about-page">
         <section class="about-hero">
-            <div class="about-hero-copy">
-                <p class="eyebrow">OUR STORY</p>
-                <h1>Beauty that feels<br><em>like you.</em></h1>
-                <p class="about-lead">At Sunshine's Luxury Hair, we believe the right hair can do more than complete a look. It can help you show up with confidence, express your style, and feel beautifully yourself.</p>
-                <a class="about-button" href="shop.html">Explore the collection <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="about-hero-image">
-                <img src="assets/images/hero.jpg" alt="A look from the Sunshine's Luxury Hair collection">
-                <span class="image-caption">Made for your kind of beautiful</span>
+            <div class="about-slideshow" data-about-slideshow aria-label="Sunshine's Luxury Hair about images">
+                <div class="about-slideshow-stage" aria-live="off">
+                    <div class="about-slide is-active" aria-hidden="false">
+                        <img src="assets/images/about-us-hero-1.png" alt="About Sunshine's Luxury Hair, with a model and the brand's confidence message" fetchpriority="high">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/about-us-hero-2%20(1).png" alt="Luxury hair bundles styled with the Sunshine's Luxury Hair brand">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/about-us-hero-3.png" alt="A woman with long wavy hair in a salon, with the brand's story message">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/about-us-hero-4.png" alt="Three women wearing different luxury hairstyles with a message about community">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/about-us-hero-5.png" alt="A stylist carefully working with long hair, with the brand's craftsmanship message">
+                    </div>
+                </div>
+                <div class="about-slideshow-controls" aria-label="Slideshow controls">
+                    <button class="slideshow-control slideshow-previous" type="button" data-slide-previous aria-label="Previous image">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+                    </button>
+                    <div class="slideshow-dots" role="group" aria-label="Choose an image">
+                        <button type="button" class="slideshow-dot is-active" data-slide-to="0" aria-label="Show image 1 of 5" aria-current="true"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="1" aria-label="Show image 2 of 5"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="2" aria-label="Show image 3 of 5"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="3" aria-label="Show image 4 of 5"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="4" aria-label="Show image 5 of 5"></button>
+                    </div>
+                    <button class="slideshow-control slideshow-next" type="button" data-slide-next aria-label="Next image">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                    </button>
+                    <button class="slideshow-control slideshow-toggle" type="button" data-slide-toggle aria-label="Pause slideshow" aria-pressed="false">
+                        <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg>
+                        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6z" /></svg>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -96,7 +124,7 @@
             <div class="footer-brand"><img src="assets/logos/logo-light.png" alt="Sunshine's Luxury Hair"><p>Premium luxury hair for every beautiful version of you.</p></div>
             <div class="footer-links"><h3>Quick Links</h3><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
             <div class="footer-links"><h3>Shop</h3><a href="shop.html?category=wigs">Wigs</a><a href="shop.html?category=bundles">Bundles</a><a href="shop.html?category=closures">Closures</a><a href="shop.html?category=frontals">Frontals</a></div>
-            <div class="footer-contact"><h3>Contact</h3><p>WhatsApp</p><p>Available for orders</p><a href="https://wa.me/237XXXXXXXXX" target="_blank" rel="noopener noreferrer">Chat With Us →</a></div>
+            <div class="footer-contact"><h3>Contact</h3><p>WhatsApp</p><p>Available for orders</p><a href="https://wa.me/237681880898" target="_blank" rel="noopener noreferrer">Chat With Us →</a></div>
         </div>
         <div class="footer-bottom"><p>© 2026 Sunshine's Luxury Hair. All rights reserved.</p></div>
     </footer>
@@ -106,7 +134,8 @@
     <script type="module" src="js/apply-store-settings.js"></script>
     <script src="js/back-to-top.js"></script>
     <script src="js/hero-copy.js"></script>
+    <script src="js/about-slideshow.js"></script>
     <script src="js/scroll-reveal.js"></script>
-    <script src="js/product-image-viewer.js"></script>
+    <script src="js/notifications.js"></script>
 </body>
 </html>

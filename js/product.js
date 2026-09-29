@@ -223,6 +223,10 @@ async function loadProduct() {
 
         };
 
+        const mainProductMedia = document.querySelector(".product-main-media");
+        if (mainProductMedia) mainProductMedia.dataset.productId = product.id;
+        if (mainProductVideo) mainProductVideo.dataset.productId = product.id;
+
 
         console.log(
             "Product loaded:",
@@ -1449,7 +1453,7 @@ if (whatsappButton) {
                 Do NOT include + or spaces.
             */
 
-            const phoneNumber = STORE_SETTINGS.whatsappNumber || "237XXXXXXXXX";
+            const phoneNumber = STORE_SETTINGS.whatsappNumber || "237681880898";
 
 
             const whatsappURL =

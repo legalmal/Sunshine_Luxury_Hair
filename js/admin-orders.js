@@ -890,6 +890,7 @@ async function updateOrderStatus(
             orderId,
             newStatus
         );
+        window.showToast?.("Order status updated successfully.", "success");
 
 
     } catch (error) {
@@ -899,9 +900,7 @@ async function updateOrderStatus(
             error
         );
 
-        alert(
-            "Unable to update the order status."
-        );
+        window.showToast?.("We couldn't update the order status. Please try again.", "error");
 
         renderOrders();
 
@@ -947,6 +946,7 @@ async function deleteOrder(orderId) {
         updateStats();
 
         renderOrders();
+        window.showToast?.("Order deleted successfully.", "success");
 
 
     } catch (error) {
@@ -956,9 +956,7 @@ async function deleteOrder(orderId) {
             error
         );
 
-        alert(
-            "Unable to delete this order."
-        );
+        window.showToast?.("We couldn't delete this order. Please try again.", "error");
 
     }
 

@@ -1111,3 +1111,23 @@
         padding: 24px 14px;
     }
 }
+
+/* Shorter home hero across desktop, tablet, and phone layouts. */
+.hero-section,
+.hero-container {
+    min-height: min(76vh, 680px);
+}
+
+@media (max-width: 900px) {
+    .hero-section,
+    .hero-container {
+        min-height: 580px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section,
+    .hero-container {
+        min-height: 540px;
+    }
+}
