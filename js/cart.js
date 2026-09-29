@@ -3,6 +3,10 @@
    CART JAVASCRIPT
    ========================================================= */
 
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
+
 const CART_KEY = "sunshinesCart";
 
 const cartItemsContainer = document.getElementById("cartItems");
@@ -51,6 +55,7 @@ function getCart() {
 
 function saveCart(cart) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    window.dispatchEvent(new Event("sunshines-cart-updated"));
 }
 
 
@@ -60,9 +65,7 @@ function saveCart(cart) {
 
 function formatPrice(price) {
 
-    const numericPrice = Number(price) || 0;
-
-    return `₦${numericPrice.toLocaleString("en-NG")}`;
+    return formatStorePrice(price, STORE_SETTINGS.currency);
 }
 
 
@@ -77,8 +80,7 @@ function getProductImage(item) {
         item.image ||
         (Array.isArray(item.images) && item.images.length
             ? item.images[0]
-            : "") ||
-        "assets/logos/logo-light.png"
+            : "")
     );
 }
 
@@ -263,11 +265,7 @@ function renderCart() {
                 >
 
                     <div class="cart-item-image">
-                        <img
-                            src="${escapeHTML(image)}"
-                            alt="${escapeHTML(name)}"
-                            loading="lazy"
-                        >
+                        ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}" loading="lazy">` : item.videoUrl ? `<video src="${escapeHTML(item.videoUrl)}" poster="${escapeHTML(item.poster || "")}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video"></video>` : ""}
                     </div>
 
 
@@ -516,6 +514,7 @@ function clearCart() {
 
 
     localStorage.removeItem(CART_KEY);
+    window.dispatchEvent(new Event("sunshines-cart-updated"));
 
     renderCart();
 }

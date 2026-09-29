@@ -7,6 +7,8 @@
 /* ---------- ROOT VARIABLES ---------- */
 
 :root {
+    color-scheme: light;
+
     --gold: #D4AF37;
     --gold-light: #E2C35B;
     --gold-dark: #B8941F;
@@ -16,6 +18,7 @@
 
     --white: #FFFFFF;
     --white-soft: #F8F8F6;
+    --background: #FFFFFF;
 
     --text-primary: #111111;
     --text-secondary: #666666;
@@ -39,11 +42,14 @@
 /* ---------- DARK THEME ---------- */
 
 body.dark-theme {
+    color-scheme: dark;
+
     --black: #ffffff;
     --black-soft: #eeeeee;
 
     --white: #080808;
     --white-soft: #111111;
+    --background: #080808;
 
     --text-primary: #ffffff;
     --text-secondary: #aaaaaa;
@@ -585,8 +591,8 @@ select:focus-visible {
     color: #111111 !important;
     border: none !important;
 
-    width: px;
-    height: px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 
     display: flex;

@@ -604,6 +604,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         video.controls = true;
 
+        video.poster = product.mainImage || product.images?.[0] || "";
+
         video.src =
             product.videoUrl;
 
@@ -641,6 +643,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.createElement("video");
 
         video.controls = true;
+
+        video.poster = product.mainImage || product.images?.[0] || "";
 
         video.src =
             videoURL;
@@ -840,13 +844,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 );
 
 
+            const hasNewVideo = Boolean(videoInput.files.length);
+            const hasExistingVideo = Boolean(product.videoUrl || product.video);
+
             if (
                 product.images.length === 0 &&
-                newFiles.length === 0
+                newFiles.length === 0 &&
+                !hasNewVideo &&
+                !hasExistingVideo
             ) {
 
                 alert(
-                    "Please keep or upload at least one product image."
+                    "Please add at least one product image or video."
                 );
 
                 return;

@@ -7,6 +7,32 @@
 const themeToggle = document.getElementById("themeToggle");
 const brandLogo = document.getElementById("brandLogo");
 
+/* Keep the cart badge consistent across every client page. */
+function updateHeaderCartCount() {
+    let cart = [];
+    try {
+        const savedCart = JSON.parse(localStorage.getItem("sunshinesCart") || "[]");
+        if (Array.isArray(savedCart)) cart = savedCart;
+    } catch (error) {
+        console.warn("Could not read the saved cart for the header badge.", error);
+    }
+
+    const total = cart.reduce((sum, item) => {
+        const quantity = Number(item?.quantity);
+        return sum + (Number.isFinite(quantity) && quantity > 0 ? Math.floor(quantity) : 1);
+    }, 0);
+
+    document.querySelectorAll("#cartCount").forEach(badge => {
+        badge.textContent = String(total);
+    });
+}
+
+updateHeaderCartCount();
+window.addEventListener("storage", event => {
+    if (event.key === "sunshinesCart") updateHeaderCartCount();
+});
+window.addEventListener("sunshines-cart-updated", updateHeaderCartCount);
+
 
 /* ---------- THEME ---------- */
 
@@ -76,64 +102,43 @@ const mainNavigation = document.getElementById("mainNavigation");
 
 if (menuToggle && mainNavigation) {
 
+    let navigationOverlay = document.getElementById("navigationOverlay");
+    if (!navigationOverlay) {
+        navigationOverlay = document.createElement("div");
+        navigationOverlay.id = "navigationOverlay";
+        navigationOverlay.className = "navigation-overlay";
+        navigationOverlay.setAttribute("aria-hidden", "true");
+        document.body.appendChild(navigationOverlay);
+    }
+
+    menuToggle.setAttribute("aria-controls", "mainNavigation");
+
+    const setNavigationOpen = (open) => {
+        mainNavigation.classList.toggle("active", open);
+        navigationOverlay.classList.toggle("active", open);
+        document.body.classList.toggle("navigation-open", open);
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+    };
+
     menuToggle.addEventListener("click", () => {
-
-        const isOpen =
-            mainNavigation.classList.toggle("active");
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            isOpen
-        );
-
-        menuToggle.setAttribute(
-            "aria-label",
-            isOpen ? "Close navigation menu" : "Open navigation menu"
-        );
-
+        setNavigationOpen(!mainNavigation.classList.contains("active"));
     });
 
+    navigationOverlay.addEventListener("click", () => setNavigationOpen(false));
+
     mainNavigation.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            mainNavigation.classList.remove("active");
-            menuToggle.setAttribute("aria-expanded", "false");
-            menuToggle.setAttribute("aria-label", "Open navigation menu");
-        });
+        link.addEventListener("click", () => setNavigationOpen(false));
     });
 
     document.addEventListener("keydown", event => {
-        if (event.key !== "Escape") return;
-        mainNavigation.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.setAttribute("aria-label", "Open navigation menu");
+        if (event.key !== "Escape" || !mainNavigation.classList.contains("active")) return;
+        setNavigationOpen(false);
+        menuToggle.focus();
     });
 
-}
-
-
-/* ---------- LIGHTWEIGHT SCROLL REVEALS ---------- */
-
-const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-if ("IntersectionObserver" in window && !motionPreference.matches) {
-    const revealTargets = document.querySelectorAll(
-        "main section, .product-card, .home-product-card, .shop-video-card, .value-card"
-    );
-
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-        });
-    }, {
-        threshold: 0.12,
-        rootMargin: "0px 0px -35px 0px"
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) setNavigationOpen(false);
     });
 
-    revealTargets.forEach((element, index) => {
-        element.classList.add("reveal-ready");
-        element.style.setProperty("--reveal-delay", `${(index % 4) * 70}ms`);
-        revealObserver.observe(element);
-    });
 }

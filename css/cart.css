@@ -149,7 +149,8 @@
     background: var(--white-soft);
 }
 
-.cart-item-image img {
+.cart-item-image img,
+.cart-item-image video {
     width: 100%;
     height: 100%;
 

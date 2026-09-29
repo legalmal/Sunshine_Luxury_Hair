@@ -9,13 +9,15 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
 
 
 /* =========================================================
    SETTINGS
 ========================================================= */
 
-const WHATSAPP_NUMBER = "237XXXXXXXXX";
+const STORE_SETTINGS = await loadStoreSettings();
+const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237XXXXXXXXX";
 
 const MAX_FEATURED_PRODUCTS = 4;
 const MAX_LATEST_VIDEOS = 3;
@@ -57,15 +59,6 @@ async function loadFeaturedProducts() {
         );
 
 
-        /*
-         * Keep ALL products.
-         *
-         * We need the complete list because the video
-         * section should be able to find videos even when
-         * those products are not among the first 4 featured
-         * products.
-         */
-
         const products = [];
 
 
@@ -92,7 +85,12 @@ async function loadFeaturedProducts() {
            SORT PRODUCTS
         ================================================== */
 
-        products.sort((a, b) => {
+        const featuredProducts = products.filter(isFeaturedProduct);
+        window.dispatchEvent(new CustomEvent("sunshine-products-loaded", {
+            detail: { products: featuredProducts }
+        }));
+
+        featuredProducts.sort((a, b) => {
 
             if (a.featured === b.featured) {
                 return 0;
@@ -107,18 +105,14 @@ async function loadFeaturedProducts() {
            FEATURED PRODUCTS ONLY
         ================================================== */
 
-        const featuredProducts =
-            products.slice(
-                0,
-                MAX_FEATURED_PRODUCTS
-            );
+        const homepageProducts = featuredProducts.slice(0, MAX_FEATURED_PRODUCTS);
 
 
-        if (featuredProducts.length === 0) {
+        if (homepageProducts.length === 0) {
 
             featuredGrid.innerHTML = `
                 <div class="home-products-empty">
-                    <p>No products available yet.</p>
+                    <p>No featured products available yet.</p>
                 </div>
             `;
 
@@ -127,7 +121,7 @@ async function loadFeaturedProducts() {
 
 
         renderFeaturedProducts(
-            featuredProducts
+            homepageProducts
         );
 
 
@@ -160,6 +154,11 @@ async function loadFeaturedProducts() {
 
     }
 
+}
+
+
+function isFeaturedProduct(product) {
+    return product.featured === true || product.featured === "true" || product.featured === 1;
 }
 
 
@@ -226,8 +225,9 @@ function createProductCard(product) {
             Array.isArray(product.images)
                 ? product.images[0]
                 : ""
-        ) ||
-        "assets/images/product-placeholder.jpg";
+        ) || "";
+
+    const video = product.videoUrl || product.video || "";
 
 
     const productId =
@@ -371,6 +371,12 @@ function createProductCard(product) {
 
         <div class="home-product-image">
 
+            ${!image && video ? `
+                <video class="home-product-video" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video">
+                    <source src="${escapeHTML(video)}">
+                </video>
+            ` : image ? `
+
             <div
                 class="home-product-image-link"
                 data-image="${escapeHTML(image)}"
@@ -388,6 +394,9 @@ function createProductCard(product) {
                 >
 
             </div>
+            ` : `
+                <div class="home-product-media-empty">Product media unavailable</div>
+            `}
 
         </div>
 
@@ -415,7 +424,7 @@ function createProductCard(product) {
 
 
             <div class="home-product-price">
-                ${formattedPrice} FCFA
+                ${formattedPrice}
             </div>
 
 
@@ -469,8 +478,8 @@ function renderLatestVideos(products) {
             .filter((product) => {
 
                 return Boolean(
-                    product.videoUrl ||
-                    product.video
+                    isFeaturedProduct(product) &&
+                    (product.videoUrl || product.video)
                 );
 
             })
@@ -524,6 +533,11 @@ function renderLatestVideos(products) {
                     product.category ||
                     "New Collection";
 
+                const lengthOption = Array.isArray(product.options)
+                    ? product.options.find(option => /length|inch/i.test(String(option.name || "")))
+                    : null;
+                const length = product.length || product.size || lengthOption?.values?.[0] || "";
+
 
                 const description =
                     product.description ||
@@ -556,6 +570,7 @@ function renderLatestVideos(products) {
                                 controls
                                 playsinline
                                 preload="metadata"
+                                poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}"
                             >
 
                                 <source
@@ -591,6 +606,12 @@ function renderLatestVideos(products) {
                                     shortDescription
                                 )}
                             </p>
+
+                            ${length ? `<p class="latest-video-length">${escapeHTML(length)}</p>` : ""}
+
+                            <strong class="latest-video-price">${formatPrice(product.price)}</strong>
+
+                            <a class="latest-video-details" href="product.html?id=${encodeURIComponent(product.id || "")}">View Product</a>
 
                         </div>
 
@@ -633,21 +654,8 @@ function formatCategory(category) {
 ========================================================= */
 
 function formatPrice(price) {
-
-    if (
-        !price ||
-        Number.isNaN(Number(price))
-    ) {
-
-        return "Price on request";
-
-    }
-
-
-    return Number(price).toLocaleString(
-        "en-US"
-    );
-
+    if (!price || Number.isNaN(Number(price))) return "Price on request";
+    return formatStorePrice(price, STORE_SETTINGS.currency);
 }
 
 

@@ -1,0 +1,41 @@
+.settings-page {
+    width: min(1050px, calc(100% - 60px));
+    margin: 0 auto;
+    padding: 44px 0 72px;
+}
+
+.settings-intro { margin-bottom: 28px; }
+.settings-intro .section-label { color: var(--admin-gold); font-size: 10px; font-weight: 600; letter-spacing: .18em; }
+.settings-intro h2 { margin: 8px 0 7px; color: #fff; font: 500 clamp(30px, 4vw, 42px)/1.1 "Playfair Display", Georgia, serif; }
+.settings-intro p { max-width: 660px; color: #999; line-height: 1.7; }
+
+.settings-form { display: grid; gap: 20px; }
+.settings-card { padding: clamp(20px, 3vw, 30px); background: linear-gradient(145deg, #141414, #101010); border: 1px solid #292929; border-radius: 16px; box-shadow: 0 16px 42px rgba(0,0,0,.2); }
+.settings-card-heading { display: flex; align-items: center; gap: 14px; padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px solid #292929; }
+.settings-card-icon { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 42px; color: var(--admin-gold-light); background: rgba(212,175,55,.1); border: 1px solid rgba(212,175,55,.22); border-radius: 12px; font-size: 18px; }
+.settings-card-heading h3 { color: #fff; font-size: 16px; font-weight: 600; }
+.settings-card-heading p { margin-top: 4px; color: #888; font-size: 12px; line-height: 1.5; }
+.settings-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; }
+.settings-field { display: grid; align-content: start; gap: 8px; color: #d7d7d7; font-size: 12px; font-weight: 500; }
+.settings-field small { color: #828282; font-size: 11px; font-weight: 400; }
+.settings-field-wide { grid-column: 1 / -1; }
+.settings-field input, .settings-field select, .settings-field textarea { width: 100%; min-height: 46px; padding: 11px 13px; color: #f4f4f4; background: #0b0b0b; border: 1px solid #303030; border-radius: 9px; outline: none; font: inherit; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+.settings-field textarea { min-height: 92px; resize: vertical; }
+.settings-field input:focus, .settings-field select:focus, .settings-field textarea:focus { border-color: var(--admin-gold); background: #101010; box-shadow: 0 0 0 3px rgba(212,175,55,.12); }
+.settings-actions { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding-top: 4px; }
+.settings-reset, .settings-save { min-height: 46px; padding: 0 20px; border-radius: 9px; font: 600 12px "Poppins", sans-serif; cursor: pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.settings-reset { color: #ddd; background: #151515; border: 1px solid #333; }
+.settings-save { color: #111; background: linear-gradient(135deg, #e3c45c, #c7a32e); border: 1px solid #d4af37; }
+.settings-reset:hover, .settings-save:hover { transform: translateY(-2px); box-shadow: 0 9px 24px rgba(212,175,55,.16); }
+.settings-status { min-height: 0; margin-bottom: 0; color: #9b9b9b; font-size: 12px; }
+.settings-status:not(:empty) { margin-bottom: 16px; padding: 12px 14px; background: #141414; border: 1px solid #303030; border-radius: 9px; }
+.settings-status.success { color: #9ed6a4; border-color: rgba(129,199,132,.3); }
+.settings-status.error { color: #ef9a9a; border-color: rgba(239,154,154,.3); }
+
+@media (max-width: 640px) {
+    .settings-page { width: calc(100% - 30px); padding: 28px 0 52px; }
+    .settings-fields { grid-template-columns: 1fr; }
+    .settings-field-wide { grid-column: auto; }
+    .settings-actions { flex-direction: column-reverse; align-items: stretch; }
+    .settings-reset, .settings-save { width: 100%; }
+}

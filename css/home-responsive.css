@@ -819,7 +819,7 @@
 
 @media (max-width: 768px) {
 
-    body.dark-mode .hero-section {
+    body.dark-theme .hero-section {
 
         background-image:
             linear-gradient(
@@ -904,11 +904,31 @@
     }
 
     .categories-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
     }
 
     .category-card {
-        min-height: 300px;
+        min-height: 220px;
+    }
+
+    .category-content {
+        padding: 16px;
+    }
+
+    .category-content h3 {
+        font-size: 20px;
+    }
+
+    .category-number {
+        margin-bottom: 28px;
+        font-size: 10px;
+    }
+
+    .category-arrow {
+        right: 16px;
+        bottom: 16px;
+        font-size: 20px;
     }
 
 }
@@ -1074,8 +1094,8 @@
     }
 
     .why-choose-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
     }
 
     .why-heading {
@@ -1087,7 +1107,7 @@
     }
 
     .why-card {
-        min-height: 230px;
-        padding: 30px 24px;
+        min-height: 210px;
+        padding: 24px 14px;
     }
 }

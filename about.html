@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="css/about-responsive.css">
     <link rel="stylesheet" href="css/brand.css">
     <link rel="stylesheet" href="css/brand-responsive.css">
+    <link rel="stylesheet" href="css/client-polish.css">
+    <link rel="stylesheet" href="css/back-to-top.css">
+    <link rel="stylesheet" href="css/scroll-reveal.css">
+    <link rel="stylesheet" href="css/product-image-viewer.css">
 </head>
 <body>
     <header class="site-header">
@@ -99,10 +103,10 @@
 
     <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
     <script src="js/app.js"></script>
-    <script>
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 400));
-        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    </script>
+    <script type="module" src="js/apply-store-settings.js"></script>
+    <script src="js/back-to-top.js"></script>
+    <script src="js/hero-copy.js"></script>
+    <script src="js/scroll-reveal.js"></script>
+    <script src="js/product-image-viewer.js"></script>
 </body>
 </html>

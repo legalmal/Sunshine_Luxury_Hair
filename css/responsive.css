@@ -122,32 +122,65 @@
 
 @media (max-width: 768px) {
 
+    .site-header {
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .site-header .logo-link {
+        order: -1;
+        flex: 0 1 auto;
+        margin: 0;
+    }
+
+    .site-header .header-actions {
+        margin-left: auto;
+    }
+
+    body.navigation-open {
+        overflow: hidden;
+    }
+
     .menu-toggle {
         display: flex;
+        order: 0;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        padding: 9px;
+        border-radius: 10px;
+        background: var(--white-soft);
+        border-color: var(--border-color);
+        z-index: 1002;
+    }
+
+    body.dark-theme .menu-toggle {
+        background: #171717;
+        border-color: #333333;
     }
 
     .main-navigation {
         position: fixed;
-        top: 70px;
-        right: 0;
+        top: var(--header-height);
+        left: 0;
         z-index: 1001;
 
-        width: min(86vw, 360px);
-        height: calc(100vh - 70px);
-        height: calc(100dvh - 70px);
-        padding: 32px 28px;
+        width: min(280px, 86vw);
+        height: calc(100vh - var(--header-height));
+        height: calc(100dvh - var(--header-height));
+        padding: 28px 20px;
 
         display: flex;
         flex-direction: column;
         align-items: flex-start;
 
-        gap: 26px;
+        gap: 8px;
         overflow-y: auto;
 
         background-color: var(--white);
-        border-left: 1px solid var(--border-color);
-        box-shadow: -14px 0 35px rgba(0, 0, 0, 0.16);
-        transform: translateX(105%);
+        border-right: 1px solid var(--border-color);
+        box-shadow: 18px 0 45px rgba(0, 0, 0, 0.2);
+        transform: translateX(-105%);
         visibility: hidden;
         transition: transform .32s cubic-bezier(.2,.7,.2,1), visibility .32s ease;
     }
@@ -157,8 +190,53 @@
         visibility: visible;
     }
 
+    body.dark-theme .main-navigation {
+        background-color: #101010;
+        border-right-color: #292929;
+        box-shadow: 18px 0 45px rgba(0, 0, 0, .48);
+    }
+
+    .navigation-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(0, 0, 0, .52);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity .25s ease, visibility .25s ease;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
+    .navigation-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
     .main-navigation a {
+        width: 100%;
+        min-height: 46px;
+        padding: 0 14px;
+        display: flex;
+        align-items: center;
+        border: 1px solid transparent;
+        border-radius: 9px;
         font-size: 14px;
+        transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .main-navigation a:hover,
+    .main-navigation a.active {
+        color: var(--gold-dark);
+        background: rgba(212, 175, 55, .1);
+        border-color: rgba(212, 175, 55, .22);
+    }
+
+    body.dark-theme .main-navigation a:hover,
+    body.dark-theme .main-navigation a.active {
+        color: var(--gold-light);
     }
 
     .main-navigation a::after { bottom: -8px; }
@@ -166,7 +244,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .main-navigation { transition: none; }
+    .main-navigation,
+    .navigation-overlay { transition: none; }
 }
 /* =========================================
    MOBILE HEADER LOGO
@@ -191,18 +270,34 @@
 
 @media (max-width: 768px) {
 
-    .menu-toggle,
     #themeToggle {
         background-color: #d4af37 !important;
         color: #111111 !important;
     }
 
-    .menu-toggle i,
     .theme-toggle i {
         color: #111111 !important;
     }
 
-    .menu-toggle:hover,
+    .menu-toggle {
+        background-color: var(--white-soft) !important;
+        color: var(--text-primary) !important;
+    }
+
+    body.dark-theme .menu-toggle {
+        background-color: #171717 !important;
+        color: #eeeeee !important;
+    }
+
+    .menu-toggle span {
+        background-color: currentColor;
+    }
+
+    .menu-toggle:hover {
+        background-color: #d4af37 !important;
+        color: #111111 !important;
+    }
+
     .theme-toggle:hover {
         background-color:#111111 !important;
     }

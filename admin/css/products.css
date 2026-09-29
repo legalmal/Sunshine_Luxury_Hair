@@ -521,6 +521,12 @@
     border-color: rgba(99, 193, 116, 0.22);
 }
 
+.product-status.low-stock {
+    color: #f0cc72;
+    background: rgba(224, 184, 79, .1);
+    border-color: rgba(224, 184, 79, .25);
+}
+
 
 /* Inactive */
 .status-inactive,

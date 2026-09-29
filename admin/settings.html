@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Sunshine's Luxury Hair</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+    <link rel="stylesheet" href="css/admin-polish.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="../css/back-to-top.css">
+    <link rel="stylesheet" href="../css/scroll-reveal.css">
+    <link rel="stylesheet" href="../css/product-image-viewer.css">
+</head>
+<body class="admin-body">
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header">
+                <a href="dashboard.html" class="admin-logo-link">
+                    <img src="../assets/logos/logo-dark.png" alt="Sunshine's Luxury Hair" class="admin-logo">
+                </a>
+            </div>
+            <nav class="admin-navigation" aria-label="Admin navigation">
+                <a href="dashboard.html"><span>⌂</span>Dashboard</a>
+                <a href="products.html"><span>▣</span>Products</a>
+                <a href="add-product.html"><span>＋</span>Add Product</a>
+                <a href="orders.html"><span>▤</span>Orders</a>
+                <a href="settings.html" class="active" aria-current="page"><span>⚙</span>Settings</a>
+            </nav>
+            <div class="admin-sidebar-bottom">
+                <button type="button" id="logoutBtn" class="admin-logout"><span>↪</span>Logout</button>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <button type="button" class="admin-menu-toggle" id="adminMenuToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+                <div>
+                    <p class="admin-page-label">STORE MANAGEMENT</p>
+                    <h1 class="admin-page-title">Settings</h1>
+                </div>
+            </header>
+
+            <section class="settings-page">
+                <div class="settings-intro">
+                    <span class="section-label">YOUR STORE</span>
+                    <h2>Store settings</h2>
+                    <p>Manage your public contact details, currency, delivery message, and stock alert level.</p>
+                </div>
+
+                <div id="settingsStatus" class="settings-status" role="status" aria-live="polite"></div>
+
+                <form id="settingsForm" class="settings-form">
+                    <section class="settings-card">
+                        <div class="settings-card-heading">
+                            <span class="settings-card-icon">⌂</span>
+                            <div><h3>Store profile</h3><p>Details customers see when they contact your store.</p></div>
+                        </div>
+                        <div class="settings-fields">
+                            <label class="settings-field settings-field-wide">Store name<input id="settingStoreName" name="storeName" maxlength="80" required></label>
+                            <label class="settings-field">Support email<input id="settingSupportEmail" name="supportEmail" type="email" autocomplete="email"></label>
+                            <label class="settings-field">Support phone<input id="settingSupportPhone" name="supportPhone" type="tel" autocomplete="tel"></label>
+                            <label class="settings-field settings-field-wide">WhatsApp number <small>Include the country code; enter digits only.</small><input id="settingWhatsapp" name="whatsappNumber" inputmode="numeric" placeholder="237690000000"></label>
+                        </div>
+                    </section>
+
+                    <section class="settings-card">
+                        <div class="settings-card-heading">
+                            <span class="settings-card-icon">₦</span>
+                            <div><h3>Store preferences</h3><p>Choose how prices and delivery information appear.</p></div>
+                        </div>
+                        <div class="settings-fields">
+                            <label class="settings-field">Store currency<select id="settingCurrency" name="currency"><option value="NGN">Nigerian naira (₦)</option><option value="XAF">Central African CFA franc (FCFA)</option></select></label>
+                            <label class="settings-field">Low stock alert at<input id="settingStockThreshold" name="lowStockThreshold" type="number" min="0" max="10000" step="1" required></label>
+                            <label class="settings-field settings-field-wide">Delivery information<textarea id="settingDeliveryNote" name="deliveryNote" rows="3" maxlength="240" placeholder="Nationwide delivery information shown to customers"></textarea></label>
+                        </div>
+                    </section>
+
+                    <div class="settings-actions">
+                        <button type="button" class="settings-reset" id="settingsReset">Restore defaults</button>
+                        <button type="submit" class="settings-save" id="settingsSave">Save settings</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="admin-sidebar-overlay" id="adminSidebarOverlay"></div>
+    <script type="module" src="../js/admin-auth.js"></script>
+    <script type="module" src="../js/admin-settings.js"></script>
+    <script src="../js/admin-menu.js"></script>
+    <script src="../js/back-to-top.js"></script>
+    <script src="../js/scroll-reveal.js"></script>
+    <script src="../js/product-image-viewer.js"></script>
+</body>
+</html>

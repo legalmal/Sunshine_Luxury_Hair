@@ -32,6 +32,10 @@
         rel="stylesheet"
         href="css/edit-product-responsive.css"
     >
+    <link rel="stylesheet" href="css/admin-polish.css">
+    <link rel="stylesheet" href="../css/back-to-top.css">
+    <link rel="stylesheet" href="../css/scroll-reveal.css">
+    <link rel="stylesheet" href="../css/product-image-viewer.css">
 </head>
 
 
@@ -49,7 +53,7 @@
             <div class="admin-sidebar-header">
 
                 <img
-                    src="../assets/logo/logo-dark.png"
+                    src="../assets/logos/logo-dark.png"
                     alt="Sunshine's Luxury Hair"
                     class="admin-logo"
                 >
@@ -80,17 +84,15 @@
                 </a>
 
 
-                <a href="#">
+                <a href="orders.html">
                     <span>▤</span>
                     Orders
-                    <small>Coming soon</small>
                 </a>
 
 
-                <a href="#">
+                <a href="settings.html">
                     <span>⚙</span>
                     Settings
-                    <small>Coming soon</small>
                 </a>
 
             </nav>
@@ -128,6 +130,8 @@
                     type="button"
                     class="admin-menu-toggle"
                     id="adminMenuToggle"
+                    aria-label="Open menu"
+                    aria-expanded="false"
                 >
                     ☰
                 </button>
@@ -705,6 +709,10 @@
 
     <script type="module" src="../js/admin-auth.js"></script>
 <script type="module" src="../js/edit-product.js"></script>
+<script src="../js/admin-menu.js"></script>
+    <script src="../js/back-to-top.js"></script>
+    <script src="../js/scroll-reveal.js"></script>
+    <script src="../js/product-image-viewer.js"></script>
 </body>
 
 </html>

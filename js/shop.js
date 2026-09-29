@@ -9,6 +9,9 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
 
 
 /* =========================================================
@@ -46,6 +49,43 @@ const shopVideoGrid =
 
 const shopPagination =
     document.getElementById("shopPagination");
+
+// Shop order buttons put their product in the cart before opening checkout.
+document.addEventListener("click", event => {
+    const orderLink = event.target.closest("[data-checkout-product]");
+    if (!orderLink) return;
+
+    const product = products.find(item => String(item.id) === orderLink.dataset.checkoutProduct);
+    if (!product) return;
+
+    event.preventDefault();
+
+    let cart = [];
+    try {
+        const storedCart = JSON.parse(localStorage.getItem("sunshinesCart") || "[]");
+        if (Array.isArray(storedCart)) cart = storedCart;
+    } catch (error) {
+        console.warn("Could not read the existing cart; starting a new checkout cart.", error);
+    }
+
+    const image = product.mainImage || product.image || product.images?.[0] || "";
+    cart.push({
+        id: product.id,
+        name: product.name || "Luxury hair",
+        price: Number(product.price) || 0,
+        image,
+        videoUrl: product.videoUrl || product.video || "",
+        poster: image,
+        category: product.category || "",
+        description: product.description || "",
+        quantity: 1,
+        options: []
+    });
+
+    localStorage.setItem("sunshinesCart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("sunshines-cart-updated"));
+    window.location.href = "checkout.html";
+});
 
 
 /* =========================================================
@@ -89,17 +129,7 @@ const VIDEOS_PER_PAGE = 4;
    ========================================================= */
 
 function formatPrice(price) {
-
-    return new Intl.NumberFormat("en-NG", {
-
-        style: "currency",
-
-        currency: "NGN",
-
-        maximumFractionDigits: 0
-
-    }).format(Number(price) || 0);
-
+    return formatStorePrice(price, STORE_SETTINGS.currency);
 }
 
 
@@ -199,21 +229,15 @@ function createProductCard(product) {
     const image =
         product.mainImage ||
         product.image ||
-        "assets/logo/logo-light.png";
+        (Array.isArray(product.images) ? product.images[0] : "") || "";
+
+    const video = product.videoUrl || product.video || "";
 
     const details =
         getProductDetails(product);
 
     const productId =
         encodeURIComponent(product.id || "");
-
-    const orderMessage =
-        encodeURIComponent(
-            `Hello, I would like to order the ${
-                product.name || "luxury hair"
-            }.`
-        );
-
 
     return `
 
@@ -236,16 +260,20 @@ function createProductCard(product) {
                     ""
                 }
 
-                <img
+                ${!image && video ? `
+                <video class="product-card-video" controls playsinline preload="metadata" poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}" aria-label="${escapeHTML(product.name || "Product")} video">
+                    <source src="${escapeHTML(video)}">
+                </video>
+                ` : image ? `<img
                     src="${escapeHTML(image)}"
                     alt="${escapeHTML(product.name || "Product")}"
                     class="product-card-image"
                     loading="lazy"
                     onerror="this.style.display='none'; this.parentElement.classList.add('image-missing');"
-                >
+                >` : `<div class="missing-image image-missing"><span>SUNSHINE'S</span><strong>LUXURY HAIR</strong></div>`}
 
 
-                <div class="missing-image">
+                ${image ? `<div class="missing-image">
 
                     <span>
                         SUNSHINE'S
@@ -255,7 +283,7 @@ function createProductCard(product) {
                         LUXURY HAIR
                     </strong>
 
-                </div>
+                </div>` : ""}
 
             </div>
 
@@ -298,10 +326,9 @@ function createProductCard(product) {
                     </a>
 
                     <a
-                        href="https://wa.me/237XXXXXXXXX?text=${orderMessage}"
+                        href="checkout.html"
                         class="product-order-button"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        data-checkout-product="${escapeHTML(product.id)}"
                     >
                         Place Order Now
                     </a>
@@ -482,18 +509,30 @@ function renderVideos(pageProducts) {
                     product.name ||
                     "Luxury hair video";
 
-
+                const details = getProductDetails(product);
                 return `
                     <article class="shop-video-card">
                         <video
                             controls
                             playsinline
                             preload="metadata"
+                            poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}"
                             aria-label="${escapeHTML(name)} video"
                         >
                             <source src="${escapeHTML(video)}">
                             Your browser does not support video playback.
                         </video>
+                        <div class="shop-video-info">
+                            <p class="product-card-category">${escapeHTML(formatCategory(product.category))}</p>
+                            <h3>${escapeHTML(name)}</h3>
+                            <p>${escapeHTML(product.description || "")}</p>
+                            <p class="shop-video-product-details">${escapeHTML(details.color)} · ${escapeHTML(details.length)}</p>
+                            <strong>${formatPrice(product.price)}</strong>
+                            <div class="product-card-actions">
+                                <a href="product.html?id=${encodeURIComponent(product.id || "")}" class="product-view-details">View Details</a>
+                                <a href="checkout.html" class="product-order-button" data-checkout-product="${escapeHTML(product.id)}">Place Order</a>
+                            </div>
+                        </div>
                     </article>
                 `;
 
@@ -1057,6 +1096,9 @@ async function loadProducts() {
                 })
             );
 
+        window.dispatchEvent(new CustomEvent("sunshine-shop-products-loaded", {
+            detail: { products }
+        }));
 
         console.log(
             "Products loaded from Firestore:",

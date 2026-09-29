@@ -14,6 +14,9 @@ import {
     signOut,
     onAuthStateChanged
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
 
 
 /* ========================================
@@ -43,21 +46,6 @@ const stockFilter =
 const featuredFilter =
     document.getElementById(
         "featuredFilter"
-    );
-
-const adminSidebar =
-    document.getElementById(
-        "adminSidebar"
-    );
-
-const adminMenuToggle =
-    document.getElementById(
-        "adminMenuToggle"
-    );
-
-const adminOverlay =
-    document.getElementById(
-        "adminOverlay"
     );
 
 const logoutBtn =
@@ -168,18 +156,7 @@ async function getProducts() {
 ======================================== */
 
 function formatPrice(price) {
-
-    return new Intl.NumberFormat(
-        "en-NG",
-        {
-            style: "currency",
-            currency: "NGN",
-            maximumFractionDigits: 0
-        }
-    ).format(
-        Number(price) || 0
-    );
-
+    return formatStorePrice(price, STORE_SETTINGS.currency);
 }
 
 
@@ -281,6 +258,8 @@ function displayProducts(
                         : ""
                 );
 
+            const video = product.videoUrl || product.video || "";
+
 
             const imageHTML =
                 image
@@ -296,6 +275,18 @@ function displayProducts(
                         >
                     `
 
+                    : video
+                    ? `
+                        <video
+                            class="product-table-image"
+                            src="${escapeHTML(video)}"
+                            poster="${escapeHTML(product.mainImage || product.images?.[0] || "")}"
+                            muted
+                            playsinline
+                            preload="metadata"
+                            aria-label="${escapeHTML(product.name || "Product")} video preview"
+                        ></video>
+                    `
                     : `
                         <div
                             class="product-table-image product-image-placeholder"
@@ -351,9 +342,18 @@ function displayProducts(
                 product.status ===
                 "in-stock";
 
+            const isLowStock = isInStock && Number(product.stock) > 0 && Number(product.stock) <= Number(STORE_SETTINGS.lowStockThreshold);
+
 
             const statusHTML =
-                isInStock
+                isLowStock
+                    ? `
+                        <span class="product-status low-stock">
+                            <span class="status-dot"></span>
+                            Low Stock
+                        </span>
+                    `
+                    : isInStock
 
                     ? `
                         <span
@@ -810,63 +810,6 @@ if (featuredFilter) {
     featuredFilter.addEventListener(
         "change",
         filterProducts
-    );
-
-}
-
-
-/* ========================================
-   MOBILE SIDEBAR
-======================================== */
-
-if (
-    adminMenuToggle &&
-    adminSidebar
-) {
-
-    adminMenuToggle.addEventListener(
-        "click",
-        () => {
-
-            adminSidebar.classList.toggle(
-                "active"
-            );
-
-
-            if (adminOverlay) {
-
-                adminOverlay.style.display =
-                    adminSidebar.classList.contains(
-                        "active"
-                    )
-                        ? "block"
-                        : "none";
-
-            }
-
-        }
-    );
-
-}
-
-
-if (
-    adminOverlay &&
-    adminSidebar
-) {
-
-    adminOverlay.addEventListener(
-        "click",
-        () => {
-
-            adminSidebar.classList.remove(
-                "active"
-            );
-
-            adminOverlay.style.display =
-                "none";
-
-        }
     );
 
 }

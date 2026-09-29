@@ -41,5 +41,12 @@ service cloud.firestore {
       allow read: if isSignedIn();
       allow update, delete: if isSignedIn();
     }
+
+    match /settings/{settingId} {
+      // Storefront contact, currency, and delivery details are public client settings.
+      allow read: if settingId == 'storefront';
+      // Match the existing admin write policy used for products and order management.
+      allow create, update, delete: if isSignedIn();
+    }
   }
 }

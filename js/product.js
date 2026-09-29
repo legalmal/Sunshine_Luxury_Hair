@@ -9,6 +9,9 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
 
 
 /* =========================================================
@@ -142,16 +145,7 @@ let currentMediaIndex = 0;
    ========================================================= */
 
 function formatPrice(price) {
-
-    return new Intl.NumberFormat(
-        "en-NG",
-        {
-            style: "currency",
-            currency: "NGN",
-            maximumFractionDigits: 0
-        }
-    ).format(Number(price) || 0);
-
+    return formatStorePrice(price, STORE_SETTINGS.currency);
 }
 
 
@@ -492,7 +486,9 @@ function createMediaGallery() {
 
             type: "video",
 
-            src: videoUrl
+            src: videoUrl,
+
+            poster: product.mainImage || product.image || product.images?.[0] || ""
 
         });
 
@@ -601,6 +597,8 @@ function renderThumbnails() {
                 thumbnail.innerHTML = `
 
                     <div class="video-thumbnail">
+
+                        ${media.poster ? `<img src="${escapeHTML(media.poster)}" alt="${escapeHTML(product.name || "Product")} video thumbnail">` : ""}
 
                         <span>
                             ▶
@@ -719,6 +717,8 @@ function showMedia(index) {
     else {
 
         if (mainProductVideo) {
+
+            mainProductVideo.poster = media.poster || "";
 
             const source =
                 mainProductVideo.querySelector(
@@ -1250,6 +1250,14 @@ if (addToCartButton) {
 
                 image: image,
 
+                videoUrl: product.videoUrl || product.video || "",
+
+                poster: product.mainImage || product.image || product.images?.[0] || "",
+
+                category: product.category || "",
+
+                description: product.description || "",
+
                 quantity: quantity,
 
                 options: selectedOptions
@@ -1272,6 +1280,7 @@ if (addToCartButton) {
                 "sunshinesCart",
                 JSON.stringify(cart)
             );
+            window.dispatchEvent(new Event("sunshines-cart-updated"));
 
 
             setAddToCartButtonIcon(
@@ -1352,9 +1361,10 @@ function updateCartCount() {
             ) =>
                 sum +
                 (
-                    Number(
-                        item.quantity
-                    ) || 0
+                    Number.isFinite(Number(item.quantity)) &&
+                    Number(item.quantity) > 0
+                        ? Math.floor(Number(item.quantity))
+                        : 1
                 ),
             0
         );
@@ -1439,8 +1449,7 @@ if (whatsappButton) {
                 Do NOT include + or spaces.
             */
 
-            const phoneNumber =
-                "237XXXXXXXXX";
+            const phoneNumber = STORE_SETTINGS.whatsappNumber || "237XXXXXXXXX";
 
 
             const whatsappURL =

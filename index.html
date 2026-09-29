@@ -77,9 +77,11 @@
         rel="stylesheet"
         href="css/home-responsive.css"
     >
-    <link rel="stylesheet" href="css/brand.css">
-    <link rel="stylesheet" href="css/brand-responsive.css">
+    <link rel="stylesheet" href="css/client-polish.css">
 
+    <link rel="stylesheet" href="css/back-to-top.css">
+    <link rel="stylesheet" href="css/scroll-reveal.css">
+    <link rel="stylesheet" href="css/product-image-viewer.css">
 </head>
 
 
@@ -270,18 +272,6 @@
                         >
                             Shop Collection
                         </a>
-
-
-
-                        <a
-                            href="https://wa.me/237XXXXXXXXX"
-                            class="secondary-button"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Order on WhatsApp
-                        </a>
-
 
                     </div>
 
@@ -645,9 +635,24 @@
                 </div>
 
                 <h3>24/7 Support</h3>
-
                 <p>
                     Friendly customer support before and after every purchase.
+                </p>
+
+            </div>
+
+
+            <!-- Style Variety -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+
+                <h3>Styles for Every Moment</h3>
+
+                <p>
+                    Explore versatile looks to complement your style and occasion.
                 </p>
 
             </div>
@@ -888,29 +893,13 @@
 
 
 
-    <!-- =====================================================
-         WHATSAPP FLOATING BUTTON
-    ====================================================== -->
-
-    <a
-        href="https://wa.me/237XXXXXXXXX?text=Hello%20Sunshine's%20Luxury%20Hair,%20I%20would%20like%20to%20make%20an%20order."
-        class="whatsapp-float"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
-    >
-
-        <i class="fa-brands fa-whatsapp"></i>
-
-    </a>
-
-
 
     <!-- =====================================================
          JAVASCRIPT
     ====================================================== -->
 
     <script src="js/app.js"></script>
+    <script type="module" src="js/apply-store-settings.js"></script>
 
 
 
@@ -918,60 +907,10 @@
         type="module"
         src="js/home.js"
     ></script>
-
-
-
-    <!-- =====================================================
-         BACK TO TOP SCRIPT
-    ====================================================== -->
-
-    <script>
-
-        const backToTop =
-            document.getElementById("backToTop");
-
-
-        if (backToTop) {
-
-
-            window.addEventListener("scroll", () => {
-
-
-                if (window.scrollY > 400) {
-
-                    backToTop.classList.add("show");
-
-                } else {
-
-                    backToTop.classList.remove("show");
-
-                }
-
-
-            });
-
-
-
-            backToTop.addEventListener("click", () => {
-
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior: "smooth"
-
-                });
-
-
-            });
-
-
-        }
-
-    </script>
-
-
+    <script src="js/back-to-top.js"></script>
+    <script src="js/hero-copy.js"></script>
+    <script src="js/scroll-reveal.js"></script>
+    <script src="js/product-image-viewer.js"></script>
 </body>
 
 </html>

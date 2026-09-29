@@ -1,0 +1,203 @@
+/* Shared visual polish for all administration screens. */
+:root {
+    --admin-panel-radius: 16px;
+    --admin-panel-shadow: 0 18px 48px rgba(0, 0, 0, .22);
+}
+
+body.admin-body,
+body.admin-dashboard-page,
+body.admin-login-page {
+    background-color: #090909;
+    background-image:
+        radial-gradient(ellipse at 90% 0%, rgba(212, 175, 55, .075), transparent 34rem),
+        linear-gradient(145deg, rgba(255, 255, 255, .012), transparent 48%);
+}
+
+.admin-sidebar {
+    background: linear-gradient(180deg, #101010 0%, #080808 70%);
+    border-right-color: rgba(255, 255, 255, .09);
+}
+
+.admin-sidebar-header,
+.admin-brand {
+    border-bottom-color: rgba(255, 255, 255, .08);
+}
+
+.admin-nav-link,
+.admin-navigation a {
+    border-radius: 10px;
+    transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.admin-nav-link:hover,
+.admin-navigation a:hover {
+    transform: translateX(3px);
+}
+
+.admin-topbar {
+    background: rgba(12, 12, 12, .88);
+    border-bottom-color: rgba(255, 255, 255, .08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.admin-menu-toggle {
+    border-radius: 11px;
+    transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.admin-menu-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, .13);
+}
+
+.admin-card,
+.dashboard-stat-card,
+.stat-card,
+.dashboard-section,
+.recent-order-card,
+.recent-product-card,
+.recent-message-card,
+.products-toolbar,
+.products-table-container,
+.products-empty,
+.order-stat-card,
+.orders-toolbar,
+.admin-order-card,
+.orders-empty,
+.form-section,
+.product-not-found,
+.login-card {
+    border-radius: var(--admin-panel-radius);
+    box-shadow: var(--admin-panel-shadow);
+}
+
+.dashboard-stat-card,
+.stat-card,
+.order-stat-card,
+.recent-order-card,
+.recent-product-card,
+.recent-message-card,
+.admin-order-card,
+.form-section,
+.products-table-container,
+.products-toolbar {
+    transition: border-color .22s ease, background-color .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+
+.dashboard-stat-card:hover,
+.stat-card:hover,
+.order-stat-card:hover,
+.recent-order-card:hover,
+.recent-product-card:hover,
+.recent-message-card:hover,
+.admin-order-card:hover {
+    border-color: rgba(212, 175, 55, .34);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, .3);
+    transform: translateY(-3px);
+}
+
+.form-section:hover,
+.products-toolbar:hover,
+.products-table-container:hover {
+    border-color: rgba(212, 175, 55, .22);
+}
+
+.products-table tbody tr,
+.admin-table tbody tr {
+    transition: background-color .18s ease;
+}
+
+.products-table tbody tr:hover,
+.admin-table tbody tr:hover {
+    background: rgba(212, 175, 55, .045);
+}
+
+.admin-menu-toggle:focus-visible,
+.admin-nav-link:focus-visible,
+.admin-navigation a:focus-visible,
+.admin-body button:focus-visible,
+.admin-dashboard-page button:focus-visible,
+.admin-login-page button:focus-visible,
+.admin-body a:focus-visible,
+.admin-dashboard-page a:focus-visible,
+.admin-login-page a:focus-visible {
+    outline: 2px solid var(--admin-gold-light);
+    outline-offset: 3px;
+}
+
+.admin-body input:focus,
+.admin-body select:focus,
+.admin-body textarea:focus,
+.admin-dashboard-page input:focus,
+.admin-dashboard-page select:focus,
+.admin-dashboard-page textarea:focus,
+.admin-login-page input:focus {
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, .12);
+}
+
+.add-product-btn,
+.dashboard-action-btn,
+.view-all-btn,
+.save-product-btn,
+.cancel-btn,
+.admin-login-btn,
+.back-products-btn {
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+}
+
+.add-product-btn:hover,
+.dashboard-action-btn:hover,
+.view-all-btn:hover,
+.save-product-btn:hover,
+.admin-login-btn:hover,
+.back-products-btn:hover {
+    box-shadow: 0 10px 28px rgba(212, 175, 55, .16);
+    transform: translateY(-2px);
+}
+
+.admin-content > *,
+.orders-page > *,
+.add-product-intro,
+.product-form > .form-section,
+.edit-product-page > *,
+.login-card {
+    animation: admin-rise-in .48s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+.admin-content > *:nth-child(2),
+.orders-page > *:nth-child(2),
+.product-form > .form-section:nth-child(2),
+.edit-product-page > *:nth-child(2) {
+    animation-delay: .06s;
+}
+
+.admin-content > *:nth-child(3),
+.orders-page > *:nth-child(3),
+.product-form > .form-section:nth-child(3),
+.edit-product-page > *:nth-child(3) {
+    animation-delay: .12s;
+}
+
+@keyframes admin-rise-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    .admin-sidebar {
+        box-shadow: 20px 0 55px rgba(0, 0, 0, .48);
+        transition: transform .3s cubic-bezier(.2, .7, .2, 1), left .3s ease, visibility .3s ease;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}

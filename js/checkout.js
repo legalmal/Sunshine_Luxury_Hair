@@ -9,6 +9,9 @@ import {
     addDoc,
     serverTimestamp
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
 
 
 /* =========================================================
@@ -22,7 +25,7 @@ import {
 // Example Cameroon:
 // 237690000000
 //
-const WHATSAPP_NUMBER = "237XXXXXXXXX";
+const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237XXXXXXXXX";
 
 const CART_KEY = "sunshinesCart";
 
@@ -90,6 +93,7 @@ function getCart() {
 
 function clearCart() {
     localStorage.removeItem(CART_KEY);
+    window.dispatchEvent(new Event("sunshines-cart-updated"));
 }
 
 
@@ -98,9 +102,7 @@ function clearCart() {
 ========================================================= */
 
 function formatPrice(price) {
-
-    return `₦${Number(price || 0).toLocaleString("en-NG")}`;
-
+    return formatStorePrice(price, STORE_SETTINGS.currency);
 }
 
 
@@ -115,8 +117,7 @@ function getProductImage(item) {
         item.image ||
         (Array.isArray(item.images)
             ? item.images[0]
-            : "") ||
-        "assets/logos/logo-light.png"
+            : "")
     );
 
 }
@@ -300,11 +301,11 @@ function renderCheckoutItems(cart) {
         }
 
         if (checkoutSubtotal) {
-            checkoutSubtotal.textContent = "₦0";
+            checkoutSubtotal.textContent = formatPrice(0);
         }
 
         if (checkoutTotal) {
-            checkoutTotal.textContent = "₦0";
+            checkoutTotal.textContent = formatPrice(0);
         }
 
         if (placeOrderButton) {
@@ -351,10 +352,7 @@ function renderCheckoutItems(cart) {
 
                     <div class="checkout-item-image">
 
-                        <img
-                            src="${escapeHTML(image)}"
-                            alt="${escapeHTML(name)}"
-                        >
+                        ${image ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(name)}">` : item.videoUrl ? `<video src="${escapeHTML(item.videoUrl)}" poster="${escapeHTML(item.poster || "")}" controls playsinline preload="metadata" aria-label="${escapeHTML(name)} video"></video>` : ""}
 
                         <span class="checkout-item-quantity">
                             ${quantity}

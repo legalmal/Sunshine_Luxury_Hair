@@ -444,7 +444,8 @@
 }
 
 
-.checkout-item-image img {
+.checkout-item-image img,
+.checkout-item-image video {
 
     width: 100%;
 
@@ -684,4 +685,18 @@
 
     letter-spacing: 1px;
 
+}
+.checkout-delivery-note {
+    margin: 0 0 18px;
+    padding: 11px 14px;
+    color: var(--text-secondary, #666);
+    background: var(--white-soft, #f8f8f6);
+    border: 1px solid var(--border-color, #e5e5e5);
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.checkout-delivery-note:empty {
+    display: none;
 }

@@ -39,6 +39,10 @@
 
 @media (max-width: 900px) {
 
+    body.admin-menu-open {
+        overflow: hidden;
+    }
+
     .admin-sidebar {
         width: 250px;
     }
@@ -98,7 +102,7 @@
     .admin-sidebar-overlay {
         position: fixed;
         inset: 0;
-        z-index: 1900;
+        z-index: 1000;
 
         background: rgba(0, 0, 0, 0.55);
         backdrop-filter: blur(2px);
@@ -203,7 +207,10 @@
 
     .admin-sidebar {
         width: 280px;
-        left: -290px;
+    }
+
+    .admin-sidebar.active {
+        left: 0;
     }
 
     .admin-topbar {

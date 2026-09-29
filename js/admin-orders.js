@@ -6,6 +6,9 @@ import {
     updateDoc,
     deleteDoc
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
 
 
 /* =========================================
@@ -39,13 +42,6 @@ const orderSearch =
 const orderStatusFilter =
     document.getElementById("orderStatusFilter");
 
-const adminMenuToggle =
-    document.getElementById("adminMenuToggle");
-
-const adminSidebar =
-    document.querySelector(".admin-sidebar");
-
-
 /* =========================================
    DATA
 ========================================= */
@@ -58,11 +54,7 @@ let orders = [];
 ========================================= */
 
 function formatPrice(value) {
-
-    const price = Number(value) || 0;
-
-    return `₦${price.toLocaleString("en-NG")}`;
-
+    return formatStorePrice(value, STORE_SETTINGS.currency);
 }
 
 
@@ -1045,68 +1037,6 @@ ordersContainer.addEventListener(
 
     }
 );
-
-
-/* =========================================
-   MOBILE SIDEBAR
-========================================= */
-
-if (
-    adminMenuToggle &&
-    adminSidebar
-) {
-
-    adminMenuToggle.addEventListener(
-        "click",
-        event => {
-
-            event.preventDefault();
-
-            adminSidebar.classList.toggle(
-                "active"
-            );
-
-
-            const isOpen =
-                adminSidebar.classList.contains(
-                    "active"
-                );
-
-
-            adminMenuToggle.setAttribute(
-                "aria-expanded",
-                isOpen
-                    ? "true"
-                    : "false"
-            );
-
-        }
-    );
-
-
-    adminSidebar
-        .querySelectorAll("a")
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    adminSidebar.classList.remove(
-                        "active"
-                    );
-
-                    adminMenuToggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                }
-            );
-
-        });
-
-}
 
 
 /* =========================================

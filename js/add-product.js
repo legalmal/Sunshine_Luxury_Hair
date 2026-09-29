@@ -183,6 +183,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     mainImagePreview.innerHTML = "";
                 }
 
+                const videoPreviewElement = videoPreview?.querySelector("video");
+                if (videoPreviewElement) {
+                    videoPreviewElement.poster = file?.type.startsWith("image/")
+                        ? URL.createObjectURL(file)
+                        : "";
+                }
+
 
                 if (!file) {
                     return;
@@ -473,6 +480,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 video.preload = "metadata";
 
                 video.src = videoURL;
+
+                if (selectedMainImage) {
+                    video.poster = URL.createObjectURL(selectedMainImage);
+                }
 
 
                 wrapper.appendChild(video);
@@ -830,10 +841,14 @@ document.addEventListener("DOMContentLoaded", () => {
                    MAIN IMAGE VALIDATION
                 ================================= */
 
-                if (!selectedMainImage) {
+                if (
+                    !selectedMainImage &&
+                    selectedGalleryImages.length === 0 &&
+                    !videoInput?.files?.length
+                ) {
 
                     throw new Error(
-                        "Please select a main product image."
+                        "Please add at least one product image or video."
                     );
 
                 }
@@ -941,42 +956,26 @@ document.addEventListener("DOMContentLoaded", () => {
                    UPLOAD MAIN IMAGE
                 ================================= */
 
-                if (saveButton) {
+                let mainImage = "";
 
-                    saveButton.innerHTML = `
-                        <i class="fa-solid fa-spinner fa-spin"></i>
-                        Uploading Main Image...
-                    `;
+                if (selectedMainImage) {
+                    if (saveButton) {
+                        saveButton.innerHTML = `
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            Uploading Main Image...
+                        `;
+                    }
 
+                    showStatus("Uploading main product image...", "info");
+
+                    const mainImageResult = await uploadProductImage(selectedMainImage);
+
+                    if (!mainImageResult?.url) {
+                        throw new Error("Main image upload failed.");
+                    }
+
+                    mainImage = mainImageResult.url;
                 }
-
-
-                showStatus(
-                    "Uploading main product image...",
-                    "info"
-                );
-
-
-                const mainImageResult =
-                    await uploadProductImage(
-                        selectedMainImage
-                    );
-
-
-                if (
-                    !mainImageResult ||
-                    !mainImageResult.url
-                ) {
-
-                    throw new Error(
-                        "Main image upload failed."
-                    );
-
-                }
-
-
-                const mainImage =
-                    mainImageResult.url;
 
 
                 /* =================================
@@ -1042,9 +1041,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 ================================= */
 
                 const allImages = [
-                    mainImage,
+                    ...(mainImage ? [mainImage] : []),
                     ...galleryImages
                 ];
+
+                if (!mainImage && galleryImages.length) {
+                    mainImage = galleryImages[0];
+                }
 
 
                 /* =================================
@@ -1275,119 +1278,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-    /* =========================================
-       MOBILE SIDEBAR
-    ========================================= */
-
-    const menuToggle =
-        document.getElementById(
-            "adminMenuToggle"
-        );
-
-    const sidebar =
-        document.querySelector(
-            ".admin-sidebar"
-        );
-
-    const overlay =
-        document.getElementById(
-            "adminSidebarOverlay"
-        );
-
-
-    function closeSidebar() {
-
-        if (sidebar) {
-
-            sidebar.classList.remove(
-                "active"
-            );
-
-        }
-
-        if (overlay) {
-
-            overlay.classList.remove(
-                "active"
-            );
-
-        }
-
-        if (menuToggle) {
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
-    }
-
-
-    if (menuToggle) {
-
-        menuToggle.addEventListener(
-            "click",
-            () => {
-
-                const isOpen =
-                    sidebar?.classList.contains(
-                        "active"
-                    );
-
-
-                if (isOpen) {
-
-                    closeSidebar();
-
-                } else {
-
-                    sidebar?.classList.add(
-                        "active"
-                    );
-
-                    overlay?.classList.add(
-                        "active"
-                    );
-
-                    menuToggle.setAttribute(
-                        "aria-expanded",
-                        "true"
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    if (overlay) {
-
-        overlay.addEventListener(
-            "click",
-            closeSidebar
-        );
-
-    }
-
-
-    if (sidebar) {
-
-        sidebar
-            .querySelectorAll("a")
-            .forEach(link => {
-
-                link.addEventListener(
-                    "click",
-                    closeSidebar
-                );
-
-            });
-
-    }
 
 });

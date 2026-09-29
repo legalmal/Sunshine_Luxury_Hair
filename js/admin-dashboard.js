@@ -3,6 +3,9 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
+import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+
+const STORE_SETTINGS = await loadStoreSettings();
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -50,14 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ========================================= */
 
     function formatPrice(value) {
-
-        const amount = Number(value) || 0;
-
-        return new Intl.NumberFormat("en-NG", {
-            style: "currency",
-            currency: "NGN",
-            maximumFractionDigits: 0
-        }).format(amount);
+        return formatStorePrice(value, STORE_SETTINGS.currency);
     }
 
 
@@ -711,115 +707,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
 
             }).join("");
-
-    }
-
-
-    /* =========================================
-       MOBILE SIDEBAR
-    ========================================= */
-
-    const adminMenuToggle =
-        document.getElementById(
-            "adminMenuToggle"
-        );
-
-    const adminSidebar =
-        document.getElementById(
-            "adminSidebar"
-        );
-
-    const adminOverlay =
-        document.getElementById(
-            "adminOverlay"
-        );
-
-
-    function closeSidebar() {
-
-        if (adminSidebar) {
-            adminSidebar.classList.remove(
-                "active"
-            );
-        }
-
-        if (adminOverlay) {
-            adminOverlay.classList.remove(
-                "active"
-            );
-        }
-
-        if (adminMenuToggle) {
-            adminMenuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-        }
-
-    }
-
-
-    if (
-        adminMenuToggle &&
-        adminSidebar
-    ) {
-
-        adminMenuToggle.addEventListener(
-            "click",
-            () => {
-
-                adminSidebar.classList.toggle(
-                    "active"
-                );
-
-                if (adminOverlay) {
-
-                    adminOverlay.classList.toggle(
-                        "active"
-                    );
-
-                }
-
-                const isOpen =
-                    adminSidebar.classList.contains(
-                        "active"
-                    );
-
-                adminMenuToggle.setAttribute(
-                    "aria-expanded",
-                    isOpen
-                        ? "true"
-                        : "false"
-                );
-
-            }
-        );
-
-    }
-
-
-    if (adminOverlay) {
-
-        adminOverlay.addEventListener(
-            "click",
-            closeSidebar
-        );
-
-    }
-
-
-    if (adminSidebar) {
-
-        adminSidebar
-            .querySelectorAll("a")
-            .forEach(link => {
-
-                link.addEventListener(
-                    "click",
-                    closeSidebar
-                );
-
-            });
 
     }
 
