@@ -702,3 +702,11 @@ body.dark-theme #themeToggle:hover {
     }
 
 }
+/* Optional original price shown beside product selling prices. */
+.price-compare {
+    margin-left: .45rem;
+    color: #888;
+    font-size: .82em;
+    font-weight: 400;
+    opacity: .9;
+}

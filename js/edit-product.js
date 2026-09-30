@@ -153,6 +153,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("productPrice").value =
         product.price ?? "";
 
+    document.getElementById("productCompareAtPrice").value =
+        product.compareAtPrice ?? "";
+
 
     document.getElementById("productCategory").value =
         product.category || "";
@@ -702,6 +705,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                         .value
                 );
 
+            const compareAtPriceValue = document.getElementById("productCompareAtPrice").value.trim();
+            const compareAtPrice = compareAtPriceValue ? Number(compareAtPriceValue) : null;
+
 
             const category =
                 document
@@ -766,6 +772,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 window.showToast?.("Enter a valid price greater than or equal to zero.", "error");
 
+                return;
+            }
+
+            if (compareAtPrice !== null && (!Number.isFinite(compareAtPrice) || compareAtPrice <= price)) {
+                window.showToast?.("Slash price must be higher than the selling price.", "error");
                 return;
             }
 
@@ -977,6 +988,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 description,
 
                 price,
+
+                compareAtPrice,
 
                 colors,
 

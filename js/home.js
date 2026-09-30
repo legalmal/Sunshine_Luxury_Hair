@@ -9,7 +9,7 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 
 /* =========================================================
@@ -347,7 +347,7 @@ function createProductCard(product) {
     ===================================================== */
 
     const formattedPrice =
-        formatPrice(price);
+        formatProductPrice(price, product.compareAtPrice, STORE_SETTINGS.currency);
 
 
     /* =====================================================
@@ -610,7 +610,7 @@ function renderLatestVideos(products) {
 
                             ${length ? `<p class="latest-video-length">${escapeHTML(length)}</p>` : ""}
 
-                            <strong class="latest-video-price">${formatPrice(product.price)}</strong>
+                            <strong class="latest-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
 
                             <a class="latest-video-details" href="product.html?id=${encodeURIComponent(product.id || "")}">View Product</a>
 

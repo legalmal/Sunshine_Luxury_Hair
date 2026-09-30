@@ -9,7 +9,7 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
 
@@ -41,6 +41,20 @@ const mainProductImage =
 const mainProductVideo =
     document.getElementById("mainProductVideo");
 
+const productVideoError = document.getElementById("productVideoError");
+
+if (mainProductVideo && productVideoError) {
+    mainProductVideo.addEventListener("error", () => {
+        if (mediaItems[currentMediaIndex]?.type !== "video") return;
+        productVideoError.textContent = "This video could not be played. Please try another video or contact us for help.";
+        productVideoError.hidden = false;
+    });
+    mainProductVideo.addEventListener("loadeddata", () => {
+        productVideoError.hidden = true;
+        productVideoError.textContent = "";
+    });
+}
+
 const productThumbnails =
     document.getElementById("productThumbnails");
 
@@ -58,9 +72,6 @@ const productDescription =
 
 const productOptions =
     document.getElementById("productOptions");
-
-const productCode =
-    document.getElementById("productCode");
 
 const productMetaCategory =
     document.getElementById(
@@ -162,6 +173,26 @@ function escapeHTML(value) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
+}
+
+function getPlayableVideoUrl(url) {
+    try {
+        const playableUrl = new URL(url, window.location.href);
+        if (!/(^|\.)res\.cloudinary\.com$/i.test(playableUrl.hostname)) return url;
+
+        const uploadPath = "/video/upload/";
+        if (!playableUrl.pathname.includes(uploadPath)) return url;
+
+        // Deliver uploaded MOV/WebM/MP4 videos as broadly supported H.264 MP4.
+        playableUrl.pathname = playableUrl.pathname.replace(
+            uploadPath,
+            `${uploadPath}f_mp4,vc_h264:baseline:3.1/`
+        ).replace(/\.(mov|webm|m4v|mp4)$/i, ".mp4");
+        return playableUrl.href;
+    } catch (error) {
+        console.warn("Could not prepare the product video URL.", error);
+        return url;
+    }
 }
 
 
@@ -335,8 +366,8 @@ function displayProduct() {
 
     if (productPrice) {
 
-        productPrice.textContent =
-            formatPrice(product.price);
+        productPrice.innerHTML =
+            formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency);
 
     }
 
@@ -351,16 +382,6 @@ function displayProduct() {
 
     }
 
-
-    /* Product code */
-
-    if (productCode) {
-
-        productCode.textContent =
-            product.code ||
-            product.id;
-
-    }
 
 
     /* Breadcrumb */
@@ -487,7 +508,7 @@ function createMediaGallery() {
     videoUrls.forEach(videoUrl => {
         mediaItems.push({
             type: "video",
-            src: videoUrl,
+            src: getPlayableVideoUrl(videoUrl),
             poster: product.mainImage || product.image || product.images?.[0] || ""
         });
     });
@@ -716,6 +737,11 @@ function showMedia(index) {
 
         if (mainProductVideo) {
 
+            if (productVideoError) {
+                productVideoError.hidden = true;
+                productVideoError.textContent = "";
+            }
+
             mainProductVideo.poster = media.poster || "";
 
             const source =
@@ -728,6 +754,10 @@ function showMedia(index) {
 
                 source.src =
                     media.src;
+
+                // Detect the response MIME type so MOV and WebM aren't
+                // mistakenly treated as MP4 files.
+                source.removeAttribute("type");
 
             }
 
@@ -1246,6 +1276,8 @@ if (addToCartButton) {
                     product.price
                 ) || 0,
 
+                compareAtPrice: Number(product.compareAtPrice) || null,
+
                 image: image,
 
                 videoUrl: product.videoUrl || product.video || "",
@@ -1406,12 +1438,6 @@ if (whatsappButton) {
 
             message +=
                 `Product: ${product.name}\n`;
-
-
-            message +=
-                `Product Code: ${
-                    product.code || product.id
-                }\n`;
 
 
             message +=

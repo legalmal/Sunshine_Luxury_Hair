@@ -734,6 +734,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         priceInput.value
                     );
 
+                const compareAtPriceInput = document.getElementById("productCompareAtPrice");
+                const compareAtPriceValue = compareAtPriceInput?.value.trim();
+                const compareAtPrice = compareAtPriceValue ? Number(compareAtPriceValue) : null;
+
 
                 if (
                     Number.isNaN(price) ||
@@ -744,6 +748,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Please enter a valid product price."
                     );
 
+                }
+
+                if (compareAtPrice !== null && (!Number.isFinite(compareAtPrice) || compareAtPrice <= price)) {
+                    throw new Error("Slash price must be higher than the selling price.");
                 }
 
 
@@ -1015,7 +1023,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         saveButton.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading Video ${i + 1} of ${videoFiles.length}...`;
                     }
                     showStatus(`Uploading product video ${i + 1} of ${videoFiles.length}...`, "info");
-                    const uploaded = await uploadProductVideo(videoFiles[i]);
+                    let uploaded;
+                    try {
+                        uploaded = await uploadProductVideo(videoFiles[i]);
+                    } catch (error) {
+                        throw new Error(`Video ${i + 1} of ${videoFiles.length} (${videoFiles[i].name}): ${error.message}`);
+                    }
                     if (!uploaded?.url) throw new Error(`Product video ${i + 1} upload failed.`);
                     videos.push(uploaded.url);
                 }
@@ -1057,8 +1070,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     price,
 
-                    compareAtPrice:
-                        null,
+                    compareAtPrice,
 
                     stock,
 

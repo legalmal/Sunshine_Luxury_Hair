@@ -41,21 +41,6 @@
     <link rel="icon" type="image/png" href="assets/logos/logo-dark.png">
 </head>
 
-<!-- =====================================================
-     WHATSAPP FLOATING BUTTON
-====================================================== -->
-
-<a
-    href="https://wa.me/237681880898?text=Hello%20Sunshine's%20Luxury%20Hair,%20I%20would%20like%20to%20make%20an%20order."
-    class="whatsapp-float"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Chat with us on WhatsApp"
->
-    <i class="fa-brands fa-whatsapp"></i>
-</a>
-
-
 <body>
 
 
@@ -230,13 +215,14 @@
 
                             <source
                                 src=""
-                                type="video/mp4"
                             >
 
                             Your browser does not support
                             video playback.
 
                         </video>
+
+                        <p class="product-video-error" id="productVideoError" role="status" hidden></p>
 
 
                         <button
@@ -418,18 +404,6 @@
 
                     <div class="product-meta">
 
-                        <div>
-
-                            <span>
-                                Product Code
-                            </span>
-
-                            <strong id="productCode">
-                                —
-                            </strong>
-
-                        </div>
-
 
                         <div>
 
@@ -565,7 +539,6 @@
 
     <script src="js/back-to-top.js"></script>
     <script src="js/scroll-reveal.js"></script>
-    <script src="js/product-video-viewer.js"></script>
     <script type="module" src="js/product-favorites.js"></script>
     <script src="js/notifications.js"></script>
 </body>

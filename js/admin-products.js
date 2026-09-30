@@ -14,7 +14,7 @@ import {
     signOut,
     onAuthStateChanged
 } from "./firebase.js";
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
 
@@ -447,9 +447,7 @@ function displayProducts(
                     <span
                         class="product-price"
                     >
-                        ${formatPrice(
-                            product.price
-                        )}
+                        ${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}
                     </span>
 
                 </td>

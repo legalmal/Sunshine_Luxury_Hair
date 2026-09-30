@@ -9,7 +9,7 @@ import {
     collection,
     getDocs
 } from "./firebase.js";
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
 
@@ -73,6 +73,7 @@ document.addEventListener("click", event => {
         id: product.id,
         name: product.name || "Luxury hair",
         price: Number(product.price) || 0,
+        compareAtPrice: Number(product.compareAtPrice) || null,
         image,
         videoUrl: product.videoUrl || product.video || "",
         poster: image,
@@ -312,7 +313,7 @@ function createProductCard(product) {
 
 
                 <p class="product-card-price">
-                    ${formatPrice(product.price)}
+                    ${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}
                 </p>
 
 
@@ -527,7 +528,7 @@ function renderVideos(pageProducts) {
                             <h3>${escapeHTML(name)}</h3>
                             <p>${escapeHTML(product.description || "")}</p>
                             <p class="shop-video-product-details">${escapeHTML(details.color)} · ${escapeHTML(details.length)}</p>
-                            <strong>${formatPrice(product.price)}</strong>
+                            <strong class="shop-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
                             <div class="product-card-actions">
                                 <a href="product.html?id=${encodeURIComponent(product.id || "")}" class="product-view-details">View Details</a>
                                 <a href="checkout.html" class="product-order-button" data-checkout-product="${escapeHTML(product.id)}">Place Order</a>

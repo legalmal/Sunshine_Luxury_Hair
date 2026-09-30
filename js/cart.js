@@ -3,7 +3,7 @@
    CART JAVASCRIPT
    ========================================================= */
 
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
 
@@ -281,7 +281,7 @@ function renderCart() {
                         </h3>
 
                         <p class="cart-item-price">
-                            ${formatPrice(price)}
+                            ${formatProductPrice(price, item.compareAtPrice, STORE_SETTINGS.currency)}
                         </p>
 
                         ${

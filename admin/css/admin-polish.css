@@ -201,3 +201,9 @@ body.admin-login-page {
         transition-duration: .01ms !important;
     }
 }
+.price-compare {
+    margin-left: .4rem;
+    color: #888;
+    font-size: .82em;
+    font-weight: 400;
+}

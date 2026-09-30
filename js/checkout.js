@@ -9,7 +9,7 @@ import {
     addDoc,
     serverTimestamp
 } from "./firebase.js";
-import { loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
 
@@ -377,7 +377,7 @@ function renderCheckoutItems(cart) {
                         }
 
                         <p>
-                            ${formatPrice(price)}
+                            ${formatProductPrice(price, item.compareAtPrice, STORE_SETTINGS.currency)}
                         </p>
 
                     </div>

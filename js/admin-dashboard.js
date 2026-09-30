@@ -5,7 +5,7 @@ import {
     getDocsFromServer,
     onAuthStateChanged
 } from "./firebase.js";
-import { DEFAULT_STORE_SETTINGS, loadStoreSettings, formatStorePrice } from "./store-settings.js";
+import { DEFAULT_STORE_SETTINGS, loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 // Dashboard initialization must not wait for the optional currency settings read.
 let STORE_SETTINGS = DEFAULT_STORE_SETTINGS;
@@ -572,7 +572,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     product.category || "Uncategorized";
 
                 const price =
-                    formatPrice(product.price);
+                    formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency);
 
                 const status =
                     product.status || "in-stock";

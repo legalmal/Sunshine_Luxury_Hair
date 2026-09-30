@@ -38,3 +38,9 @@ export function formatStorePrice(value, currency = "NGN") {
         maximumFractionDigits: 0
     }).format(amount);
 }
+
+export function formatProductPrice(value, compareAtPrice, currency = "NGN") {
+    const current = formatStorePrice(value, currency);
+    const compare = Number(compareAtPrice);
+    return `<span class="price-current">${current}</span>${Number.isFinite(compare) && compare > Number(value) ? ` <del class="price-compare">${formatStorePrice(compare, currency)}</del>` : ""}`;
+}

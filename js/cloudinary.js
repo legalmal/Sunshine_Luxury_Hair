@@ -71,26 +71,57 @@ async function uploadProductVideo(file) {
         throw new Error("Selected file is not a video.");
     }
 
-    const formData = new FormData();
-
-    formData.append("file", file);
-    formData.append(
-        "upload_preset",
-        CLOUDINARY_UPLOAD_PRESET
-    );
-
-
     const uploadURL =
         `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
 
+    // Cloudinary requires chunked uploads for files over 100 MB.
+    if (file.size > 100 * 1024 * 1024) {
+        const chunkSize = 20 * 1024 * 1024;
+        const uploadId = globalThis.crypto?.randomUUID?.()
+            || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        let data = null;
 
-    const response = await fetch(uploadURL, {
-        method: "POST",
-        body: formData
-    });
+        for (let start = 0; start < file.size; start += chunkSize) {
+            const end = Math.min(start + chunkSize, file.size) - 1;
+            const formData = new FormData();
+            formData.append("file", file.slice(start, end + 1), file.name);
+            formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+            let response;
+            try {
+                response = await fetch(uploadURL, {
+                    method: "POST",
+                    headers: {
+                        "X-Unique-Upload-Id": uploadId,
+                        "Content-Range": `bytes ${start}-${end}/${file.size}`
+                    },
+                    body: formData
+                });
+            } catch (error) {
+                throw new Error(`Network request for ${file.name} could not reach Cloudinary: ${error?.message || "check your connection and Cloudinary upload access."}`);
+            }
+            const chunkResponse = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(chunkResponse?.error?.message || `Video upload failed (HTTP ${response.status}).`);
+            }
+            if (chunkResponse.done !== false) data = chunkResponse;
+        }
 
+        if (!data?.secure_url) throw new Error("Cloudinary did not finish the video upload.");
+        return { url: data.secure_url, publicId: data.public_id, resourceType: data.resource_type };
+    }
 
-    const data = await response.json();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    let response;
+    try {
+        response = await fetch(uploadURL, { method: "POST", body: formData });
+    } catch (error) {
+        throw new Error(`Network request for ${file.name} could not reach Cloudinary: ${error?.message || "check your connection and Cloudinary upload access."}`);
+    }
+
+    const data = await response.json().catch(() => ({}));
 
 
     if (!response.ok) {
