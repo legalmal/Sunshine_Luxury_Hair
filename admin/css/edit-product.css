@@ -570,6 +570,24 @@
     border-radius: 10px;
 }
 
+.existing-video-item {
+    margin-bottom: 18px;
+}
+
+.existing-video-item label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 8px;
+    color: var(--text-primary, #222);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.existing-video-item input[type="radio"] {
+    accent-color: #d4af37;
+}
+
 
 /* =========================================================
    VIDEO PREVIEW

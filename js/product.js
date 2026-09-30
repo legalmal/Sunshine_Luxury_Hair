@@ -479,24 +479,18 @@ function createMediaGallery() {
         Video
     */
 
-    const videoUrl =
-        product.videoUrl ||
-        product.video;
-
-
-    if (videoUrl) {
-
+    const storedVideos = Array.isArray(product.videos)
+        ? product.videos.map(video => typeof video === "string" ? video : video?.url).filter(Boolean)
+        : [];
+    const legacyMainVideo = product.mainVideo || product.videoUrl || product.video || "";
+    const videoUrls = [...new Set([legacyMainVideo, ...storedVideos].filter(Boolean))];
+    videoUrls.forEach(videoUrl => {
         mediaItems.push({
-
             type: "video",
-
             src: videoUrl,
-
             poster: product.mainImage || product.image || product.images?.[0] || ""
-
         });
-
-    }
+    });
 
 
     renderThumbnails();

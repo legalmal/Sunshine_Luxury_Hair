@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     ===================================================== */
 
     let product = null;
+    let selectedNewMainVideoIndex = -1;
 
 
     try {
@@ -267,7 +268,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     videoInput.addEventListener(
         "change",
-        previewNewVideo
+        () => {
+            selectedNewMainVideoIndex = -1;
+            previewNewVideo();
+        }
     );
 
 
@@ -580,8 +584,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         existingVideo.innerHTML = "";
 
+        const videos = Array.isArray(product.videos)
+            ? product.videos.map(video => typeof video === "string" ? video : video?.url).filter(Boolean)
+            : [];
+        const videoUrls = [...new Set([product.mainVideo || product.videoUrl || product.video || "", ...videos].filter(Boolean))];
 
-        if (!product.videoUrl) {
+        if (!videoUrls.length) {
 
             existingVideo.innerHTML = `
 
@@ -595,20 +603,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        const video =
-            document.createElement("video");
-
-        video.controls = true;
-
-        video.poster = product.mainImage || product.images?.[0] || "";
-
-        video.src =
-            product.videoUrl;
-
-
-        existingVideo.appendChild(
-            video
-        );
+        videoUrls.forEach((url, index) => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "existing-video-item";
+            const video = document.createElement("video");
+            video.controls = true;
+            video.poster = product.mainImage || product.images?.[0] || "";
+            video.src = url;
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "existingMainVideo";
+            radio.value = url;
+            radio.checked = url === (product.mainVideo || product.videoUrl || product.video) || (!product.mainVideo && !product.videoUrl && index === 0);
+            radio.addEventListener("change", () => {
+                product.mainVideo = url;
+                product.videoUrl = url;
+            });
+            label.append(radio, document.createTextNode(" Main video"));
+            wrapper.append(video, label);
+            existingVideo.appendChild(wrapper);
+        });
 
     }
 
@@ -622,33 +637,32 @@ document.addEventListener("DOMContentLoaded", async () => {
         videoPreview.innerHTML = "";
 
 
-        const file =
-            videoInput.files[0];
+        const files = Array.from(videoInput.files || []);
 
-
-        if (!file) {
+        if (!files.length) {
             return;
         }
-
-
-        const videoURL =
-            URL.createObjectURL(file);
-
-
-        const video =
-            document.createElement("video");
-
-        video.controls = true;
-
-        video.poster = product.mainImage || product.images?.[0] || "";
-
-        video.src =
-            videoURL;
-
-
-        videoPreview.appendChild(
-            video
-        );
+        files.forEach((file, index) => {
+            if (!file.type.startsWith("video/")) return;
+            const video = document.createElement("video");
+            video.controls = true;
+            video.poster = product.mainImage || product.images?.[0] || "";
+            video.src = URL.createObjectURL(file);
+            const wrapper = document.createElement("div");
+            wrapper.className = "existing-video-item";
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "newMainVideo";
+            radio.checked = selectedNewMainVideoIndex === index;
+            radio.addEventListener("change", () => {
+                selectedNewMainVideoIndex = index;
+                previewNewVideo();
+            });
+            label.append(radio, document.createTextNode(" Set as main video"));
+            wrapper.append(video, label);
+            videoPreview.appendChild(wrapper);
+        });
 
     }
 
@@ -835,7 +849,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             const hasNewVideo = Boolean(videoInput.files.length);
-            const hasExistingVideo = Boolean(product.videoUrl || product.video);
+            const hasExistingVideo = Boolean(product.mainVideo || product.videoUrl || product.video || product.videos?.length);
 
             if (
                 product.images.length === 0 &&
@@ -917,33 +931,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                VIDEO
             --------------------------------------------- */
 
-            let videoUrl =
-                product.videoUrl || "";
-
-
-            if (
-                videoInput.files.length > 0
-            ) {
-
-                saveButton.textContent =
-                    "Uploading video...";
-
-
-                console.log(
-                    "Uploading new product video..."
-                );
-
-
-                const uploadedVideo =
-                    await uploadProductVideo(
-                        videoInput.files[0]
-                    );
-
-
-                videoUrl =
-                    uploadedVideo.url;
-
+            const videos = Array.isArray(product.videos)
+                ? product.videos.map(video => typeof video === "string" ? video : video?.url).filter(Boolean)
+                : [];
+            const videoUrls = [...new Set([product.mainVideo || product.videoUrl || product.video || "", ...videos].filter(Boolean))];
+            const uploadedNewVideos = [];
+            for (const [index, file] of Array.from(videoInput.files || []).entries()) {
+                saveButton.textContent = `Uploading video ${index + 1}...`;
+                const uploadedVideo = await uploadProductVideo(file);
+                if (!uploadedVideo?.url) throw new Error(`Video ${index + 1} upload failed.`);
+                videoUrls.push(uploadedVideo.url);
+                uploadedNewVideos.push(uploadedVideo.url);
             }
+            const uniqueVideoUrls = [...new Set(videoUrls)];
+            const mainVideo = selectedNewMainVideoIndex >= 0
+                ? uploadedNewVideos[selectedNewMainVideoIndex] || product.mainVideo || product.videoUrl || product.video || uniqueVideoUrls[0] || ""
+                : product.mainVideo || product.videoUrl || product.video || uniqueVideoUrls[0] || "";
 
 
             /* ---------------------------------------------
@@ -990,7 +993,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 mainImage,
 
-                videoUrl,
+                videos: uniqueVideoUrls,
+
+                mainVideo,
+
+                videoUrl: mainVideo,
 
                 updatedAt:
                     serverTimestamp()

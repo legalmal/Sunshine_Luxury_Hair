@@ -1,5 +1,5 @@
 @media (max-width: 700px) {
-    .contact-page { padding: 48px 18px 60px; }
+    .contact-page { padding: 0 18px 60px; }
     .contact-intro { margin-bottom: 32px; }
     .contact-intro h1 { font-size: 47px; }
     .contact-panel { grid-template-columns: 1fr; }

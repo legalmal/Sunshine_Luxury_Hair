@@ -77,6 +77,9 @@
         rel="stylesheet"
         href="css/home-responsive.css"
     >
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/about-responsive.css">
+    <link rel="stylesheet" href="css/home-hero-slideshow.css">
     <link rel="stylesheet" href="css/client-polish.css">
 
     <link rel="stylesheet" href="css/back-to-top.css">
@@ -225,65 +228,50 @@
         ================================================== -->
 
         <section class="hero-section">
-
-
+            <div class="home-slideshow about-slideshow" data-about-slideshow aria-label="Sunshine's Luxury Hair featured looks">
+                <div class="about-slideshow-stage" aria-live="off" data-fit-image-ratio style="aspect-ratio: 760 / 310">
+                    <div class="about-slide is-active" aria-hidden="false">
+                        <img src="assets/images/home-hero-1.png" alt="Featured Sunshine's Luxury Hair look" fetchpriority="high">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/home-hero-2.png" alt="Luxury hair style from Sunshine's Luxury Hair"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/home-hero-3.png" alt="Discover your next hair look"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/home-hero-4.png" alt="A beautiful style for every moment"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/home-hero-5.png" alt="Explore the Sunshine's Luxury Hair collection"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/home-hero-6.png" alt="Find a look that feels like you"></div>
+                </div>
+                <div class="about-slideshow-controls" aria-label="Slideshow controls">
+                    <button class="slideshow-control slideshow-previous" type="button" data-slide-previous aria-label="Previous image">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+                    </button>
+                    <div class="slideshow-dots" role="group" aria-label="Choose an image">
+                        <button type="button" class="slideshow-dot is-active" data-slide-to="0" aria-label="Show image 1 of 6" aria-current="true"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="1" aria-label="Show image 2 of 6"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="2" aria-label="Show image 3 of 6"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="3" aria-label="Show image 4 of 6"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="4" aria-label="Show image 5 of 6"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="5" aria-label="Show image 6 of 6"></button>
+                    </div>
+                    <button class="slideshow-control slideshow-next" type="button" data-slide-next aria-label="Next image">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                    </button>
+                    <button class="slideshow-control slideshow-toggle" type="button" data-slide-toggle aria-label="Pause slideshow" aria-pressed="false">
+                        <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg>
+                        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6z" /></svg>
+                    </button>
+                </div>
+            </div>
             <div class="hero-container">
 
 
-                <!-- HERO CONTENT -->
-
                 <div class="hero-content">
-
-
-                    <p class="hero-label">
-                        SUNSHINE'S LUXURY HAIR
-                    </p>
-
-
-
-                    <h1 class="hero-title">
-
-                        BE BOLD.<br>
-
-                        BE BEAUTIFUL.<br>
-
-                        <span>BE YOU.</span>
-
-                    </h1>
-
-
-
-                    <p class="hero-description">
-
-                        Discover premium luxury hair designed
-                        to elevate your beauty, confidence
-                        and personal style.
-
-                    </p>
-
-
-
-                    <!-- HERO BUTTONS -->
-
                     <div class="hero-buttons">
-
-
                         <a
                             href="shop.html"
                             class="primary-button"
                         >
                             Shop Collection
                         </a>
-
                     </div>
-
-
-
-                    <!-- DECORATIVE BORDER -->
-
-                    <div class="hero-decoration"></div>
-
-
                 </div>
 
 
@@ -911,6 +899,7 @@
     ></script>
     <script src="js/back-to-top.js"></script>
     <script src="js/hero-copy.js"></script>
+    <script src="js/about-slideshow.js"></script>
     <script src="js/scroll-reveal.js"></script>
     <script src="js/product-video-viewer.js"></script>
     <script type="module" src="js/product-favorites.js"></script>

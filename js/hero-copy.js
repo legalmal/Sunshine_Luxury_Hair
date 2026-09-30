@@ -31,29 +31,6 @@
             ]
         },
         {
-            root: ".contact-intro",
-            label: ".contact-eyebrow",
-            title: "h1",
-            description: ":scope > p:last-child",
-            slides: [
-                {
-                    label: "WE'RE HERE FOR YOU",
-                    title: "Let's talk about<br><em>your next look.</em>",
-                    description: "Have a question about a style, an order, or finding the right look? Send us a message and our team will get back to you."
-                },
-                {
-                    label: "HERE TO HELP",
-                    title: "We're listening.<br><em>Let's connect.</em>",
-                    description: "Tell us what you are looking for and our team will help with styles, orders, and finding your next look."
-                },
-                {
-                    label: "YOUR QUESTIONS MATTER",
-                    title: "A little help<br><em>goes a long way.</em>",
-                    description: "Reach out whenever you need help choosing a style or have a question about your order."
-                }
-            ]
-        },
-        {
             root: ".cart-page-header",
             label: ".section-label",
             title: "h1",
@@ -222,18 +199,6 @@
             }, fadeDuration);
         }, cycleDuration);
     };
-
-    window.addEventListener("sunshine-products-loaded", event => {
-        startProductHero(event.detail?.products || [], {
-            root: ".hero-section",
-            imageTarget: ".hero-section",
-            label: ".hero-label",
-            title: ".hero-title",
-            description: ".hero-description",
-            defaultLabel: "Featured collection",
-            productSource: "featured"
-        });
-    });
 
     window.addEventListener("sunshine-shop-products-loaded", event => {
         startProductHero(event.detail?.products || [], {

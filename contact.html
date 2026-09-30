@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/about-responsive.css">
     <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/contact-responsive.css">
     <link rel="stylesheet" href="css/brand.css">
@@ -36,10 +38,50 @@
     </header>
 
     <main class="contact-page">
-        <section class="contact-intro">
-            <p class="contact-eyebrow">WE'RE HERE FOR YOU</p>
-            <h1>Let's talk about<br><em>your next look.</em></h1>
-            <p>Have a question about a style, an order, or finding the right look? Send us a message and our team will get back to you.</p>
+        <section class="contact-hero" aria-label="Contact Sunshine's Luxury Hair">
+            <div class="contact-slideshow about-slideshow" data-about-slideshow aria-label="Sunshine's Luxury Hair contact images">
+                <div class="about-slideshow-stage" aria-live="off">
+                    <div class="about-slide is-active" aria-hidden="false">
+                        <img src="assets/images/contact-hero-1.png" alt="Contact Sunshine's Luxury Hair for help with your next look" fetchpriority="high">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/contact-hero-2.png" alt="Explore luxury hair styles from Sunshine's Luxury Hair">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/contact-hero-3.png" alt="Find a style that feels like you">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/contact-hero-4.png" alt="Sunshine's Luxury Hair is here to help">
+                    </div>
+                    <div class="about-slide" aria-hidden="true" inert>
+                        <img src="assets/images/contact-hero-5.png" alt="Connect with the Sunshine's Luxury Hair team">
+                    </div>
+                </div>
+                <div class="about-slideshow-controls" aria-label="Slideshow controls">
+                    <button class="slideshow-control slideshow-previous" type="button" data-slide-previous aria-label="Previous image">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+                    </button>
+                    <div class="slideshow-dots" role="group" aria-label="Choose an image">
+                        <button type="button" class="slideshow-dot is-active" data-slide-to="0" aria-label="Show image 1 of 5" aria-current="true"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="1" aria-label="Show image 2 of 5"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="2" aria-label="Show image 3 of 5"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="3" aria-label="Show image 4 of 5"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="4" aria-label="Show image 5 of 5"></button>
+                    </div>
+                    <button class="slideshow-control slideshow-next" type="button" data-slide-next aria-label="Next image">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+                    </button>
+                    <button class="slideshow-control slideshow-toggle" type="button" data-slide-toggle aria-label="Pause slideshow" aria-pressed="false">
+                        <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg>
+                        <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6z" /></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="contact-intro">
+                <p class="contact-eyebrow">WE'RE HERE FOR YOU</p>
+                <h1>Let's talk about<br><em>your next look.</em></h1>
+                <p>Have a question about a style, an order, or finding the right look? Send us a message and our team will get back to you.</p>
+            </div>
         </section>
 
         <section class="contact-panel" aria-label="Send us a message">
@@ -112,6 +154,7 @@
     <script type="module" src="js/contact.js"></script>
     <script type="module" src="js/contact-map.js"></script>
     <script src="js/hero-copy.js"></script>
+    <script src="js/about-slideshow.js"></script>
     <script src="js/back-to-top.js"></script>
     <script src="js/scroll-reveal.js"></script>
     <script src="js/notifications.js"></script>

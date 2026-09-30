@@ -1042,6 +1042,20 @@
     border-radius: 3px;
 }
 
+.video-preview-card .preview-file-info label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    color: #f2d778;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.video-preview-card .preview-file-info input {
+    accent-color: #d4af37;
+}
+
 
 /* =========================================================
    SCROLLBAR

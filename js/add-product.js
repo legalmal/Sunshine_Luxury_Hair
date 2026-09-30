@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selectedMainImage = null;
     let selectedGalleryImages = [];
+    let selectedMainVideoIndex = 0;
 
 
     /* =========================================
@@ -423,106 +424,57 @@ document.addEventListener("DOMContentLoaded", () => {
        VIDEO PREVIEW
     ========================================= */
 
+    function renderVideoPreview() {
+        if (!videoPreview) return;
+        videoPreview.innerHTML = "";
+        const files = Array.from(videoInput?.files || []);
+        if (!files.length) return;
+
+        files.forEach((file, index) => {
+            if (!file.type.startsWith("video/")) return;
+            const wrapper = document.createElement("div");
+            wrapper.className = "video-preview-card";
+            const video = document.createElement("video");
+            video.controls = true;
+            video.preload = "metadata";
+            video.src = URL.createObjectURL(file);
+            wrapper.appendChild(video);
+
+            const information = document.createElement("div");
+            information.className = "preview-file-info";
+            const name = document.createElement("strong");
+            name.textContent = file.name;
+            const size = document.createElement("span");
+            size.textContent = formatFileSize(file.size);
+            const mainLabel = document.createElement("label");
+            const mainChoice = document.createElement("input");
+            mainChoice.type = "radio";
+            mainChoice.name = "mainProductVideoChoice";
+            mainChoice.value = String(index);
+            mainChoice.checked = index === selectedMainVideoIndex;
+            mainChoice.setAttribute("aria-label", `Set ${file.name} as the main video`);
+            mainChoice.addEventListener("change", () => {
+                selectedMainVideoIndex = index;
+                renderVideoPreview();
+            });
+            mainLabel.append(mainChoice, document.createTextNode(" Main video"));
+            information.append(name, size, mainLabel);
+            wrapper.appendChild(information);
+            videoPreview.appendChild(wrapper);
+        });
+    }
+
     if (videoInput) {
-
-        videoInput.addEventListener(
-            "change",
-            () => {
-
-                const file =
-                    videoInput.files?.[0];
-
-
-                if (videoPreview) {
-                    videoPreview.innerHTML = "";
-                }
-
-
-                if (!file) {
-                    return;
-                }
-
-
-                /* Validate */
-
-                if (!file.type.startsWith("video/")) {
-
-                    videoInput.value = "";
-
-                    showStatus(
-                        "Please select a valid video file.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                const videoURL =
-                    URL.createObjectURL(file);
-
-
-                const wrapper =
-                    document.createElement(
-                        "div"
-                    );
-
-                wrapper.className =
-                    "video-preview-card";
-
-
-                const video =
-                    document.createElement(
-                        "video"
-                    );
-
-
-                video.controls = true;
-
-                video.preload = "metadata";
-
-                video.src = videoURL;
-
-                if (selectedMainImage) {
-                    video.poster = URL.createObjectURL(selectedMainImage);
-                }
-
-
-                wrapper.appendChild(video);
-
-
-                const information =
-                    document.createElement(
-                        "div"
-                    );
-
-                information.className =
-                    "preview-file-info";
-
-
-                information.innerHTML = `
-                    <strong>
-                        ${file.name}
-                    </strong>
-
-                    <span>
-                        ${formatFileSize(file.size)}
-                    </span>
-                `;
-
-
-                wrapper.appendChild(
-                    information
-                );
-
-
-                videoPreview.appendChild(
-                    wrapper
-                );
-
+        videoInput.addEventListener("change", () => {
+            const files = Array.from(videoInput.files || []);
+            if (files.some(file => !file.type.startsWith("video/"))) {
+                videoInput.value = "";
+                showStatus("Please select valid video files.", "error");
+                return;
             }
-        );
-
+            selectedMainVideoIndex = 0;
+            renderVideoPreview();
+        });
     }
 
 
@@ -1056,57 +1008,20 @@ document.addEventListener("DOMContentLoaded", () => {
                    UPLOAD VIDEO
                 ================================= */
 
-                let videoUrl = "";
-
-
-                if (
-                    videoInput &&
-                    videoInput.files &&
-                    videoInput.files.length > 0
-                ) {
-
-                    const videoFile =
-                        videoInput.files[0];
-
-
+                const videoFiles = Array.from(videoInput?.files || []);
+                const videos = [];
+                for (let i = 0; i < videoFiles.length; i++) {
                     if (saveButton) {
-
-                        saveButton.innerHTML = `
-                            <i class="fa-solid fa-spinner fa-spin"></i>
-                            Uploading Video...
-                        `;
-
+                        saveButton.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading Video ${i + 1} of ${videoFiles.length}...`;
                     }
-
-
-                    showStatus(
-                        "Uploading product video...",
-                        "info"
-                    );
-
-
-                    const videoResult =
-                        await uploadProductVideo(
-                            videoFile
-                        );
-
-
-                    if (
-                        !videoResult ||
-                        !videoResult.url
-                    ) {
-
-                        throw new Error(
-                            "Product video upload failed."
-                        );
-
-                    }
-
-
-                    videoUrl =
-                        videoResult.url;
-
+                    showStatus(`Uploading product video ${i + 1} of ${videoFiles.length}...`, "info");
+                    const uploaded = await uploadProductVideo(videoFiles[i]);
+                    if (!uploaded?.url) throw new Error(`Product video ${i + 1} upload failed.`);
+                    videos.push(uploaded.url);
                 }
+                const mainVideo = videos.length
+                    ? videos[Math.min(selectedMainVideoIndex, videos.length - 1)]
+                    : "";
 
 
                 /* =================================
@@ -1172,11 +1087,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     images:
                         allImages,
 
-                    /*
-                     * OPTIONAL VIDEO
-                     */
+                    videos,
 
-                    videoUrl,
+                    mainVideo,
+
+                    // Keep the legacy field for existing product cards and integrations.
+                    videoUrl: mainVideo,
 
                     colors,
 

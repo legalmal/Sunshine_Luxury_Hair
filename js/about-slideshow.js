@@ -25,6 +25,18 @@
             slide.toggleAttribute("inert", !active);
         });
 
+        const ratioStage = slideshow.querySelector("[data-fit-image-ratio]");
+        const activeImage = slides[activeIndex]?.querySelector("img");
+        if (ratioStage && activeImage) {
+            const applyImageRatio = () => {
+                if (activeImage.naturalWidth && activeImage.naturalHeight) {
+                    ratioStage.style.aspectRatio = `${activeImage.naturalWidth} / ${activeImage.naturalHeight}`;
+                }
+            };
+            if (activeImage.complete) applyImageRatio();
+            else activeImage.addEventListener("load", applyImageRatio, { once: true });
+        }
+
         dots.forEach((dot, index) => {
             const active = index === activeIndex;
             dot.classList.toggle("is-active", active);
