@@ -8,7 +8,7 @@
     const nextButton = slideshow.querySelector("[data-slide-next]");
     const toggleButton = slideshow.querySelector("[data-slide-toggle]");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const intervalMs = 6000;
+    const intervalMs = slideshow.classList.contains("home-slideshow") ? 10000 : 6000;
 
     if (slides.length < 2 || !previousButton || !nextButton || !toggleButton) return;
 

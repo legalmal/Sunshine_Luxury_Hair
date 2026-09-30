@@ -16,13 +16,13 @@
 }
 
 .home-slideshow .about-slide.is-active img {
-    animation: home-hero-slow-motion 6s ease-out both;
+    animation: home-hero-slow-motion 10s linear both;
     transform-origin: center;
 }
 
 @keyframes home-hero-slow-motion {
-    from { transform: scale(1.04) translate3d(2%, 0, 0); }
-    to { transform: scale(1.04) translate3d(-2%, 0, 0); }
+    from { transform: scale(1.16) translate3d(7%, 0, 0); }
+    to { transform: scale(1.16) translate3d(-7%, 0, 0); }
 }
 
 .hero-container {
