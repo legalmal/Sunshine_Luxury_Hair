@@ -485,15 +485,14 @@ function displayProducts(
                         class="product-actions"
                     >
 
-                        <button
+                        <a
                             class="product-action-btn"
                             title="Edit Product"
-                            data-edit-id="${escapeHTML(
-                                product.id
-                            )}"
+                            aria-label="Edit ${escapeHTML(product.name || "product")}"
+                            href="adit-product.html?id=${encodeURIComponent(product.id)}"
                         >
                             ✎
-                        </button>
+                        </a>
 
 
                         <button
@@ -519,32 +518,6 @@ function displayProducts(
 
         }
     );
-
-
-    /* =================================
-       EDIT BUTTONS
-    ================================= */
-
-    document
-        .querySelectorAll(
-            "[data-edit-id]"
-        )
-        .forEach(
-            (button) => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        editProduct(
-                            button.dataset.editId
-                        );
-
-                    }
-                );
-
-            }
-        );
 
 
     /* =================================
@@ -665,22 +638,6 @@ function filterProducts() {
 /* ========================================
    EDIT PRODUCT
 ======================================== */
-
-function editProduct(
-    productId
-) {
-
-    localStorage.setItem(
-        "editingProductId",
-        productId
-    );
-
-
-    window.location.href =
-"/admin/adit-product.html";
-
-}
-
 
 /* ========================================
    DELETE PRODUCT

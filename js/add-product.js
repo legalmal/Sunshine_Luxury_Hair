@@ -734,6 +734,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         priceInput.value
                     );
 
+                const rating = Number(document.getElementById("productRating")?.value || 4.5);
+                if (!Number.isFinite(rating) || ![4.5, 5].includes(rating)) {
+                    throw new Error("Rating must be either 4.5 or 5.0.");
+                }
+
                 const compareAtPriceInput = document.getElementById("productCompareAtPrice");
                 const compareAtPriceValue = compareAtPriceInput?.value.trim();
                 const compareAtPrice = compareAtPriceValue ? Number(compareAtPriceValue) : null;
@@ -1071,6 +1076,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     price,
 
                     compareAtPrice,
+
+                    rating,
 
                     stock,
 

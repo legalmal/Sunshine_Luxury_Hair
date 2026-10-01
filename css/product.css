@@ -32,6 +32,9 @@
 
 .product-gallery { position: sticky; top: 104px; min-width: 0; }
 
+.product-rating, .product-card-rating { margin: 8px 0 14px; color: #a87920; font-size: 14px; letter-spacing: .04em; }
+.product-card-rating { margin: 7px 0; font-size: 13px; }
+
 .product-main-media {
     position: relative;
     aspect-ratio: 4 / 4.65;
@@ -165,7 +168,7 @@
     line-height: 1.04;
     letter-spacing: -.045em;
 }
-.product-price { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: .01em; }
+.product-price { margin: 0; color: var(--gold-dark); font-size: 20px; font-weight: 600; letter-spacing: .01em; }
 .product-divider { width: 100%; height: 1px; margin: 27px 0; background: var(--border-color); }
 .product-description { max-width: 580px; margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.9; }
 
@@ -232,8 +235,8 @@
 .add-cart-button { border: 1px solid #171512; background: #171512; color: #fff; }
 .add-cart-button:hover { border-color: var(--gold-dark); background: var(--gold-dark); color: #fff; transform: translateY(-1px); }
 .add-cart-label { position: static; width: auto; height: auto; padding: 0; margin: 0; overflow: visible; clip: auto; white-space: normal; border: 0; }
-.whatsapp-button { border: 1px solid var(--border-color); background: transparent; color: var(--text-primary); }
-.whatsapp-button:hover { border-color: var(--gold-dark); background: rgba(212,175,55,.1); transform: translateY(-1px); }
+.whatsapp-button { border: 1px solid #25d366; background: #25d366; color: #fff; }
+.whatsapp-button:hover { border-color: #1da851; background: #1da851; color: #fff; transform: translateY(-1px); }
 
 .product-meta { margin-top: 35px; padding-top: 10px; border-top: 1px solid var(--border-color); }
 .product-meta > div { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 11px; }

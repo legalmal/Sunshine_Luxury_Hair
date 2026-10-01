@@ -527,7 +527,7 @@
 .featured-grid .product-price {
     margin-bottom: 18px;
 
-    color: var(--gold);
+    color: var(--gold-dark);
 
     font-family: "Playfair Display", serif;
 
@@ -1435,7 +1435,7 @@ body.dark-theme .secondary-button {
 .home-product-price {
     margin-bottom: 20px;
 
-    color: #111111;
+    color: var(--gold-dark);
 
     font-family: "Playfair Display", serif;
 
@@ -1453,6 +1453,8 @@ body.dark-theme .secondary-button {
 .home-product-card { min-width: 0; }
 .home-product-image { height: auto; aspect-ratio: 1 / 1; }
 .home-product-info { display: flex; flex-direction: column; align-items: flex-start; }
+.home-product-rating, .latest-video-rating { margin: 0 0 12px; color: var(--gold-dark); font-size: 13px; letter-spacing: .04em; }
+body.dark-theme .home-product-rating, body.dark-theme .latest-video-rating { color: #e2c35b; }
 .home-product-category { min-width: 0; max-width: 100%; margin-bottom: 14px; }
 .home-product-name { overflow-wrap: anywhere; }
 .home-product-actions { width: 100%; }
@@ -1577,9 +1579,12 @@ body.dark-theme .home-product-card {
 }
 
 
-body.dark-theme .home-product-name,
-body.dark-theme .home-product-price {
+body.dark-theme .home-product-name {
     color: #ffffff;
+}
+
+body.dark-theme .home-product-price {
+    color: #e2c35b;
 }
 
 

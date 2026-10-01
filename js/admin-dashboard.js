@@ -618,6 +618,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         </div>
 
+                        <a class="recent-product-edit" href="adit-product.html?id=${encodeURIComponent(product.id)}" aria-label="Edit ${escapeHTML(name)}">Edit</a>
+
                         <span class="recent-product-favorites" aria-label="${favoriteCounts.get(product.id) || 0} favorites">
                             ♥ ${favoriteCounts.get(product.id) || 0}
                         </span>
@@ -628,7 +630,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }).join("");
 
     }
-
 
     /* =========================================
        RECENT ORDERS

@@ -349,6 +349,9 @@ function createProductCard(product) {
     const formattedPrice =
         formatProductPrice(price, product.compareAtPrice, STORE_SETTINGS.currency);
 
+    const rating = getDisplayRating(product);
+    const ratingStars = Array.from({ length: 5 }, (_, index) => index < Math.round(rating) ? "★" : "☆").join("");
+
 
     /* =====================================================
        WHATSAPP
@@ -412,6 +415,8 @@ function createProductCard(product) {
             <h3 class="home-product-name">
                 ${escapeHTML(name)}
             </h3>
+
+            <p class="home-product-rating" aria-label="Rated ${rating.toFixed(1)} out of 5"><span aria-hidden="true">${ratingStars}</span> ${rating.toFixed(1)} / 5</p>
 
 
             <p class="home-product-length">
@@ -610,6 +615,7 @@ function renderLatestVideos(products) {
 
                             ${length ? `<p class="latest-video-length">${escapeHTML(length)}</p>` : ""}
 
+                            <p class="latest-video-rating" aria-label="Rated ${getDisplayRating(product).toFixed(1)} out of 5"><span aria-hidden="true">${Array.from({length: 5}, (_, index) => index < Math.round(getDisplayRating(product)) ? "★" : "☆").join("")}</span> ${getDisplayRating(product).toFixed(1)} / 5</p>
                             <strong class="latest-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
 
                             <a class="latest-video-details" href="product.html?id=${encodeURIComponent(product.id || "")}">View Product</a>
@@ -657,6 +663,13 @@ function formatCategory(category) {
 function formatPrice(price) {
     if (!price || Number.isNaN(Number(price))) return "Price on request";
     return formatStorePrice(price, STORE_SETTINGS.currency);
+}
+
+function getDisplayRating(product) {
+    const saved = Number(product.rating);
+    if (Number.isFinite(saved) && saved >= 4.5 && saved <= 5) return saved >= 4.75 ? 5 : 4.5;
+    const key = String(product.id || product.name || "product");
+    return [...key].reduce((sum, character) => sum + character.charCodeAt(0), 0) % 2 ? 5 : 4.5;
 }
 
 

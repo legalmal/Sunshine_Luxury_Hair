@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     ===================================================== */
 
     const editingProductId =
+        new URLSearchParams(window.location.search).get("id") ||
         localStorage.getItem("editingProductId");
 
 
@@ -155,6 +156,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("productCompareAtPrice").value =
         product.compareAtPrice ?? "";
+
+    document.getElementById("productRating").value =
+        product.rating ?? 4.5;
 
 
     document.getElementById("productCategory").value =
@@ -708,6 +712,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             const compareAtPriceValue = document.getElementById("productCompareAtPrice").value.trim();
             const compareAtPrice = compareAtPriceValue ? Number(compareAtPriceValue) : null;
 
+            const rating = Number(document.getElementById("productRating")?.value || 4.5);
+            if (!Number.isFinite(rating) || ![4.5, 5].includes(rating)) {
+                window.showToast?.("Rating must be either 4.5 or 5.0.", "error");
+                return;
+            }
+
 
             const category =
                 document
@@ -990,6 +1000,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 price,
 
                 compareAtPrice,
+
+                rating,
 
                 colors,
 

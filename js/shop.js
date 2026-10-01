@@ -167,6 +167,13 @@ function escapeHTML(value) {
 
 }
 
+function getDisplayRating(product) {
+    const saved = Number(product.rating);
+    if (Number.isFinite(saved) && saved >= 4.5 && saved <= 5) return saved >= 4.75 ? 5 : 4.5;
+    const key = String(product.id || product.name || "product");
+    return [...key].reduce((sum, character) => sum + character.charCodeAt(0), 0) % 2 ? 5 : 4.5;
+}
+
 
 /* =========================================================
    CREATE PRODUCT CARD
@@ -299,6 +306,8 @@ function createProductCard(product) {
                 <h2>
                     ${escapeHTML(product.name || "Unnamed Product")}
                 </h2>
+
+                ${(() => { const rating = getDisplayRating(product); return `<p class="product-card-rating" aria-label="Rated ${rating.toFixed(1)} out of 5"><span aria-hidden="true">${Array.from({length: 5}, (_, index) => index < Math.round(rating) ? "★" : "☆").join("")}</span> ${rating.toFixed(1)} / 5</p>`; })()}
 
 
                 <p class="product-card-details">
