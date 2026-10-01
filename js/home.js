@@ -4,11 +4,7 @@
    FEATURED PRODUCTS + LATEST VIDEOS
    ========================================================= */
 
-import {
-    db,
-    collection,
-    getDocs
-} from "./firebase.js";
+import { loadProducts } from "./product-data.js";
 import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 
@@ -54,24 +50,7 @@ async function loadFeaturedProducts() {
         `;
 
 
-        const snapshot = await getDocs(
-            collection(db, "products")
-        );
-
-
-        const products = [];
-
-
-        snapshot.forEach((documentSnapshot) => {
-
-            const product = documentSnapshot.data();
-
-            products.push({
-                id: documentSnapshot.id,
-                ...product
-            });
-
-        });
+        const products = await loadProducts();
 
 
         /* =================================================
@@ -462,173 +441,53 @@ function createProductCard(product) {
 function renderLatestVideos(products) {
 
     if (!latestVideosGrid) {
-
-        console.warn(
-            "latestVideosGrid was not found."
-        );
-
+        console.warn("latestVideosGrid was not found.");
         return;
-
     }
 
-
-    /*
-     * Find products that have a video.
-     *
-     * Your product data currently appears to support
-     * both videoUrl and video.
-     */
-
-    const videoProducts =
-        products
-            .filter((product) => {
-
-                return Boolean(
-                    isFeaturedProduct(product) &&
-                    (product.videoUrl || product.video)
-                );
-
-            })
-            .slice(
-                0,
-                MAX_LATEST_VIDEOS
-            );
-
-
-    /* =====================================================
-       NO VIDEOS
-    ===================================================== */
+    const videoProducts = products
+        .filter(product => isFeaturedProduct(product) && Boolean(product.videoUrl || product.video))
+        .slice(0, MAX_LATEST_VIDEOS);
 
     if (!videoProducts.length) {
-
-        latestVideosGrid.innerHTML = `
-
-            <p class="home-empty-message">
-
-                New videos coming soon.
-
-            </p>
-
-        `;
-
+        latestVideosGrid.innerHTML = '<p class="home-empty-message">New videos coming soon.</p>';
         return;
-
     }
 
+    latestVideosGrid.innerHTML = videoProducts.map(product => {
+        const video = product.videoUrl || product.video || "";
+        const name = product.name || "Luxury Hair";
+        const category = formatCategory(product.category);
+        const lengthOption = Array.isArray(product.options)
+            ? product.options.find(option => String(option.name || "").toLowerCase().includes("length") || String(option.name || "").toLowerCase().includes("inch"))
+            : null;
+        let length = lengthOption?.values?.[0] || product.length || product.size || "Available lengths";
+        length = String(length);
+        if (length !== "Available lengths" && !length.toLowerCase().includes("inch")) length += " inch";
+        const shortDescription = getShortDescription(product.description || "Premium luxury hair");
+        const rating = getDisplayRating(product);
+        const stars = Array.from({ length: 5 }, (_, index) => index < Math.round(rating) ? "★" : "☆").join("");
 
-    /* =====================================================
-       RENDER VIDEOS
-    ===================================================== */
-
-    latestVideosGrid.innerHTML =
-        videoProducts
-            .map((product) => {
-
-                const video =
-                    product.videoUrl ||
-                    product.video ||
-                    "";
-
-
-                const name =
-                    product.name ||
-                    "Luxury Hair";
-
-
-                const category =
-                    product.category ||
-                    "New Collection";
-
-                const lengthOption = Array.isArray(product.options)
-                    ? product.options.find(option => /length|inch/i.test(String(option.name || "")))
-                    : null;
-                const length = product.length || product.size || lengthOption?.values?.[0] || "";
-
-
-                const description =
-                    product.description ||
-                    "Discover our latest luxury hair collection.";
-
-
-                const safeDescription =
-                    String(description)
-                        .replace(/\s+/g, " ")
-                        .trim();
-
-
-                const shortDescription =
-                    safeDescription.length > 90
-                        ? safeDescription.substring(0, 90) + "..."
-                        : safeDescription;
-
-
-                return `
-
-                    <article
-                        class="latest-video-card"
-                    >
-
-                        <div
-                            class="latest-video-media"
-                        >
-
-                            <video
-                                controls
-                                playsinline
-                                preload="metadata"
-                                poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}"
-                            >
-
-                                <source
-                                    src="${escapeHTML(video)}"
-                                >
-
-                                Your browser does not support
-                                video playback.
-
-                            </video>
-
-                        </div>
-
-
-                        <div
-                            class="latest-video-info"
-                        >
-
-                            <p
-                                class="latest-video-category"
-                            >
-                                ${escapeHTML(category)}
-                            </p>
-
-
-                            <h3>
-                                ${escapeHTML(name)}
-                            </h3>
-
-
-                            <p>
-                                ${escapeHTML(
-                                    shortDescription
-                                )}
-                            </p>
-
-                            ${length ? `<p class="latest-video-length">${escapeHTML(length)}</p>` : ""}
-
-                            <p class="latest-video-rating" aria-label="Rated ${getDisplayRating(product).toFixed(1)} out of 5"><span aria-hidden="true">${Array.from({length: 5}, (_, index) => index < Math.round(getDisplayRating(product)) ? "★" : "☆").join("")}</span> ${getDisplayRating(product).toFixed(1)} / 5</p>
-                            <strong class="latest-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
-
-                            <a class="latest-video-details" href="product.html?id=${encodeURIComponent(product.id || "")}">View Product</a>
-
-                        </div>
-
-                    </article>
-
-                `;
-
-            })
-            .join("");
-
+        return `
+            <article class="latest-video-card">
+                <div class="latest-video-media">
+                    <video controls playsinline preload="metadata" poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}">
+                        <source src="${escapeHTML(video)}">
+                        Your browser does not support video playback.
+                    </video>
+                </div>
+                <div class="latest-video-info">
+                    <p class="latest-video-category">${escapeHTML(category)}</p>
+                    <h3>${escapeHTML(name)}</h3>
+                    <p class="latest-video-rating" aria-label="Rated ${rating.toFixed(1)} out of 5"><span aria-hidden="true">${stars}</span> ${rating.toFixed(1)} / 5</p>
+                    <p class="latest-video-length">${escapeHTML(length)}</p>
+                    <p>${escapeHTML(shortDescription)}</p>
+                    <strong class="latest-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
+                    <a class="latest-video-details" href="product.html?id=${encodeURIComponent(product.id || "")}">View Product</a>
+                </div>
+            </article>
+        `;
+    }).join("");
 }
 
 

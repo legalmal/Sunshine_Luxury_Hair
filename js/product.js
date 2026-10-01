@@ -4,11 +4,7 @@
    FIRESTORE VERSION
    ========================================================= */
 
-import {
-    db,
-    collection,
-    getDocs
-} from "./firebase.js";
+import { loadProduct as loadProductRecord } from "./product-data.js";
 import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
@@ -221,17 +217,7 @@ async function loadProduct() {
         );
 
 
-        const productsSnapshot =
-            await getDocs(
-                collection(db, "products")
-            );
-
-
-        const foundProduct =
-            productsSnapshot.docs.find(
-                document =>
-                    document.id === productId
-            );
+        const foundProduct = await loadProductRecord(productId);
 
 
         if (!foundProduct) {
@@ -248,13 +234,7 @@ async function loadProduct() {
         }
 
 
-        product = {
-
-            id: foundProduct.id,
-
-            ...foundProduct.data()
-
-        };
+        product = foundProduct;
 
         const mainProductMedia = document.querySelector(".product-main-media");
         if (mainProductMedia) mainProductMedia.dataset.productId = product.id;

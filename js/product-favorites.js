@@ -1,5 +1,3 @@
-import { db, doc, serverTimestamp, setDoc } from "./firebase.js";
-
 const VISITOR_KEY = "sunshine-favorite-visitor-id";
 const FAVORITES_KEY = "sunshine-product-favorites";
 
@@ -93,6 +91,7 @@ document.addEventListener("click", async event => {
     button.disabled = true;
 
     try {
+        const { db, doc, serverTimestamp, setDoc } = await import("./firebase.js");
         const favoriteId = `${productId}_${visitorId}`;
         await setDoc(doc(db, "favorites", favoriteId), {
             productId,

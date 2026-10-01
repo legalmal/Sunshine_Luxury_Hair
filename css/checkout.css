@@ -358,9 +358,11 @@
 
     margin-top: 20px;
 
-    background: var(--gold);
+    border: 1px solid #25d366;
 
-    color: #000;
+    background: #25d366;
+
+    color: #fff;
 
     font-size: 10px;
 
@@ -377,11 +379,11 @@
 
 .place-order-button:hover {
 
-    background: transparent;
+    background: #1da851;
 
-    color: var(--gold);
+    color: #fff;
 
-    border: 1px solid var(--gold);
+    border-color: #1da851;
 
 }
 

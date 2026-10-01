@@ -75,6 +75,7 @@ form.addEventListener("submit", async (event) => {
             setDoc(settingsRef, data, { merge: true }),
             setDoc(notificationSettingsRef, notificationData, { merge: true })
         ]);
+        localStorage.removeItem("sunshinesStoreSettingsCache");
         setStatus("Settings saved successfully.", "success");
     } catch (error) {
         console.error("Unable to save store settings:", error);

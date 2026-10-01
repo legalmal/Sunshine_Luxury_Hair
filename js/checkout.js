@@ -3,24 +3,20 @@
    CHECKOUT
    ========================================================= */
 
-import {
-    db,
-    collection,
-    addDoc,
-    serverTimestamp
-} from "./firebase.js";
-import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
+import { DEFAULT_STORE_SETTINGS, loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
-const STORE_SETTINGS = await loadStoreSettings();
+let STORE_SETTINGS = DEFAULT_STORE_SETTINGS;
 
 
 /* =========================================================
    SETTINGS
 ========================================================= */
 
-const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237681880898";
+let WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237681880898";
 
 const CART_KEY = "sunshinesCart";
+const DIRECT_CHECKOUT_KEY = "sunshinesDirectCheckout";
+const isDirectCheckout = new URLSearchParams(window.location.search).get("direct") === "1";
 
 
 /* =========================================================
@@ -54,29 +50,44 @@ const placeOrderButton =
 const cartCount =
     document.getElementById("cartCount");
 
+loadStoreSettings().then(settings => {
+    STORE_SETTINGS = settings;
+    WHATSAPP_NUMBER = settings.whatsappNumber || "237681880898";
+    const cart = getCart();
+    updateCartCount(cart);
+    renderCheckoutItems(cart);
+});
+
 
 /* =========================================================
    CART
 ========================================================= */
 
-function getCart() {
+function readStoredItems(storage, key) {
     try {
-        const cart =
-            JSON.parse(
-                localStorage.getItem(CART_KEY)
-            );
+        const cart = JSON.parse(storage.getItem(key) || "[]");
 
         return Array.isArray(cart) ? cart : [];
 
     } catch (error) {
 
         console.error(
-            "Unable to read cart:",
+            "Unable to read saved order items:",
             error
         );
 
         return [];
     }
+}
+
+function getSavedCart() {
+    return readStoredItems(localStorage, CART_KEY);
+}
+
+function getCart() {
+    return isDirectCheckout
+        ? readStoredItems(sessionStorage, DIRECT_CHECKOUT_KEY)
+        : getSavedCart();
 }
 
 
@@ -85,7 +96,11 @@ function getCart() {
 ========================================================= */
 
 function clearCart() {
-    localStorage.removeItem(CART_KEY);
+    if (isDirectCheckout) {
+        sessionStorage.removeItem(DIRECT_CHECKOUT_KEY);
+    } else {
+        localStorage.removeItem(CART_KEY);
+    }
     window.dispatchEvent(new Event("sunshines-cart-updated"));
 }
 
@@ -230,8 +245,9 @@ function updateCartCount(cart) {
         return;
     }
 
+    const badgeItems = isDirectCheckout ? getSavedCart() : cart;
     const count =
-        cart.reduce(
+        badgeItems.reduce(
             (total, item) =>
                 total + getQuantity(item),
             0
@@ -841,6 +857,8 @@ async function placeOrder(event) {
                     item.options || []
 
             }));
+
+        const { db, collection, addDoc, serverTimestamp } = await import("./firebase.js");
 
 
         /* =========================================

@@ -3,9 +3,9 @@
    CART JAVASCRIPT
    ========================================================= */
 
-import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
+import { DEFAULT_STORE_SETTINGS, loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
-const STORE_SETTINGS = await loadStoreSettings();
+let STORE_SETTINGS = DEFAULT_STORE_SETTINGS;
 
 const CART_KEY = "sunshinesCart";
 
@@ -22,6 +22,11 @@ const cartTotal = document.getElementById("cartTotal");
 
 const clearCartButton = document.getElementById("clearCartButton");
 const checkoutButton = document.getElementById("checkoutButton");
+
+loadStoreSettings().then(settings => {
+    STORE_SETTINGS = settings;
+    renderCart();
+});
 
 
 /* =========================================================

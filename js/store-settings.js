@@ -1,5 +1,3 @@
-import { db, doc, getDoc } from "./firebase.js";
-
 export const DEFAULT_STORE_SETTINGS = Object.freeze({
     storeName: "Sunshine's Luxury Hair",
     supportEmail: "",
@@ -12,17 +10,50 @@ export const DEFAULT_STORE_SETTINGS = Object.freeze({
 });
 
 let settingsPromise;
+const SETTINGS_CACHE_KEY = "sunshinesStoreSettingsCache";
+const SETTINGS_CACHE_TTL_MS = 60 * 1000;
+
+function readCachedSettings() {
+    try {
+        const cache = JSON.parse(localStorage.getItem(SETTINGS_CACHE_KEY) || "null");
+        return cache?.settings && typeof cache.settings === "object" ? cache : null;
+    } catch {
+        return null;
+    }
+}
+
+function cacheSettings(settings) {
+    try {
+        localStorage.setItem(SETTINGS_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), settings }));
+    } catch (error) {
+        console.warn("Store settings cache could not be saved.", error);
+    }
+}
 
 export function loadStoreSettings() {
     if (!settingsPromise) {
-        settingsPromise = getDoc(doc(db, "settings", "storefront"))
-            .then(snapshot => snapshot.exists()
-                ? { ...DEFAULT_STORE_SETTINGS, ...snapshot.data() }
-                : { ...DEFAULT_STORE_SETTINGS })
-            .catch(error => {
-                console.warn("Store settings could not be loaded; using defaults.", error);
-                return { ...DEFAULT_STORE_SETTINGS };
-            });
+        const cached = readCachedSettings();
+        const cacheIsFresh = cached && Date.now() - Number(cached.savedAt) < SETTINGS_CACHE_TTL_MS;
+
+        if (cacheIsFresh) {
+            settingsPromise = Promise.resolve({ ...DEFAULT_STORE_SETTINGS, ...cached.settings });
+        } else {
+            settingsPromise = import("./firebase.js")
+                .then(({ db, doc, getDoc }) => getDoc(doc(db, "settings", "storefront")))
+                .then(snapshot => {
+                    const settings = snapshot.exists()
+                        ? { ...DEFAULT_STORE_SETTINGS, ...snapshot.data() }
+                        : { ...DEFAULT_STORE_SETTINGS };
+                    cacheSettings(settings);
+                    return settings;
+                })
+                .catch(error => {
+                    console.warn("Store settings could not be loaded; using cached settings or defaults.", error);
+                    return cached
+                        ? { ...DEFAULT_STORE_SETTINGS, ...cached.settings }
+                        : { ...DEFAULT_STORE_SETTINGS };
+                });
+        }
     }
     return settingsPromise;
 }

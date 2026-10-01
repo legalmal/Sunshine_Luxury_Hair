@@ -36,9 +36,12 @@
     <!-- Shop CSS -->
     <link rel="stylesheet" href="css/shop.css">
     <link rel="stylesheet" href="css/shop-responsive.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/about-responsive.css">
     <link rel="stylesheet" href="css/brand.css">
     <link rel="stylesheet" href="css/brand-responsive.css">
     <link rel="stylesheet" href="css/client-polish.css">
+    <link rel="stylesheet" href="css/home-hero-slideshow.css">
 
     <link rel="stylesheet" href="css/back-to-top.css">
     <link rel="stylesheet" href="css/scroll-reveal.css">
@@ -164,13 +167,37 @@
         <!-- ================= SHOP BANNER ================= -->
 
         <section
-            class="shop-hero"
+            class="hero-section shop-hero"
             aria-label="Sunshine's luxury hair collection"
         >
-            <div class="container shop-hero-copy">
-                <p class="section-label">SHOP THE COLLECTION</p>
-                <h1>Find your<br><span>signature look.</span></h1>
-                <p>Explore premium wigs, bundles, and finishing pieces selected for your next favorite style.</p>
+            <div class="home-slideshow about-slideshow" data-about-slideshow aria-label="Featured Sunshine's Luxury Hair looks">
+                <div class="about-slideshow-stage" aria-live="off" data-fit-image-ratio style="aspect-ratio: 760 / 310">
+                    <div class="about-slide is-active" aria-hidden="false"><img src="assets/images/shop-dark-1.png" alt="Shop the Sunshine's Luxury Hair collection" fetchpriority="high"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-2.png" alt="Explore luxury hair styles"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-3.png" alt="Find your next signature look"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-4.png" alt="Shop premium hair from Sunshine's Luxury Hair"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-5.png" alt="Discover styles for every occasion"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-6.png" alt="Choose a style that feels like you"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-7.png" alt="Browse the Sunshine's Luxury Hair collection"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/shop-dark-8.png" alt="Find a beautiful new look"></div>
+                </div>
+                <div class="about-slideshow-controls" aria-label="Slideshow controls">
+                    <button class="slideshow-control slideshow-previous" type="button" data-slide-previous aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg></button>
+                    <div class="slideshow-dots" role="group" aria-label="Choose an image">
+                        <button type="button" class="slideshow-dot is-active" data-slide-to="0" aria-label="Show image 1 of 8" aria-current="true"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="1" aria-label="Show image 2 of 8"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="2" aria-label="Show image 3 of 8"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="3" aria-label="Show image 4 of 8"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="4" aria-label="Show image 5 of 8"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="5" aria-label="Show image 6 of 8"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="6" aria-label="Show image 7 of 8"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="7" aria-label="Show image 8 of 8"></button>
+                    </div>
+                    <button class="slideshow-control slideshow-next" type="button" data-slide-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg></button>
+                    <button class="slideshow-control slideshow-toggle" type="button" data-slide-toggle aria-label="Pause slideshow" aria-pressed="false"><svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg><svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6z" /></svg></button>
+                </div>
+            </div>
+            <div class="container hero-container shop-hero-copy">
                 <a class="primary-button" href="#productGrid">Browse Products</a>
             </div>
         </section>
@@ -345,29 +372,12 @@
 
                 <!-- ================= VIDEOS ================= -->
 
-                <section
-                    class="shop-videos"
-                    id="shopVideos"
-                    hidden
-                >
-
+                <section class="shop-videos" id="shopVideos" hidden>
                     <header class="shop-video-heading">
-
-                        <p>
-                            Explore our videos
-                        </p>
-
-                        <h2>
-                            Hair Inspiration
-                        </h2>
-
+                        <p>Explore our videos</p>
+                        <h2>Hair Inspiration</h2>
                     </header>
-
-                    <div
-                        class="shop-video-grid"
-                        id="shopVideoGrid"
-                    ></div>
-
+                    <div class="shop-video-grid" id="shopVideoGrid"></div>
                 </section>
 
 
@@ -524,6 +534,7 @@
 
     <script src="js/back-to-top.js"></script>
     <script src="js/hero-copy.js"></script>
+    <script src="js/about-slideshow.js"></script>
     <script src="js/scroll-reveal.js"></script>
     <script src="js/product-video-viewer.js"></script>
     <script type="module" src="js/product-favorites.js"></script>

@@ -4,11 +4,7 @@
    FIRESTORE VERSION
    ========================================================= */
 
-import {
-    db,
-    collection,
-    getDocs
-} from "./firebase.js";
+import { loadProducts as loadProductRecords } from "./product-data.js";
 import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
 
 const STORE_SETTINGS = await loadStoreSettings();
@@ -50,7 +46,7 @@ const shopVideoGrid =
 const shopPagination =
     document.getElementById("shopPagination");
 
-// Shop order buttons put their product in the cart before opening checkout.
+// Shop order buttons start a single-item checkout without changing the saved cart.
 document.addEventListener("click", event => {
     const orderLink = event.target.closest("[data-checkout-product]");
     if (!orderLink) return;
@@ -60,16 +56,8 @@ document.addEventListener("click", event => {
 
     event.preventDefault();
 
-    let cart = [];
-    try {
-        const storedCart = JSON.parse(localStorage.getItem("sunshinesCart") || "[]");
-        if (Array.isArray(storedCart)) cart = storedCart;
-    } catch (error) {
-        console.warn("Could not read the existing cart; starting a new checkout cart.", error);
-    }
-
     const image = product.mainImage || product.image || product.images?.[0] || "";
-    cart.push({
+    const checkoutItem = {
         id: product.id,
         name: product.name || "Luxury hair",
         price: Number(product.price) || 0,
@@ -81,11 +69,10 @@ document.addEventListener("click", event => {
         description: product.description || "",
         quantity: 1,
         options: []
-    });
+    };
 
-    localStorage.setItem("sunshinesCart", JSON.stringify(cart));
-    window.dispatchEvent(new Event("sunshines-cart-updated"));
-    window.location.href = "checkout.html";
+    sessionStorage.setItem("sunshinesDirectCheckout", JSON.stringify([checkoutItem]));
+    window.location.href = "checkout.html?direct=1";
 });
 
 
@@ -121,8 +108,6 @@ let currentSort = "featured";
 let currentPage = 1;
 
 const PRODUCTS_PER_PAGE = 8;
-
-const VIDEOS_PER_PAGE = 4;
 
 
 /* =========================================================
@@ -478,79 +463,46 @@ function getFilteredProducts() {
    ========================================================= */
 
 function renderVideos(pageProducts) {
+    if (!shopVideos || !shopVideoGrid) return;
 
-    if (!shopVideos || !shopVideoGrid) {
-        return;
-    }
-
-
-    const videoProducts =
-        pageProducts
-            .filter(product => {
-
-                return Boolean(
-                    product.videoUrl ||
-                    product.video
-                );
-
-            })
-            .slice(0, VIDEOS_PER_PAGE);
-
+    const videoProducts = pageProducts
+        .filter(product => Boolean(product.videoUrl || product.video))
+        .slice(0, 4);
 
     if (!videoProducts.length) {
         shopVideoGrid.innerHTML = "";
-
         shopVideos.hidden = true;
-
         return;
     }
 
-
-    shopVideoGrid.innerHTML =
-        videoProducts
-            .map(product => {
-
-                const video =
-                    product.videoUrl ||
-                    product.video ||
-                    "";
-
-                const name =
-                    product.name ||
-                    "Luxury hair video";
-
-                const details = getProductDetails(product);
-                return `
-                    <article class="shop-video-card">
-                        <video
-                            controls
-                            playsinline
-                            preload="metadata"
-                            poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}"
-                            aria-label="${escapeHTML(name)} video"
-                        >
-                            <source src="${escapeHTML(video)}">
-                            Your browser does not support video playback.
-                        </video>
-                        <div class="shop-video-info">
-                            <p class="product-card-category">${escapeHTML(formatCategory(product.category))}</p>
-                            <h3>${escapeHTML(name)}</h3>
-                            <p>${escapeHTML(product.description || "")}</p>
-                            <p class="shop-video-product-details">${escapeHTML(details.color)} · ${escapeHTML(details.length)}</p>
-                            <strong class="shop-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
-                            <div class="product-card-actions">
-                                <a href="product.html?id=${encodeURIComponent(product.id || "")}" class="product-view-details">View Details</a>
-                                <a href="checkout.html" class="product-order-button" data-checkout-product="${escapeHTML(product.id)}">Place Order</a>
-                            </div>
-                        </div>
-                    </article>
-                `;
-
-            })
-            .join("");
+    shopVideoGrid.innerHTML = videoProducts.map(product => {
+        const video = product.videoUrl || product.video || "";
+        const name = product.name || "Luxury hair video";
+        const details = getProductDetails(product);
+        const rating = getDisplayRating(product);
+        const ratingStars = Array.from({ length: 5 }, (_, index) => index < Math.round(rating) ? "★" : "☆").join("");
+        return `
+            <article class="shop-video-card">
+                <video controls playsinline preload="metadata" poster="${escapeHTML(product.mainImage || product.image || product.images?.[0] || "")}" aria-label="${escapeHTML(name)} video">
+                    <source src="${escapeHTML(video)}">
+                    Your browser does not support video playback.
+                </video>
+                <div class="shop-video-info">
+                    <p class="product-card-category">${escapeHTML(formatCategory(product.category))}</p>
+                    <h3>${escapeHTML(name)}</h3>
+                    <p class="product-card-rating" aria-label="Rated ${rating.toFixed(1)} out of 5"><span aria-hidden="true">${ratingStars}</span> ${rating.toFixed(1)} / 5</p>
+                    <p class="shop-video-product-details"><span>${escapeHTML(details.color)}</span><span>${escapeHTML(details.length)}</span></p>
+                    <strong class="shop-video-price">${formatProductPrice(product.price, product.compareAtPrice, STORE_SETTINGS.currency)}</strong>
+                    <div class="product-card-actions">
+                        <a href="product.html?id=${encodeURIComponent(product.id || "")}" class="product-view-details">View Details</a>
+                        <a href="checkout.html" class="product-order-button" data-checkout-product="${escapeHTML(product.id)}">Place Order</a>
+                    </div>
+                </div>
+            </article>
+        `;
+    }).join("");
 
     shopVideos.hidden = false;
-
 }
 
 
@@ -661,7 +613,7 @@ function renderProducts() {
                     : "No products found";
         }
 
-        renderVideos([]);
+    renderVideos([]);
 
         renderPagination(0);
 
@@ -1089,22 +1041,7 @@ async function loadProducts() {
         console.log("Loading products from Firestore...");
 
 
-        const productsSnapshot =
-            await getDocs(
-                collection(db, "products")
-            );
-
-
-        products =
-            productsSnapshot.docs.map(
-                document => ({
-
-                    id: document.id,
-
-                    ...document.data()
-
-                })
-            );
+        products = await loadProductRecords();
 
         window.dispatchEvent(new CustomEvent("sunshine-shop-products-loaded", {
             detail: { products }

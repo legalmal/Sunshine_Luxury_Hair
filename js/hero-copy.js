@@ -138,9 +138,7 @@
             productImages.forEach(image => {
                 if (typeof image !== "string" || !image.trim() || seenImages.has(image.trim())) return;
                 seenImages.add(image.trim());
-                imageEntries.push({
-                    image: image.trim()
-                });
+                imageEntries.push({ image: image.trim() });
             });
         });
 
@@ -182,7 +180,6 @@
 
         let activeSlide = 0;
         applySlide(activeSlide);
-
         if (root.dataset.productCarouselStarted === "true") return;
         root.dataset.productCarouselStarted = "true";
         window.setInterval(() => {
