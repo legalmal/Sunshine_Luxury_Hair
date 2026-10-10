@@ -79,6 +79,39 @@
                         </div>
                     </section>
 
+                    <section class="settings-card">
+                        <div class="settings-card-heading">
+                            <span class="settings-card-icon">▧</span>
+                            <div><h3>Shop by category images</h3><p>Choose an existing product photo or upload a picture for each category tile on the home page.</p></div>
+                        </div>
+                        <div class="category-image-fields">
+                            <div class="category-image-field">
+                                <label class="settings-field" for="categoryImageWigs">Wigs</label>
+                                <select id="categoryImageWigs" class="category-product-image"><option value="">Use default artwork</option></select>
+                                <label class="settings-field">Or upload a picture<input id="categoryUploadWigs" type="file" accept="image/*"></label>
+                                <img class="category-image-preview" id="categoryPreviewWigs" alt="Wigs category image preview" hidden>
+                            </div>
+                            <div class="category-image-field">
+                                <label class="settings-field" for="categoryImageBundles">Bundles</label>
+                                <select id="categoryImageBundles" class="category-product-image"><option value="">Use default artwork</option></select>
+                                <label class="settings-field">Or upload a picture<input id="categoryUploadBundles" type="file" accept="image/*"></label>
+                                <img class="category-image-preview" id="categoryPreviewBundles" alt="Bundles category image preview" hidden>
+                            </div>
+                            <div class="category-image-field">
+                                <label class="settings-field" for="categoryImageClosures">Closures</label>
+                                <select id="categoryImageClosures" class="category-product-image"><option value="">Use default artwork</option></select>
+                                <label class="settings-field">Or upload a picture<input id="categoryUploadClosures" type="file" accept="image/*"></label>
+                                <img class="category-image-preview" id="categoryPreviewClosures" alt="Closures category image preview" hidden>
+                            </div>
+                            <div class="category-image-field">
+                                <label class="settings-field" for="categoryImageFrontals">Frontals</label>
+                                <select id="categoryImageFrontals" class="category-product-image"><option value="">Use default artwork</option></select>
+                                <label class="settings-field">Or upload a picture<input id="categoryUploadFrontals" type="file" accept="image/*"></label>
+                                <img class="category-image-preview" id="categoryPreviewFrontals" alt="Frontals category image preview" hidden>
+                            </div>
+                        </div>
+                    </section>
+
                     <div class="settings-actions">
                         <button type="button" class="settings-reset" id="settingsReset">Restore defaults</button>
                         <button type="submit" class="settings-save" id="settingsSave">Save settings</button>

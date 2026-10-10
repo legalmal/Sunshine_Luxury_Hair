@@ -702,9 +702,14 @@ body.dark-theme #themeToggle:hover {
     }
 
 }
-/* Optional original price shown beside product selling prices. */
+/* Keep the crossed-out slash price directly below the selling price everywhere. */
+.price-current {
+    display: block;
+}
+
 .price-compare {
-    margin-left: .45rem;
+    display: block;
+    margin: 2px 0 0;
     color: #888;
     font-size: .82em;
     font-weight: 400;

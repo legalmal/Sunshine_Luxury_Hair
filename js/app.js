@@ -6,6 +6,7 @@
 
 const themeToggle = document.getElementById("themeToggle");
 const brandLogo = document.getElementById("brandLogo");
+const footerLogos = document.querySelectorAll(".site-footer .footer-brand img");
 
 /* Keep the cart badge consistent across every client page. */
 function updateHeaderCartCount() {
@@ -46,6 +47,10 @@ function setTheme(theme) {
             brandLogo.src = "assets/logos/logo-dark.png";
         }
 
+        footerLogos.forEach(logo => {
+            logo.src = "assets/logos/logo-dark.png";
+        });
+
         if (themeToggle) {
             themeToggle.textContent = "☀";
         }
@@ -59,6 +64,10 @@ function setTheme(theme) {
         if (brandLogo) {
             brandLogo.src = "assets/logos/logo-light.png";
         }
+
+        footerLogos.forEach(logo => {
+            logo.src = "assets/logos/logo-light.png";
+        });
 
         if (themeToggle) {
             themeToggle.textContent = "☾";

@@ -1079,13 +1079,15 @@
     .home-product-description { min-height: 0; margin-bottom: 10px; font-size: 10px; line-height: 1.45; }
     .home-product-price { margin-bottom: 11px; font-size: 15px; }
     .home-product-actions { gap: 6px; }
-    .home-product-actions a { min-height: 38px; padding: 0 5px; border-radius: 4px; font-size: 8px; letter-spacing: .2px; }
+    .home-product-actions a,
+    .home-product-actions button { width: 100%; min-width: 0; min-height: 38px; box-sizing: border-box; padding: 0 5px; border-radius: 4px; font-size: 8px; line-height: 1.2; letter-spacing: .2px; }
 }
 
 @media (max-width: 360px) {
     .featured-grid { gap: 8px; }
     .home-product-info { padding-inline: 9px; }
-    .home-product-actions a { font-size: 7px; }
+    .home-product-actions a,
+    .home-product-actions button { font-size: 7px; }
 }
 
 @media (max-width: 768px) {

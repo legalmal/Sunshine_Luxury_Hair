@@ -15,6 +15,26 @@ import { loadStoreSettings, formatStorePrice, formatProductPrice } from "./store
 const STORE_SETTINGS = await loadStoreSettings();
 const WHATSAPP_NUMBER = STORE_SETTINGS.whatsappNumber || "237681880898";
 
+const categoryImageClasses = {
+    wigs: ".category-wigs",
+    bundles: ".category-bundles",
+    closures: ".category-closures",
+    frontals: ".category-frontals"
+};
+Object.entries(categoryImageClasses).forEach(([category, selector]) => {
+    const image = STORE_SETTINGS.categoryImages?.[category];
+    const card = document.querySelector(selector);
+    if (!image || !card) return;
+    try {
+        const imageUrl = new URL(image);
+        if (imageUrl.protocol === "https:") {
+            card.style.backgroundImage = `url("${imageUrl.href}")`;
+        }
+    } catch {
+        // Ignore invalid saved image URLs and retain the default category art.
+    }
+});
+
 const MAX_FEATURED_PRODUCTS = 4;
 const MAX_LATEST_VIDEOS = 3;
 
@@ -28,6 +48,8 @@ const featuredGrid =
 
 const latestVideosGrid =
     document.getElementById("latestVideosGrid");
+
+let homeProducts = [];
 
 
 /* =========================================================
@@ -51,6 +73,7 @@ async function loadFeaturedProducts() {
 
 
         const products = await loadProducts();
+        homeProducts = products;
 
 
         /* =================================================
@@ -416,11 +439,20 @@ function createProductCard(product) {
             <div class="home-product-actions">
 
                 <a
-                    href="shop.html?id=${encodeURIComponent(productId)}"
+                    href="product.html?id=${encodeURIComponent(productId)}"
                     class="home-view-details"
                 >
-                    Visit Our Gallery
+                    View Product
                 </a>
+
+                <button
+                    type="button"
+                    class="home-add-cart"
+                    data-add-home-product="${escapeHTML(productId)}"
+                    ${String(product.status || "").toLowerCase() === "out-of-stock" ? "disabled" : ""}
+                >
+                    ${String(product.status || "").toLowerCase() === "out-of-stock" ? "Out of stock" : "Add to cart"}
+                </button>
 
             </div>
 
@@ -431,6 +463,58 @@ function createProductCard(product) {
 
     return card;
 
+}
+
+/* Keep homepage additions in the same shape used by product.js and cart.js. */
+if (featuredGrid) {
+    featuredGrid.addEventListener("click", event => {
+        const button = event.target.closest("[data-add-home-product]");
+        if (!button) return;
+
+        const productId = button.dataset.addHomeProduct;
+        const product = homeProducts.find(item => String(item.id) === productId);
+        if (!product) return;
+
+        const image = product.mainImage || product.image || product.images?.[0] || "";
+        const cartItem = {
+            id: product.id,
+            name: product.name || "Luxury Hair",
+            price: Number(product.price) || 0,
+            compareAtPrice: Number(product.compareAtPrice) || null,
+            image,
+            videoUrl: product.videoUrl || product.video || "",
+            poster: image,
+            category: product.category || "",
+            description: product.description || "",
+            quantity: 1,
+            options: []
+        };
+
+        let cart = [];
+        try {
+            const saved = JSON.parse(localStorage.getItem("sunshinesCart") || "[]");
+            if (Array.isArray(saved)) cart = saved;
+        } catch (error) {
+            console.warn("Could not read the saved cart.", error);
+        }
+
+        const existing = cart.find(item =>
+            String(item.id || item.productId) === String(cartItem.id) &&
+            JSON.stringify(item.selectedOptions || item.options || {}) === JSON.stringify(cartItem.options)
+        );
+        if (existing) {
+            existing.quantity = Math.min(99, (Number(existing.quantity) || 1) + 1);
+        } else {
+            cart.push(cartItem);
+        }
+
+        localStorage.setItem("sunshinesCart", JSON.stringify(cart));
+        window.dispatchEvent(new Event("sunshines-cart-updated"));
+        button.textContent = "Added to cart";
+        window.setTimeout(() => {
+            if (button.isConnected) button.textContent = "Add to cart";
+        }, 1600);
+    });
 }
 
 

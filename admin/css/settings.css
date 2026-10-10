@@ -16,6 +16,13 @@
 .settings-card-heading h3 { color: #fff; font-size: 16px; font-weight: 600; }
 .settings-card-heading p { margin-top: 4px; color: #888; font-size: 12px; line-height: 1.5; }
 .settings-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; }
+.category-image-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.category-image-field { display: grid; align-content: start; gap: 12px; padding: 16px; background: #0d0d0d; border: 1px solid #292929; border-radius: 12px; }
+.category-image-field > .settings-field { gap: 8px; }
+.category-product-image { width: 100%; min-height: 46px; padding: 11px 13px; color: #f4f4f4; background: #0b0b0b; border: 1px solid #303030; border-radius: 9px; font: inherit; }
+.category-image-field input[type="file"] { padding: 10px; font-size: 11px; }
+.category-image-preview { width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; }
+.category-image-preview[hidden] { display: none; }
 .settings-field { display: grid; align-content: start; gap: 8px; color: #d7d7d7; font-size: 12px; font-weight: 500; }
 .settings-field small { color: #828282; font-size: 11px; font-weight: 400; }
 .settings-field-wide { grid-column: 1 / -1; }
@@ -35,6 +42,7 @@
 @media (max-width: 640px) {
     .settings-page { width: calc(100% - 30px); padding: 28px 0 52px; }
     .settings-fields { grid-template-columns: 1fr; }
+    .category-image-fields { grid-template-columns: 1fr; }
     .settings-field-wide { grid-column: auto; }
     .settings-actions { flex-direction: column-reverse; align-items: stretch; }
     .settings-reset, .settings-save { width: 100%; }

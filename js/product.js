@@ -1428,61 +1428,35 @@ if (whatsappButton) {
                 getSelectedOptions();
 
 
-            let message =
-                `Hello Sunshine's Luxury Hair,\n\n` +
-                `I would like to order:\n\n`;
+            const image = product.mainImage ||
+                (Array.isArray(product.images) ? product.images[0] : "");
+            const cartItem = {
+                id: product.id,
+                name: product.name,
+                price: Number(product.price) || 0,
+                compareAtPrice: Number(product.compareAtPrice) || null,
+                image,
+                videoUrl: product.videoUrl || product.video || "",
+                poster: product.mainImage || product.image || product.images?.[0] || "",
+                category: product.category || "",
+                description: product.description || "",
+                quantity,
+                options: selectedOptions
+            };
 
+            let cart = [];
+            try {
+                const savedCart = JSON.parse(localStorage.getItem("sunshinesCart") || "[]");
+                if (Array.isArray(savedCart)) cart = savedCart;
+            } catch (error) {
+                console.warn("Could not read the saved cart before checkout.", error);
+            }
 
-            message +=
-                `Product: ${product.name}\n`;
-
-
-            message +=
-                `Price: ${
-                    formatPrice(product.price)
-                }\n`;
-
-
-            message +=
-                `Quantity: ${quantity}\n`;
-
-
-            Object.entries(
-                selectedOptions
-            ).forEach(
-                ([name, value]) => {
-
-                    message +=
-                        `${name}: ${value}\n`;
-
-                }
-            );
-
-
-            /*
-                REPLACE THIS WITH
-                YOUR REAL WHATSAPP NUMBER.
-
-                Nigeria example:
-
-                2348012345678
-
-                Do NOT include + or spaces.
-            */
-
-            const phoneNumber = STORE_SETTINGS.whatsappNumber || "237681880898";
-
-
-            const whatsappURL =
-                `https://wa.me/${phoneNumber}?text=${
-                    encodeURIComponent(message)
-                }`;
-
-
-            window.open(
-                whatsappURL,
-                "_blank"
-            );
+            cart.push(cartItem);
+            localStorage.setItem("sunshinesCart", JSON.stringify(cart));
+            window.dispatchEvent(new Event("sunshines-cart-updated"));
+            updateCartCount();
+            window.location.href = "checkout.html";
 
         }
     );
