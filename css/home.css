@@ -735,8 +735,8 @@
     background:
         linear-gradient(
             to top,
-            rgba(0,0,0,0.88),
-            rgba(0,0,0,0.08)
+            rgba(0,0,0,0.55),
+            rgba(0,0,0,0.02)
         );
 }
 
@@ -1560,11 +1560,9 @@ body.dark-theme .home-product-rating, body.dark-theme .latest-video-rating { col
 
 
 .home-view-details:hover {
-    background: #111111;
-
-    border-color: #111111;
-
-    color: #ffffff;
+    background: #d4af37;
+    border-color: #d4af37;
+    color: #111111;
 }
 
 
@@ -2153,8 +2151,7 @@ body.image-lightbox-open {
     line-height: 1.7;
 }
 
-.latest-video-price,
-.latest-video-details {
+.latest-video-price {
     display: inline-block;
     margin: 14px 12px 0 0;
 }
@@ -2162,12 +2159,6 @@ body.image-lightbox-open {
 .latest-video-price {
     color: var(--gold-dark);
 }
-
-.latest-video-details {
-    color: var(--gold-dark);
-    font-weight: 600;
-}
-
 
 /* =====================================================
    CATEGORY SECTION
@@ -2290,6 +2281,12 @@ body.image-lightbox-open {
         );
 }
 
+/* Keep uploaded category photos filling each tile after the background color rules. */
+.categories-grid .category-card {
+    background-size: cover;
+    background-position: center;
+}
+
 
 /* ---------- OVERLAY ---------- */
 
@@ -2301,8 +2298,8 @@ body.image-lightbox-open {
     background:
         linear-gradient(
             to top,
-            rgba(0, 0, 0, 0.85),
-            rgba(0, 0, 0, 0.05)
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.02)
         );
 }
 
@@ -2433,8 +2430,7 @@ body.dark-theme .home-product-media-empty {
     background: #171717;
 }
 
-body.dark-theme .latest-video-price,
-body.dark-theme .latest-video-details {
+body.dark-theme .latest-video-price {
     color: #e2c35b;
 }
 
