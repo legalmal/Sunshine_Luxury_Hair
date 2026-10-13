@@ -30,7 +30,7 @@
 .cart-page-header p:last-child {
     max-width: 520px;
     margin: 0 auto;
-    color: var(--text-secondary);
+    color: #b3261e;
     font-size: 14px;
     line-height: 1.8;
 }

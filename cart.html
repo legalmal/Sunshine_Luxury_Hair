@@ -29,6 +29,9 @@
     <!-- CART -->
     <link rel="stylesheet" href="css/cart.css">
     <link rel="stylesheet" href="css/cart-responsive.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/about-responsive.css">
+    <link rel="stylesheet" href="css/home-hero-slideshow.css">
     <link rel="stylesheet" href="css/brand.css">
     <link rel="stylesheet" href="css/brand-responsive.css">
     <link rel="stylesheet" href="css/client-polish.css">
@@ -157,24 +160,33 @@
              PAGE HEADER
         ================================================== -->
 
-        <section class="cart-page-header">
-
-            <div class="container">
-
-                <p class="section-label">
-                    SUNSHINE'S LUXURY HAIR
-                </p>
-
-                <h1>
-                    Your Cart
-                </h1>
-
-                <p>
-                    Review your selected pieces before checkout.
-                </p>
-
+        <section class="hero-section cart-hero" aria-label="Your Sunshine's Luxury Hair cart">
+            <div class="home-slideshow about-slideshow" data-about-slideshow aria-label="Sunshine's Luxury Hair cart highlights">
+                <div class="about-slideshow-stage" aria-live="off" data-fit-image-ratio style="aspect-ratio: 760 / 310">
+                    <div class="about-slide is-active" aria-hidden="false"><img src="assets/images/cart-hero-1.png" alt="Sunshine's Luxury Hair cart" fetchpriority="high"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/cart-hero-2.png" alt="Review your selected luxury hair pieces"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/cart-hero-3.png" alt="Your selected Sunshine's Luxury Hair styles"></div>
+                    <div class="about-slide" aria-hidden="true" inert><img src="assets/images/cart-hero-4.png" alt="Get ready for your next beautiful look"></div>
+                </div>
+                <div class="about-slideshow-controls" aria-label="Slideshow controls">
+                    <button class="slideshow-control slideshow-previous" type="button" data-slide-previous aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg></button>
+                    <div class="slideshow-dots" role="group" aria-label="Choose an image">
+                        <button type="button" class="slideshow-dot is-active" data-slide-to="0" aria-label="Show image 1 of 4" aria-current="true"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="1" aria-label="Show image 2 of 4"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="2" aria-label="Show image 3 of 4"></button>
+                        <button type="button" class="slideshow-dot" data-slide-to="3" aria-label="Show image 4 of 4"></button>
+                    </div>
+                    <button class="slideshow-control slideshow-next" type="button" data-slide-next aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg></button>
+                    <button class="slideshow-control slideshow-toggle" type="button" data-slide-toggle aria-label="Pause slideshow" aria-pressed="false"><svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg><svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6z" /></svg></button>
+                </div>
             </div>
-
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-buttons">
+                        <a href="shop.html" class="primary-button">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
         </section>
 
 
@@ -387,6 +399,7 @@
 
     <script type="module" src="js/cart.js"></script>
     <script src="js/hero-copy.js"></script>
+    <script src="js/about-slideshow.js"></script>
 
 
     <script src="js/back-to-top.js"></script>
