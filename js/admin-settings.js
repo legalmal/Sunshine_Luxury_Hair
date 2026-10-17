@@ -1,7 +1,7 @@
 import { db, doc, getDoc, setDoc, serverTimestamp } from "./firebase.js";
 import { DEFAULT_STORE_SETTINGS } from "./store-settings.js";
 import { loadProducts } from "./product-data.js";
-import { uploadProductImage } from "./cloudinary.js";
+import { uploadProductImage, uploadProductVideo } from "./cloudinary.js";
 
 const form = document.getElementById("settingsForm");
 const status = document.getElementById("settingsStatus");
@@ -9,7 +9,9 @@ const saveButton = document.getElementById("settingsSave");
 const settingsRef = doc(db, "settings", "storefront");
 const notificationSettingsRef = doc(db, "settings", "adminNotifications");
 const categoryKeys = ["wigs", "bundles", "closures", "frontals"];
+const serviceEditorList = document.getElementById("serviceEditorList");
 let availableProducts = [];
+let currentDecemberExtraImage = "";
 
 function setStatus(message, type = "") {
     status.textContent = message;
@@ -36,7 +38,51 @@ function populate(settings) {
             preview.hidden = !selectedImage;
         }
     });
+    serviceEditorList.replaceChildren();
+    (Array.isArray(settings.services) ? settings.services : []).forEach(addServiceEditor);
+    const extra = settings.decemberExtra || DEFAULT_STORE_SETTINGS.decemberExtra;
+    currentDecemberExtraImage = extra.image || "";
+    document.getElementById("settingDecemberExtraEnabled").checked = Boolean(extra.enabled);
+    document.getElementById("settingDecemberExtraTitle").value = extra.title || "";
+    document.getElementById("settingDecemberExtraMessage").value = extra.message || "";
+    const extraPreview = document.getElementById("decemberExtraPreview");
+    extraPreview.src = extra.image || "";
+    extraPreview.hidden = !extra.image;
 }
+
+function addServiceEditor(service = {}) {
+    const card = document.createElement("div");
+    card.className = "service-editor-card";
+    card.innerHTML = `
+        <div class="service-editor-heading"><strong>Service</strong><button type="button" class="service-remove-button">Delete service</button></div>
+        <label class="settings-field">Service name<input class="service-name" maxlength="80" value=""></label>
+        <label class="settings-field">Description<textarea class="service-description" rows="3" maxlength="300"></textarea></label>
+        <label class="settings-field">Photo URL (optional)<input class="service-image-url" type="url" placeholder="https://..."></label>
+        <label class="settings-field">Or upload a photo<input class="service-image-file" type="file" accept="image/*"></label>
+        <label class="settings-field">Video URL (optional)<input class="service-video-url" type="url" placeholder="https://..."></label>
+        <label class="settings-field">Or upload a video<input class="service-video-file" type="file" accept="video/*"></label>`;
+    card.querySelector(".service-name").value = service.name || "";
+    card.querySelector(".service-description").value = service.description || "";
+    card.querySelector(".service-image-url").value = service.image || "";
+    card.querySelector(".service-video-url").value = service.video || "";
+    card.querySelector(".service-remove-button").addEventListener("click", () => card.remove());
+    serviceEditorList.append(card);
+}
+
+document.getElementById("addServiceButton").addEventListener("click", () => addServiceEditor());
+document.getElementById("settingDecemberExtraImage").addEventListener("change", event => {
+    const file = event.target.files?.[0];
+    const preview = document.getElementById("decemberExtraPreview");
+    if (file && !file.type.startsWith("image/")) {
+        event.target.value = "";
+        setStatus("Please choose a valid bag image.", "error");
+        return;
+    }
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.hidden = false;
+    }
+});
 
 function populateCategoryImageOptions(products, categoryImages = {}) {
     categoryKeys.forEach((category) => {
@@ -129,6 +175,8 @@ form.addEventListener("submit", async (event) => {
     saveButton.disabled = true;
     saveButton.textContent = "Preparing images…";
     const categoryImages = {};
+    const services = [];
+    let decemberExtraImage = "";
     try {
         for (const category of categoryKeys) {
             const suffix = `${category[0].toUpperCase()}${category.slice(1)}`;
@@ -138,9 +186,27 @@ form.addEventListener("submit", async (event) => {
                 ? (await uploadProductImage(selectedFile)).url
                 : selectedUrl;
         }
+        for (const card of serviceEditorList.querySelectorAll(".service-editor-card")) {
+            const name = card.querySelector(".service-name").value.trim();
+            const description = card.querySelector(".service-description").value.trim();
+            let image = card.querySelector(".service-image-url").value.trim();
+            let video = card.querySelector(".service-video-url").value.trim();
+            const imageFile = card.querySelector(".service-image-file").files?.[0];
+            const videoFile = card.querySelector(".service-video-file").files?.[0];
+            if (!name && !description && !image && !video && !imageFile && !videoFile) continue;
+            if (!name) throw new Error("Enter a name for each service you want to save.");
+            for (const mediaUrl of [image, video].filter(Boolean)) {
+                if (new URL(mediaUrl).protocol !== "https:") throw new Error("Service media links must use HTTPS.");
+            }
+            if (imageFile) image = (await uploadProductImage(imageFile)).url;
+            if (videoFile) video = (await uploadProductVideo(videoFile)).url;
+            services.push({ name, description, image, video });
+        }
+        const extraFile = document.getElementById("settingDecemberExtraImage").files?.[0];
+        decemberExtraImage = extraFile ? (await uploadProductImage(extraFile)).url : currentDecemberExtraImage;
     } catch (error) {
-        console.error("Unable to upload category image:", error);
-        setStatus(error.message || "A category image could not be uploaded.", "error");
+        console.error("Unable to prepare store media:", error);
+        setStatus(error.message || "A selected image or video could not be uploaded.", "error");
         saveButton.disabled = false;
         saveButton.textContent = "Save settings";
         return;
@@ -156,6 +222,13 @@ form.addEventListener("submit", async (event) => {
         lowStockThreshold: Number(document.getElementById("settingStockThreshold").value),
         deliveryNote: document.getElementById("settingDeliveryNote").value.trim(),
         categoryImages,
+        services,
+        decemberExtra: {
+            enabled: document.getElementById("settingDecemberExtraEnabled").checked,
+            title: document.getElementById("settingDecemberExtraTitle").value.trim(),
+            message: document.getElementById("settingDecemberExtraMessage").value.trim(),
+            image: decemberExtraImage
+        },
         updatedAt: serverTimestamp()
     };
     const notificationData = {
@@ -177,6 +250,12 @@ form.addEventListener("submit", async (event) => {
             document.getElementById(`categoryUpload${suffix}`).value = "";
             updateCategoryPreview(category, categoryImages[category]);
         });
+        serviceEditorList.querySelectorAll("input[type=file]").forEach(input => { input.value = ""; });
+        document.getElementById("settingDecemberExtraImage").value = "";
+        currentDecemberExtraImage = decemberExtraImage;
+        const extraPreview = document.getElementById("decemberExtraPreview");
+        extraPreview.src = decemberExtraImage;
+        extraPreview.hidden = !decemberExtraImage;
         setStatus("Settings saved successfully.", "success");
     } catch (error) {
         console.error("Unable to save store settings:", error);
@@ -193,6 +272,8 @@ document.getElementById("settingsReset").addEventListener("click", () => {
         const suffix = `${category[0].toUpperCase()}${category.slice(1)}`;
         document.getElementById(`categoryUpload${suffix}`).value = "";
     });
+    document.getElementById("settingDecemberExtraImage").value = "";
+    serviceEditorList.replaceChildren();
     setStatus("Default values restored. Save settings to apply them.");
 });
 

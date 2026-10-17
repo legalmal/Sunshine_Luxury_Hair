@@ -1,6 +1,41 @@
 import { loadStoreSettings } from "./store-settings.js";
 
 loadStoreSettings().then(settings => {
+    const decemberExtra = settings.decemberExtra || {};
+    if (decemberExtra.enabled && decemberExtra.image) {
+        let imageUrl = "";
+        try {
+            const parsed = new URL(decemberExtra.image);
+            if (parsed.protocol === "https:") imageUrl = parsed.href;
+        } catch { /* Ignore invalid saved image links. */ }
+        if (imageUrl) {
+            const homeFeature = document.getElementById("decemberExtraHome");
+            if (homeFeature) {
+                document.getElementById("decemberExtraHomeTitle").textContent = decemberExtra.title || "A little Sunshine extra";
+                document.getElementById("decemberExtraHomeMessage").textContent = decemberExtra.message || "Every order arrives beautifully packaged in our signature bag, at no extra cost.";
+                const image = document.getElementById("decemberExtraHomeImage");
+                image.src = imageUrl;
+                homeFeature.hidden = false;
+            } else {
+                const banner = document.createElement("aside");
+                banner.className = "december-extra-banner";
+                banner.setAttribute("aria-label", "December complimentary extra");
+                const image = document.createElement("img");
+                image.src = imageUrl;
+                image.alt = "Sunshine's Luxury Hair complimentary branded bag";
+                image.loading = "lazy";
+                const copy = document.createElement("div");
+                const title = document.createElement("strong");
+                title.textContent = decemberExtra.title || "A little Sunshine extra";
+                const message = document.createElement("p");
+                message.textContent = decemberExtra.message || "Every order arrives beautifully packaged in our signature bag, at no extra cost.";
+                copy.append(title, message);
+                banner.append(image, copy);
+                document.querySelector("header.site-header")?.insertAdjacentElement("afterend", banner);
+            }
+        }
+    }
+
     const whatsappNumber = String(settings.whatsappNumber || "").replace(/\D/g, "");
 
     if (whatsappNumber.length >= 8 && whatsappNumber.length <= 15) {

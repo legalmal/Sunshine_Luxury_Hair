@@ -6,7 +6,17 @@
 
 /* ---------- ROOT VARIABLES ---------- */
 
-:root {
+.december-extra-banner { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 10px max(20px, calc((100% - 1200px) / 2)); color: #201a0b; background: linear-gradient(100deg, #f5e8b7, #fff8e3); border-bottom: 1px solid rgba(150, 117, 28, .2); }
+.december-extra-banner img { width: 58px; height: 58px; flex: 0 0 58px; object-fit: cover; border-radius: 9px; }
+.december-extra-banner strong { display: block; font: 600 15px/1.3 "Playfair Display", Georgia, serif; }
+.december-extra-banner p { margin: 3px 0 0; font: 12px/1.5 "Poppins", sans-serif; }
+.december-extra-home { padding: 38px 0; background: #f8f5ec; }
+.december-extra-home[hidden] { display: none; }
+.december-extra-home-card { display: grid; grid-template-columns: 1fr minmax(260px, 42%); align-items: center; gap: clamp(24px, 6vw, 80px); padding: clamp(24px, 5vw, 58px); background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 18px; box-shadow: 0 18px 44px rgba(0,0,0,.08); }
+.december-extra-home-copy h2 { margin: 10px 0 14px; color: var(--black-soft); font: 500 clamp(30px, 4vw, 48px)/1.1 "Playfair Display", Georgia, serif; }
+.december-extra-home-copy > p:not(.section-label) { max-width: 540px; margin: 0 0 24px; color: var(--text-secondary); font: 14px/1.8 "Poppins", sans-serif; }
+.december-extra-home-card > img { display: block; width: 100%; max-height: 400px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; }
+@media (max-width: 650px) { .december-extra-banner { justify-content: flex-start; } .december-extra-home-card { grid-template-columns: 1fr; } .december-extra-home-card > img { max-height: 300px; } }
     color-scheme: light;
 
     --gold: #D4AF37;
@@ -715,3 +725,4 @@ body.dark-theme #themeToggle:hover {
     font-weight: 400;
     opacity: .9;
 }
+:root {

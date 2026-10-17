@@ -38,6 +38,17 @@
     background-repeat: no-repeat;
 }
 
+.services-section[hidden] { display: none; }
+.services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.service-card { overflow: hidden; background: var(--white); border: 1px solid rgba(0,0,0,.08); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.07); }
+.service-card-media { aspect-ratio: 4 / 3; background: #f3f0eb; }
+.service-card-media img, .service-card-media video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.service-card-copy { padding: 22px; }
+.service-card-copy h3 { margin: 0 0 10px; font: 600 22px/1.25 "Playfair Display", serif; color: var(--black-soft); }
+.service-card-copy p { margin: 0; color: var(--text-secondary); font: 14px/1.7 "Poppins", sans-serif; }
+@media (max-width: 800px) { .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } }
+@media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
+
 
 /* =========================================================
    HERO CONTAINER

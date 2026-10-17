@@ -35,6 +35,35 @@ Object.entries(categoryImageClasses).forEach(([category, selector]) => {
     }
 });
 
+function renderServices(services) {
+    const section = document.getElementById("servicesSection");
+    const grid = document.getElementById("servicesGrid");
+    const visibleServices = Array.isArray(services)
+        ? services.filter(service => service && typeof service.name === "string" && service.name.trim())
+        : [];
+    if (!section || !grid || !visibleServices.length) return;
+    grid.innerHTML = visibleServices.map(service => {
+        const name = escapeHTML(service.name);
+        const description = escapeHTML(service.description || "");
+        const image = safeMediaUrl(service.image);
+        const video = safeMediaUrl(service.video);
+        const media = video
+            ? `<video controls playsinline preload="metadata"${image ? ` poster="${escapeHTML(image)}"` : ""} aria-label="${name} video"><source src="${escapeHTML(video)}">Your browser does not support video playback.</video>`
+            : image ? `<img src="${escapeHTML(image)}" alt="${name}" loading="lazy">` : "";
+        return `<article class="service-card">${media ? `<div class="service-card-media">${media}</div>` : ""}<div class="service-card-copy"><h3>${name}</h3>${description ? `<p>${description}</p>` : ""}</div></article>`;
+    }).join("");
+    section.hidden = false;
+}
+
+function safeMediaUrl(value) {
+    try {
+        const url = new URL(value || "");
+        return url.protocol === "https:" ? url.href : "";
+    } catch { return ""; }
+}
+
+renderServices(STORE_SETTINGS.services);
+
 const MAX_FEATURED_PRODUCTS = 4;
 const MAX_LATEST_VIDEOS = 3;
 

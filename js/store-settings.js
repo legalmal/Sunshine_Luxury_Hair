@@ -7,7 +7,9 @@ export const DEFAULT_STORE_SETTINGS = Object.freeze({
     currency: "NGN",
     lowStockThreshold: 5,
     deliveryNote: "Nationwide delivery available.",
-    categoryImages: {}
+    categoryImages: {},
+    services: [],
+    decemberExtra: { enabled: false, title: "A little Sunshine extra", message: "Every order arrives beautifully packaged in our signature bag, at no extra cost.", image: "" }
 });
 
 let settingsPromise;

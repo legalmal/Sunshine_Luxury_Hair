@@ -112,6 +112,29 @@
                         </div>
                     </section>
 
+                    <section class="settings-card">
+                        <div class="settings-card-heading">
+                            <span class="settings-card-icon">✦</span>
+                            <div><h3>Homepage services</h3><p>Add services with photos and optional videos. Only completed service cards appear on the homepage.</p></div>
+                        </div>
+                        <div id="serviceEditorList" class="service-editor-list"></div>
+                        <button type="button" class="settings-reset" id="addServiceButton">Add a service</button>
+                    </section>
+
+                    <section class="settings-card">
+                        <div class="settings-card-heading">
+                            <span class="settings-card-icon">🎁</span>
+                            <div><h3>December extra package</h3><p>Promote the complimentary branded bag across the homepage and customer pages.</p></div>
+                        </div>
+                        <div class="settings-fields">
+                            <label class="settings-field settings-field-wide december-extra-toggle"><input id="settingDecemberExtraEnabled" type="checkbox"> Show the December extra package</label>
+                            <label class="settings-field">Headline<input id="settingDecemberExtraTitle" maxlength="80" placeholder="A little Sunshine extra"></label>
+                            <label class="settings-field settings-field-wide">Message<textarea id="settingDecemberExtraMessage" rows="3" maxlength="240" placeholder="Your order arrives in our signature branded bag, at no extra cost."></textarea></label>
+                            <label class="settings-field settings-field-wide">Bag photo<input id="settingDecemberExtraImage" type="file" accept="image/*"><small>Upload a clear photo of the branded bag. This image is shown with the homepage feature.</small></label>
+                            <img class="december-extra-preview" id="decemberExtraPreview" alt="December extra package bag preview" hidden>
+                        </div>
+                    </section>
+
                     <div class="settings-actions">
                         <button type="button" class="settings-reset" id="settingsReset">Restore defaults</button>
                         <button type="submit" class="settings-save" id="settingsSave">Save settings</button>
