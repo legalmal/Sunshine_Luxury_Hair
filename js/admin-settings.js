@@ -56,13 +56,11 @@ function addServiceEditor(service = {}) {
     card.innerHTML = `
         <div class="service-editor-heading"><strong>Service</strong><button type="button" class="service-remove-button">Delete service</button></div>
         <label class="settings-field">Service name<input class="service-name" maxlength="80" value=""></label>
-        <label class="settings-field">Description<textarea class="service-description" rows="3" maxlength="300"></textarea></label>
         <label class="settings-field">Photo URL (optional)<input class="service-image-url" type="url" placeholder="https://..."></label>
         <label class="settings-field">Or upload a photo<input class="service-image-file" type="file" accept="image/*"></label>
         <label class="settings-field">Video URL (optional)<input class="service-video-url" type="url" placeholder="https://..."></label>
         <label class="settings-field">Or upload a video<input class="service-video-file" type="file" accept="video/*"></label>`;
     card.querySelector(".service-name").value = service.name || "";
-    card.querySelector(".service-description").value = service.description || "";
     card.querySelector(".service-image-url").value = service.image || "";
     card.querySelector(".service-video-url").value = service.video || "";
     card.querySelector(".service-remove-button").addEventListener("click", () => card.remove());
@@ -188,19 +186,18 @@ form.addEventListener("submit", async (event) => {
         }
         for (const card of serviceEditorList.querySelectorAll(".service-editor-card")) {
             const name = card.querySelector(".service-name").value.trim();
-            const description = card.querySelector(".service-description").value.trim();
             let image = card.querySelector(".service-image-url").value.trim();
             let video = card.querySelector(".service-video-url").value.trim();
             const imageFile = card.querySelector(".service-image-file").files?.[0];
             const videoFile = card.querySelector(".service-video-file").files?.[0];
-            if (!name && !description && !image && !video && !imageFile && !videoFile) continue;
+            if (!name && !image && !video && !imageFile && !videoFile) continue;
             if (!name) throw new Error("Enter a name for each service you want to save.");
             for (const mediaUrl of [image, video].filter(Boolean)) {
                 if (new URL(mediaUrl).protocol !== "https:") throw new Error("Service media links must use HTTPS.");
             }
             if (imageFile) image = (await uploadProductImage(imageFile)).url;
             if (videoFile) video = (await uploadProductVideo(videoFile)).url;
-            services.push({ name, description, image, video });
+            services.push({ name, image, video });
         }
         const extraFile = document.getElementById("settingDecemberExtraImage").files?.[0];
         decemberExtraImage = extraFile ? (await uploadProductImage(extraFile)).url : currentDecemberExtraImage;

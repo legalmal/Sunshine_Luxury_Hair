@@ -42,16 +42,49 @@ function renderServices(services) {
         ? services.filter(service => service && typeof service.name === "string" && service.name.trim())
         : [];
     if (!section || !grid || !visibleServices.length) return;
-    grid.innerHTML = visibleServices.map(service => {
+    grid.innerHTML = visibleServices.map((service, index) => {
         const name = escapeHTML(service.name);
-        const description = escapeHTML(service.description || "");
         const image = safeMediaUrl(service.image);
         const video = safeMediaUrl(service.video);
         const media = video
-            ? `<video controls playsinline preload="metadata"${image ? ` poster="${escapeHTML(image)}"` : ""} aria-label="${name} video"><source src="${escapeHTML(video)}">Your browser does not support video playback.</video>`
-            : image ? `<img src="${escapeHTML(image)}" alt="${name}" loading="lazy">` : "";
-        return `<article class="service-card">${media ? `<div class="service-card-media">${media}</div>` : ""}<div class="service-card-copy"><h3>${name}</h3>${description ? `<p>${description}</p>` : ""}</div></article>`;
+            ? `<video class="service-card-video" playsinline preload="metadata"${image ? ` poster="${escapeHTML(image)}"` : ""} aria-label="${name} service video"><source src="${escapeHTML(video)}"></video>`
+            : image ? `<img class="service-card-image" src="${escapeHTML(image)}" alt="" loading="lazy">` : "";
+        const playButton = video
+            ? `<button class="service-video-toggle" type="button" aria-label="Play ${name} video" aria-pressed="false"><span aria-hidden="true">▶</span><span class="service-video-toggle-label">Play video</span></button>`
+            : "";
+        return `<article class="category-card service-card">${media}<div class="category-overlay"></div><div class="category-content"><span class="category-number">${String(index + 1).padStart(2, "0")}</span><h3>${name}</h3>${playButton}<span class="category-arrow" aria-hidden="true">→</span></div></article>`;
     }).join("");
+    grid.querySelectorAll(".service-video-toggle").forEach(button => {
+        const video = button.closest(".service-card")?.querySelector(".service-card-video");
+        if (!video) return;
+        button.addEventListener("click", async () => {
+            if (video.paused) {
+                try {
+                    video.muted = false;
+                    video.volume = 1;
+                    await video.play();
+                    button.setAttribute("aria-label", `Pause ${video.getAttribute("aria-label") || "service"}`);
+                    button.setAttribute("aria-pressed", "true");
+                    button.querySelector("span[aria-hidden]").textContent = "Ⅱ";
+                    button.querySelector(".service-video-toggle-label").textContent = "Pause video";
+                } catch {
+                    button.querySelector(".service-video-toggle-label").textContent = "Video unavailable";
+                }
+            } else {
+                video.pause();
+                button.setAttribute("aria-label", `Play ${video.getAttribute("aria-label") || "service"}`);
+                button.setAttribute("aria-pressed", "false");
+                button.querySelector("span[aria-hidden]").textContent = "▶";
+                button.querySelector(".service-video-toggle-label").textContent = "Play video";
+            }
+        });
+        video.addEventListener("ended", () => {
+            button.setAttribute("aria-label", `Play ${video.getAttribute("aria-label") || "service"}`);
+            button.setAttribute("aria-pressed", "false");
+            button.querySelector("span[aria-hidden]").textContent = "▶";
+            button.querySelector(".service-video-toggle-label").textContent = "Play video";
+        });
+    });
     section.hidden = false;
 }
 

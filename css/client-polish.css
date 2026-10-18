@@ -582,3 +582,36 @@ a:focus-visible {
 .hero-content .hero-description {
     color: #111;
 }
+
+/* Carry the bag promo's warm gold outline across storefront cards. */
+.product-card,
+.home-product-card,
+.category-card,
+.latest-video-card,
+.why-card,
+.value-card,
+.contact-panel,
+.cart-item,
+.cart-summary,
+.checkout-item,
+.checkout-summary {
+    border: 1px solid rgba(174, 139, 43, .32);
+}
+
+body.dark-theme .product-card,
+body.dark-theme .home-product-card,
+body.dark-theme .category-card,
+body.dark-theme .latest-video-card,
+body.dark-theme .why-card,
+body.dark-theme .value-card,
+body.dark-theme .contact-panel,
+body.dark-theme .cart-item,
+body.dark-theme .cart-summary,
+body.dark-theme .checkout-item,
+body.dark-theme .checkout-summary {
+    border-color: rgba(212, 175, 55, .38);
+}
+
+.value-card { padding: 18px; border-radius: var(--client-radius); }
+.cart-item, .checkout-item { padding-inline: 18px; border-radius: var(--client-radius); }
+.cart-item { margin-bottom: 14px; }

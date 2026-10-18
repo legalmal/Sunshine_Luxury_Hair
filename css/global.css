@@ -6,17 +6,7 @@
 
 /* ---------- ROOT VARIABLES ---------- */
 
-.december-extra-banner { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 10px max(20px, calc((100% - 1200px) / 2)); color: #201a0b; background: linear-gradient(100deg, #f5e8b7, #fff8e3); border-bottom: 1px solid rgba(150, 117, 28, .2); }
-.december-extra-banner img { width: 58px; height: 58px; flex: 0 0 58px; object-fit: cover; border-radius: 9px; }
-.december-extra-banner strong { display: block; font: 600 15px/1.3 "Playfair Display", Georgia, serif; }
-.december-extra-banner p { margin: 3px 0 0; font: 12px/1.5 "Poppins", sans-serif; }
-.december-extra-home { padding: 38px 0; background: #f8f5ec; }
-.december-extra-home[hidden] { display: none; }
-.december-extra-home-card { display: grid; grid-template-columns: 1fr minmax(260px, 42%); align-items: center; gap: clamp(24px, 6vw, 80px); padding: clamp(24px, 5vw, 58px); background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 18px; box-shadow: 0 18px 44px rgba(0,0,0,.08); }
-.december-extra-home-copy h2 { margin: 10px 0 14px; color: var(--black-soft); font: 500 clamp(30px, 4vw, 48px)/1.1 "Playfair Display", Georgia, serif; }
-.december-extra-home-copy > p:not(.section-label) { max-width: 540px; margin: 0 0 24px; color: var(--text-secondary); font: 14px/1.8 "Poppins", sans-serif; }
-.december-extra-home-card > img { display: block; width: 100%; max-height: 400px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; }
-@media (max-width: 650px) { .december-extra-banner { justify-content: flex-start; } .december-extra-home-card { grid-template-columns: 1fr; } .december-extra-home-card > img { max-height: 300px; } }
+:root {
     color-scheme: light;
 
     --gold: #D4AF37;
@@ -725,4 +715,25 @@ body.dark-theme #themeToggle:hover {
     font-weight: 400;
     opacity: .9;
 }
-:root {
+.december-extra-banner { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 10px max(20px, calc((100% - 1200px) / 2)); color: #221b0c; background: linear-gradient(100deg, #f0e1ad, #fff9e9 55%, #f4e8c2); border-bottom: 1px solid rgba(150, 117, 28, .25); }
+.december-extra-banner img { width: 56px; height: 56px; flex: 0 0 56px; object-fit: cover; border: 2px solid rgba(255,255,255,.85); border-radius: 10px; box-shadow: 0 4px 12px rgba(50,35,0,.16); }
+.december-extra-banner strong { display: block; font: 600 15px/1.3 "Playfair Display", Georgia, serif; }
+.december-extra-banner p { margin: 3px 0 0; font: 12px/1.5 "Poppins", sans-serif; }
+.december-extra-home { padding: clamp(38px, 6vw, 76px) 0; background: radial-gradient(ellipse at 15% 50%, rgba(212,175,55,.15), transparent 54%), #f7f4ec; }
+.december-extra-home[hidden] { display: none; }
+.december-extra-home-card { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr minmax(280px, 43%); align-items: center; gap: clamp(28px, 6vw, 84px); padding: clamp(28px, 5vw, 64px); background: linear-gradient(120deg, #fff 0%, #fffdf8 100%); border: 1px solid rgba(174,139,43,.28); border-radius: 22px; box-shadow: 0 24px 65px rgba(50,38,10,.12); }
+.december-extra-home-card::before { position: absolute; inset: 0 auto 0 0; width: 5px; background: linear-gradient(#e6cb75, #b8941f, #e6cb75); content: ""; }
+.december-extra-home-copy { position: relative; z-index: 1; }
+.december-extra-home-copy .section-label { display: inline-block; margin: 0 0 8px; padding: 8px 12px; color: #755c18; background: #f7efd5; border: 1px solid rgba(184,148,31,.2); border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .15em; }
+.december-extra-home-copy h2 { max-width: 600px; margin: 8px 0 16px; color: #17140d; font: 500 clamp(32px, 4.5vw, 54px)/1.08 "Playfair Display", Georgia, serif; }
+.december-extra-home-copy > p:not(.section-label) { max-width: 520px; margin: 0 0 26px; color: #5e5a50; font: 14px/1.85 "Poppins", sans-serif; }
+.december-extra-home-copy .primary-button { box-shadow: 0 9px 22px rgba(184,148,31,.22); }
+.december-extra-home-card > img { display: block; width: 100%; max-height: 440px; aspect-ratio: 4 / 3; object-fit: cover; object-position: center; border: 8px solid #fff; border-radius: 16px; box-shadow: 0 18px 38px rgba(40,30,8,.18); }
+body.dark-theme .december-extra-home { background: radial-gradient(ellipse at 15% 50%, rgba(212,175,55,.12), transparent 54%), #0b0b0b; }
+body.dark-theme .december-extra-home-card { background: linear-gradient(120deg, #181714, #111); border-color: rgba(212,175,55,.32); box-shadow: 0 24px 65px rgba(0,0,0,.32); }
+body.dark-theme .december-extra-home-copy h2 { color: #f4edda; }
+body.dark-theme .december-extra-home-copy > p:not(.section-label) { color: #c1bbad; }
+body.dark-theme .december-extra-home-copy .section-label { color: #e4cd82; background: rgba(212,175,55,.1); border-color: rgba(212,175,55,.25); }
+body.dark-theme .december-extra-home-card > img { border-color: #27251f; }
+body.dark-theme .december-extra-banner { color: #f4edda; background: linear-gradient(100deg, #2a2415, #17150f 55%, #302714); border-color: rgba(212,175,55,.23); }
+@media (max-width: 650px) { .december-extra-banner { justify-content: flex-start; } .december-extra-home-card { grid-template-columns: 1fr; gap: 26px; } .december-extra-home-card > img { max-height: 320px; } }
