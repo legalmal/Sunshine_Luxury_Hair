@@ -523,6 +523,11 @@
 
 }
 
+.checkout-variant-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 10px 0; }
+.checkout-variant-field { display: grid; gap: 5px; color: var(--text-secondary); font-size: 10px; font-weight: 600; }
+.checkout-variant-field select { width: 100%; min-height: 38px; padding: 7px 9px; color: var(--text-primary); background: var(--white); border: 1px solid rgba(184,148,31,.48); border-radius: 8px; font: inherit; }
+.checkout-variant-field select:focus { outline: 2px solid rgba(212,175,55,.28); border-color: var(--gold); }
+
 
 .checkout-item-info p {
 

@@ -27,6 +27,7 @@ function populate(settings) {
     document.getElementById("settingWhatsapp").value = settings.whatsappNumber || "";
     document.getElementById("settingCurrency").value = settings.currency === "XAF" ? "XAF" : "NGN";
     document.getElementById("settingStockThreshold").value = Number(settings.lowStockThreshold ?? 5);
+    document.getElementById("settingDeliveryFee").value = settings.deliveryFee ?? "";
     document.getElementById("settingDeliveryNote").value = settings.deliveryNote || "";
     categoryKeys.forEach((category) => {
         const select = document.getElementById(`categoryImage${category[0].toUpperCase()}${category.slice(1)}`);
@@ -217,6 +218,7 @@ form.addEventListener("submit", async (event) => {
         whatsappNumber: phone,
         currency: document.getElementById("settingCurrency").value,
         lowStockThreshold: Number(document.getElementById("settingStockThreshold").value),
+        deliveryFee: document.getElementById("settingDeliveryFee").value === "" ? null : Number(document.getElementById("settingDeliveryFee").value),
         deliveryNote: document.getElementById("settingDeliveryNote").value.trim(),
         categoryImages,
         services,

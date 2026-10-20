@@ -6,6 +6,7 @@ export const DEFAULT_STORE_SETTINGS = Object.freeze({
     storeLocationAddress: "",
     currency: "NGN",
     lowStockThreshold: 5,
+    deliveryFee: null,
     deliveryNote: "Nationwide delivery available.",
     categoryImages: {},
     services: [],

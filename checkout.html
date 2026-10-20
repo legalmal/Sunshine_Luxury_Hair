@@ -322,6 +322,12 @@
 
                         <p id="storeDeliveryNote" class="checkout-delivery-note"></p>
 
+                        <div class="form-group">
+                            <label for="deliveryCountry">Country <span>*</span></label>
+                            <input type="text" id="deliveryCountry" name="deliveryCountry" placeholder="Country" autocomplete="country-name" required>
+                            <small class="form-error" id="deliveryCountryError"></small>
+                        </div>
+
 
 
                         <!-- CITY -->
@@ -354,7 +360,7 @@
                             <div class="form-group">
 
                                 <label for="deliveryState">
-                                    State / Region
+                                    Region
                                     <span>*</span>
                                 </label>
 
@@ -362,7 +368,7 @@
                                     type="text"
                                     id="deliveryState"
                                     name="deliveryState"
-                                    placeholder="State / Region"
+                                    placeholder="Region"
                                     required
                                 >
 
@@ -374,8 +380,6 @@
                             </div>
 
                         </div>
-
-
 
                         <!-- ADDRESS -->
 
@@ -399,6 +403,11 @@
                                 id="deliveryAddressError"
                             ></small>
 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deliveryLandmark">Landmark <small>Optional</small></label>
+                            <input type="text" id="deliveryLandmark" name="deliveryLandmark" placeholder="Nearby landmark">
                         </div>
 
 
@@ -514,7 +523,6 @@
 
                         </div>
 
-
                         <div class="checkout-summary-row">
 
                             <span>
@@ -525,6 +533,11 @@
                                 ₦0
                             </strong>
 
+                        </div>
+
+                        <div class="checkout-summary-row">
+                            <span>Delivery</span>
+                            <strong id="checkoutDelivery">To be confirmed</strong>
                         </div>
 
 

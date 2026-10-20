@@ -4,8 +4,10 @@
    ========================================================= */
 
 import { DEFAULT_STORE_SETTINGS, loadStoreSettings, formatStorePrice, formatProductPrice } from "./store-settings.js";
+import { loadProducts } from "./product-data.js";
 
 let STORE_SETTINGS = DEFAULT_STORE_SETTINGS;
+let CHECKOUT_PRODUCTS = [];
 
 
 /* =========================================================
@@ -35,6 +37,9 @@ const checkoutItemCount =
 const checkoutSubtotal =
     document.getElementById("checkoutSubtotal");
 
+const checkoutDelivery =
+    document.getElementById("checkoutDelivery");
+
 const checkoutTotal =
     document.getElementById("checkoutTotal");
 
@@ -50,9 +55,13 @@ const placeOrderButton =
 const cartCount =
     document.getElementById("cartCount");
 
-loadStoreSettings().then(settings => {
+loadStoreSettings().then(async settings => {
     STORE_SETTINGS = settings;
     WHATSAPP_NUMBER = settings.whatsappNumber || "237681880898";
+    CHECKOUT_PRODUCTS = await loadProducts().catch(error => {
+        console.warn("Product options could not be loaded for checkout.", error);
+        return [];
+    });
     const cart = getCart();
     updateCartCount(cart);
     renderCheckoutItems(cart);
@@ -89,6 +98,64 @@ function getCart() {
         ? readStoredItems(sessionStorage, DIRECT_CHECKOUT_KEY)
         : getSavedCart();
 }
+
+function saveCart(cart) {
+    const storage = isDirectCheckout ? sessionStorage : localStorage;
+    const key = isDirectCheckout ? DIRECT_CHECKOUT_KEY : CART_KEY;
+    storage.setItem(key, JSON.stringify(cart));
+}
+
+function getOptionMap(item) {
+    const options = item.selectedOptions || item.options || {};
+    if (Array.isArray(options)) {
+        return Object.fromEntries(options.map(option => {
+            if (typeof option === "string") {
+                const divider = option.indexOf(":");
+                return divider < 0 ? [option, ""] : [option.slice(0, divider).trim(), option.slice(divider + 1).trim()];
+            }
+            return [option?.name || option?.label || "", option?.value || ""];
+        }).filter(([name]) => name));
+    }
+    return options && typeof options === "object" ? { ...options } : {};
+}
+
+function getAvailableCheckoutOptions(item) {
+    const product = CHECKOUT_PRODUCTS.find(entry => String(entry.id) === String(item.id || item.productId));
+    if (!product) return [];
+
+    const groups = [];
+    const options = Array.isArray(product.options)
+        ? product.options
+        : Object.entries(product.options || {}).map(([name, values]) => ({ name, values }));
+    options.forEach(option => {
+        const name = String(option.name || option.label || "");
+        if (!/length|inch/i.test(name) || !Array.isArray(option.values) || !option.values.length) return;
+        groups.push({ name: "Length", sourceName: name, values: option.values });
+    });
+
+    const colorOption = options.find(option => /colou?r/i.test(String(option.name || option.label || "")) && Array.isArray(option.values));
+    const colors = Array.isArray(product.colors) && product.colors.length
+        ? product.colors
+        : colorOption?.values;
+    if (Array.isArray(colors) && colors.length) {
+        groups.unshift({ name: "Color", sourceName: colorOption?.name || "Color", values: colors });
+    }
+    return groups;
+}
+
+checkoutItems?.addEventListener("change", event => {
+    const select = event.target.closest("select[data-checkout-option]");
+    if (!select) return;
+    const cart = getCart();
+    const index = Number(select.dataset.cartIndex);
+    const item = cart[index];
+    if (!item) return;
+    const options = getOptionMap(item);
+    options[select.dataset.checkoutOption] = select.value;
+    item.options = options;
+    delete item.selectedOptions;
+    saveCart(cart);
+});
 
 
 /* =========================================================
@@ -168,7 +235,7 @@ function getQuantity(item) {
 
 function getSelectedOptions(item) {
 
-    const options = item.options;
+    const options = item.selectedOptions || item.options;
 
     if (!options) {
         return [];
@@ -189,18 +256,14 @@ function getSelectedOptions(item) {
                     option.label ||
                     "";
 
-                const value =
-                    option.value ||
-                    "";
-
-                if (name && value) {
-                    return `${name}: ${value}`;
-                }
-
-                return value || name;
+                return formatCheckoutOption(name, option.value || "");
             }
 
-            return String(option);
+            const text = String(option);
+            const separator = text.indexOf(":");
+            return separator < 0
+                ? text
+                : formatCheckoutOption(text.slice(0, separator), text.slice(separator + 1));
 
         }).filter(Boolean);
     }
@@ -209,13 +272,24 @@ function getSelectedOptions(item) {
     if (typeof options === "object") {
 
         return Object.entries(options)
-            .map(([name, value]) =>
-                `${name}: ${value}`
-            );
+            .filter(([, value]) => value !== undefined && value !== null && String(value).trim())
+            .map(([name, value]) => formatCheckoutOption(name, value));
     }
 
 
     return [];
+}
+
+function formatCheckoutOption(name, value) {
+    const label = String(name || "Option").trim();
+    let selectedValue = String(value ?? "").trim();
+    if (!selectedValue) return "";
+
+    if (/length|inch/i.test(label) && !/(?:\b(?:inches|inch|in)\b|["″])/i.test(selectedValue)) {
+        selectedValue = `${selectedValue} inches`;
+    }
+
+    return `${label}: ${selectedValue}`;
 }
 
 
@@ -281,6 +355,13 @@ function calculateSubtotal(cart) {
 
 }
 
+function getDeliveryFee() {
+    const fee = STORE_SETTINGS.deliveryFee;
+    if (fee === null || fee === undefined || fee === "") return null;
+    const amount = Number(fee);
+    return Number.isFinite(amount) && amount >= 0 ? amount : null;
+}
+
 
 /* =========================================================
    RENDER CHECKOUT ITEMS
@@ -335,7 +416,7 @@ function renderCheckoutItems(cart) {
 
 
     checkoutItems.innerHTML =
-        cart.map(item => {
+        cart.map((item, index) => {
 
             const name =
                 getProductName(item);
@@ -354,6 +435,23 @@ function renderCheckoutItems(cart) {
 
             const options =
                 getSelectedOptions(item);
+
+            const optionMap = getOptionMap(item);
+            const variantGroups = getAvailableCheckoutOptions(item);
+            const variantControls = variantGroups.map(group => {
+                const selectedKey = Object.keys(optionMap).find(key =>
+                    /colou?r/i.test(key) === /colou?r/i.test(group.sourceName) &&
+                    (/length|inch/i.test(key) === /length|inch/i.test(group.sourceName))
+                );
+                const selectedValue = selectedKey ? String(optionMap[selectedKey]) : "";
+                return `<label class="checkout-variant-field">${escapeHTML(group.name)}
+                    <select data-checkout-option="${escapeHTML(group.sourceName)}" data-cart-index="${index}">
+                        <option value="" disabled ${selectedValue ? "" : "selected"}>Choose ${escapeHTML(group.name.toLowerCase())}</option>
+                        ${group.values.map(value => `<option value="${escapeHTML(value)}" ${String(value) === selectedValue ? "selected" : ""}>${escapeHTML(value)}</option>`).join("")}
+                    </select>
+                </label>`;
+            }).join("");
+            const otherOptions = options.filter(option => !/^(?:colou?r|length|inch)/i.test(option));
 
 
             return `
@@ -376,12 +474,13 @@ function renderCheckoutItems(cart) {
                             ${escapeHTML(name)}
                         </h3>
 
+                        ${variantControls ? `<div class="checkout-variant-fields">${variantControls}</div>` : ""}
                         ${
-                            options.length
+                            otherOptions.length
                                 ? `
                                     <div class="checkout-item-options">
 
-                                        ${options.map(option => `
+                                        ${otherOptions.map(option => `
                                             <span>
                                                 ${escapeHTML(option)}
                                             </span>
@@ -429,6 +528,7 @@ function updateCheckoutSummary(cart) {
 
     const subtotal =
         calculateSubtotal(cart);
+    const deliveryFee = getDeliveryFee();
 
 
     if (checkoutItemCount) {
@@ -441,9 +541,12 @@ function updateCheckoutSummary(cart) {
             formatPrice(subtotal);
     }
 
+    if (checkoutDelivery) {
+        checkoutDelivery.textContent = deliveryFee === null ? "To be confirmed" : formatPrice(deliveryFee);
+    }
+
     if (checkoutTotal) {
-        checkoutTotal.textContent =
-            formatPrice(subtotal);
+        checkoutTotal.textContent = deliveryFee === null ? "To be confirmed" : formatPrice(subtotal + deliveryFee);
     }
 
 }
@@ -459,6 +562,7 @@ function clearErrors() {
         "customerName",
         "customerPhone",
         "customerEmail",
+        "deliveryCountry",
         "deliveryCity",
         "deliveryState",
         "deliveryAddress"
@@ -547,6 +651,8 @@ function validateForm() {
             ?.value
             .trim() || "";
 
+    const country = document.getElementById("deliveryCountry")?.value.trim() || "";
+
     const state =
         document
             .getElementById("deliveryState")
@@ -606,6 +712,11 @@ function validateForm() {
         valid = false;
     }
 
+    if (!country) {
+        showError("deliveryCountry", "Please enter your country.");
+        valid = false;
+    }
+
 
     if (!state) {
 
@@ -646,6 +757,15 @@ function validateForm() {
     return valid;
 }
 
+function validateCheckoutVariants() {
+    const unselected = Array.from(checkoutItems?.querySelectorAll("select[data-checkout-option]") || [])
+        .find(select => !select.value);
+    if (!unselected) return true;
+    unselected.focus();
+    window.showToast?.(`Please select a ${unselected.dataset.checkoutOption.toLowerCase()} for each product.`, "error");
+    return false;
+}
+
 
 /* =========================================================
    CREATE WHATSAPP MESSAGE
@@ -655,82 +775,115 @@ function createWhatsAppMessage(
     customer,
     cart,
     subtotal,
-    orderId
+    orderNumber,
+    deliveryFee
 ) {
 
-    let message =
-`Hello Sunshine's Luxury Hair 👋
+    const productDetails = cart.map(item => {
+        const length = getOrderOption(item, /length|inch/i);
+        const colour = getOrderOption(item, /colou?r/i) || item.color || item.colour || "Not selected";
+        return [
+            `Product: ${getProductName(item)}`,
+            `Product link: ${getProductLink(item)}`,
+            `Length: ${formatOrderLength(length)}`,
+            `Colour: ${colour}`,
+            `Quantity: ${getQuantity(item)}`
+        ].join("\n");
+    }).join("\n\n");
 
-I would like to place an order.
+    const deliveryLine = deliveryFee === null
+        ? "Delivery: To be confirmed through WhatsApp"
+        : `Delivery: ${formatWhatsAppPrice(deliveryFee)}`;
+    const totalLine = deliveryFee === null
+        ? `*TOTAL: ${formatWhatsAppPrice(subtotal)} + delivery*`
+        : `*TOTAL: ${formatWhatsAppPrice(subtotal + deliveryFee)}*`;
 
-ORDER ID:
-${orderId}
+    return `🌸 *SUNSHINE'S LUXURY HAIR*
 
-CUSTOMER DETAILS
+🛍️ *NEW ORDER*
+
+━━━━━━━━━━━━━━━━━━
+
+📋 *ORDER NUMBER*
+${orderNumber}
+
+👤 *CUSTOMER DETAILS*
+
 Name: ${customer.name}
 Phone: ${customer.phone}
 Email: ${customer.email || "Not provided"}
 
-DELIVERY DETAILS
+━━━━━━━━━━━━━━━━━━
+
+📍 *DELIVERY ADDRESS*
+
+Country: ${customer.country}
+Region: ${customer.state}
 City: ${customer.city}
-State/Region: ${customer.state}
-Address: ${customer.address}
+Street: ${customer.address}
+Landmark: ${customer.landmark || "Not provided"}
 
-ORDER ITEMS
-`;
+━━━━━━━━━━━━━━━━━━
 
+💇 *PRODUCT DETAILS*
 
-    cart.forEach((item, index) => {
+${productDetails}
 
-        const name =
-            getProductName(item);
+━━━━━━━━━━━━━━━━━━
 
-        const quantity =
-            getQuantity(item);
+💰 *ORDER SUMMARY*
 
-        const price =
-            Number(item.price || 0);
+Product: ${formatWhatsAppPrice(subtotal)}
 
-        const total =
-            price * quantity;
+${deliveryLine}
 
-        const options =
-            getSelectedOptions(item);
+${totalLine}
 
+━━━━━━━━━━━━━━━━━━
 
-        message +=
-`
-${index + 1}. ${name}
-Quantity: ${quantity}
-Price: ${formatPrice(price)}
-Total: ${formatPrice(total)}
-`;
+💳 *PAYMENT*
 
+Payment will be arranged through WhatsApp.
 
-        if (options.length) {
+Please confirm this order and provide the payment instructions.
 
-            message +=
-`Options: ${options.join(", ")}
-`;
+Thank you for choosing
+*Sunshine's Luxury Hair* ❤️`;
 
-        }
+}
 
-    });
+function getProductLink(item) {
+    const productId = item.id || item.productId;
+    if (!productId) return "Not available";
+    const url = new URL("product.html", window.location.href);
+    url.searchParams.set("id", String(productId));
+    return url.href;
+}
 
+function getOrderOption(item, matcher) {
+    return getSelectedOptions(item).map(option => {
+        const separator = option.indexOf(":");
+        return separator < 0 ? null : {
+            name: option.slice(0, separator).trim(),
+            value: option.slice(separator + 1).trim()
+        };
+    }).find(option => option && matcher.test(option.name))?.value || "";
+}
 
-    message +=
-`
-ORDER TOTAL
-Subtotal: ${formatPrice(subtotal)}
-Total: ${formatPrice(subtotal)}
+function formatOrderLength(value) {
+    const length = String(value || "").trim();
+    if (!length) return "Not selected";
+    if (/\b(?:inch|inches|in)\b|["″]/i.test(length)) {
+        return length.replace(/\s*(?:inches|inch|in)\.?$/i, "inch").replace(/[″"]$/, "inch");
+    }
+    return `${length}inch`;
+}
 
-Order Note:
-${customer.note || "None"}
-
-Thank you.`;
-
-    return message;
-
+function formatWhatsAppPrice(value) {
+    if (STORE_SETTINGS.currency === "XAF") {
+        return `${Number(value || 0).toLocaleString("en-US", { maximumFractionDigits: 0 })} CFA`;
+    }
+    return formatPrice(value);
 }
 
 
@@ -755,7 +908,7 @@ async function placeOrder(event) {
     }
 
 
-    if (!validateForm()) {
+    if (!validateForm() || !validateCheckoutVariants()) {
         return;
     }
 
@@ -780,6 +933,9 @@ async function placeOrder(event) {
                 .value
                 .trim(),
 
+        country:
+            document.getElementById("deliveryCountry").value.trim(),
+
         city:
             document
                 .getElementById("deliveryCity")
@@ -798,6 +954,9 @@ async function placeOrder(event) {
                 .value
                 .trim(),
 
+        landmark:
+            document.getElementById("deliveryLandmark").value.trim(),
+
         note:
             document
                 .getElementById("orderNote")
@@ -809,6 +968,8 @@ async function placeOrder(event) {
 
     const subtotal =
         calculateSubtotal(cart);
+    const deliveryFee = getDeliveryFee();
+    const orderNumber = `SLH${Date.now()}`;
 
 
     const originalButtonText =
@@ -854,7 +1015,7 @@ async function placeOrder(event) {
                     getProductImage(item),
 
                 options:
-                    item.options || []
+                    item.selectedOptions || item.options || []
 
             }));
 
@@ -872,9 +1033,11 @@ async function placeOrder(event) {
                 name: customer.name,
                 phone: customer.phone,
                 email: customer.email,
+                country: customer.country,
                 city: customer.city,
                 state: customer.state,
-                address: customer.address
+                address: customer.address,
+                landmark: customer.landmark
 
             },
 
@@ -883,8 +1046,10 @@ async function placeOrder(event) {
             items: orderItems,
 
             subtotal: subtotal,
-
-            total: subtotal,
+            deliveryFee,
+            total: deliveryFee === null ? subtotal : subtotal + deliveryFee,
+            totalPendingConfirmation: deliveryFee === null,
+            orderNumber,
 
             status: "pending",
 
@@ -918,7 +1083,8 @@ async function placeOrder(event) {
                 customer,
                 cart,
                 subtotal,
-                orderRef.id
+                orderNumber,
+                deliveryFee
             );
 
 
